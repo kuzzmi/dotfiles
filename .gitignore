@@ -3,3 +3,6 @@
 
 # Except these
 !.gitignore
+!.gitconfig
+!.i3
+!.i3status.conf

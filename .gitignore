@@ -7,6 +7,8 @@
 
 # i3
 !.i3status.conf
-
 !.i3/
 !.i3/config
+
+# Email
+!.offlineimaprc

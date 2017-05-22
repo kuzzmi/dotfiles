@@ -12,3 +12,4 @@
     ca = "add -A . && git commit -m"
     pl = "pull --rebase"
     pull = "pull --rebase"
+    ps = "push"

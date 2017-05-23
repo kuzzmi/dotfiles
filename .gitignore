@@ -12,3 +12,5 @@
 
 # Email
 !.offlineimaprc
+!.mutt/
+!.mutt/muttrc

@@ -5,7 +5,7 @@
 !.gitignore
 !.gitconfig
 !LICENSE
-!README
+!README.md
 
 # i3 ------------------------------------------------
 !.i3status.conf

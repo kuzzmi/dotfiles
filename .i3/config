@@ -288,6 +288,7 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id xset r rate 250 50
 exec --no-startup-id libinput-gestures
 exec --no-startup-id xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+exec --no-startup-id exec terminal -e /home/kuzzmi/.local/bin/export-dbus.sh
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
@@ -297,8 +298,8 @@ exec_always --no-startup-id fix_xcursor
 # Autostart user applications
 exec --no-startup-id exec terminal
 exec --no-startup-id exec slack
+exec --no-startup-id exec terminal -e "mutt"
 # exec --no-startup-id exec google-chrome-stable
-# exec --no-startup-id exec terminal -e "mutt"
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
@@ -318,16 +319,13 @@ bar {
 
     bindsym button4 nop
     bindsym button5 nop
-    # font xft:Input 11
     strip_workspace_numbers yes
 
     colors {
-#       background $transparent
         background #3C4254
         statusline #FEDDD0
         separator  #FEDDD0
 
-# ED7278
 #                           border  backgr. text
         focused_workspace  #FEDDD0 #FEDDD0 #3C4254
         active_workspace   #595B5B #353836 #FDF6E3

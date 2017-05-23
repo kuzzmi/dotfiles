@@ -1,16 +1,22 @@
-# Exclude everything
+# Exclude everything --------------------------------
 *
 
 # Except these
 !.gitignore
 !.gitconfig
 
-# i3
+# i3 ------------------------------------------------
 !.i3status.conf
 !.i3/
 !.i3/config
 
-# Email
+# Email ---------------------------------------------
 !.offlineimaprc
 !.mutt/
 !.mutt/muttrc
+
+# Local Scripts -------------------------------------
+!.local/
+!.local/bin/
+!.local/bin/export-dbus.sh
+!.local/bin/run-offlineimap.sh

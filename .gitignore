@@ -22,3 +22,8 @@
 !.local/bin/
 !.local/bin/export-dbus.sh
 !.local/bin/run-offlineimap.sh
+!.local/bin/touchpad.sh
+
+# Extenders -----------------------------------------
+!.extend.xinitrc
+!.extend.Xresources

@@ -4,6 +4,8 @@
 # Except these
 !.gitignore
 !.gitconfig
+!LICENSE
+!README
 
 # i3 ------------------------------------------------
 !.i3status.conf

@@ -29,6 +29,7 @@
 !.notmuch-config
 !.mutt/
 !.mutt/muttrc
+!.mutt/mutt-notmuch.py
 !.msmtprc
 !.msmtp/
 !.msmtp/Equifax_Secure_CA.cert

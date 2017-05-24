@@ -8,6 +8,7 @@
 [alias]
     s = "status -s"
     c = "commit"
+    d = "diff"
     cm = "commit -m"
     ca = "add -A . && git commit -m"
     pl = "pull --rebase"

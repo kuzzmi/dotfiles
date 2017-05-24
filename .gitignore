@@ -1,31 +1,46 @@
 # Exclude everything --------------------------------
 *
 
-# Except these
+# Except these --------------------------------------
+#
 !.gitignore
 !.gitconfig
 !LICENSE
 !README.md
 
-# i3 ------------------------------------------------
+# i3 and company ------------------------------------
+#
 !.i3status.conf
 !.i3/
 !.i3/config
+!.dmenurc
+
+# Oh-my-zsh -----------------------------------------
+#
+!.zshrc
 
 # Email ---------------------------------------------
+#
 !.offlineimaprc
 !.offlineimap/
 !.offlineimap/offlineimap.py
+!.offlineimap/run-offlineimap.sh
+!.offlineimap/postsynchook.sh
+!.notmuch-config
 !.mutt/
 !.mutt/muttrc
+!.msmtprc
+!.msmtp/
+!.msmtp/Equifax_Secure_CA.cert # This one is needed for msmtp
 
 # Local Scripts -------------------------------------
+#
 !.local/
 !.local/bin/
 !.local/bin/export-dbus.sh
-!.local/bin/run-offlineimap.sh
 !.local/bin/touchpad.sh
 
 # Extenders -----------------------------------------
+#
 !.extend.xinitrc
 !.extend.Xresources

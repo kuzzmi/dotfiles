@@ -7,9 +7,7 @@ fsync = False
 [Account kuzzmi-gmail]
 localrepository = kuzzmi-gmail-local
 remoterepository = kuzzmi-gmail-remote
-postsyncbook = notmuch new
-autorefresh = 0.5
-quick = 10
+postsynchook = ~/.offlineimap/postsynchook.sh
 
 [Repository kuzzmi-gmail-local]
 type = Maildir
@@ -23,8 +21,7 @@ nametrans = lambda folder: {'drafts':  '[Gmail]/Drafts',
 
 [Repository kuzzmi-gmail-remote]
 maxconnections = 1
-keepalive = 60
-holdconnectionopen = yes
+auth_mechanisms = LOGIN
 type = Gmail
 remoteusereval = get_username("kuzzmi-gmail")
 remotepasseval = get_password("kuzzmi-gmail")
@@ -38,6 +35,8 @@ nametrans = lambda folder: {'[Gmail]/Drafts':    'drafts',
                             }.get(folder, folder)
 
 folderfilter = lambda folder: folder not in ['[Gmail]/Trash',
+                                             '[Gmail]/Notes',
+                                             '[Gmail]/Junk',
                                              '[Gmail]/Important',
                                              '[Gmail]/Spam',
                                              ]

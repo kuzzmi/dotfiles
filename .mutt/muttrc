@@ -48,6 +48,7 @@ set spoolfile = "+kuzzmi-gmail/INBOX"
 mailboxes +kuzzmi-gmail/INBOX \
           +kuzzmi-gmail/archive \
           +kuzzmi-gmail/sent \
+          +kuzzmi-gmail/chats \
           +kuzzmi-gmail/drafts \
 
 # Other special folders.
@@ -103,7 +104,7 @@ macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract 
 macro compose \ci "<pipe-entry> markdown > ~/.mutt/temp/markdown.md" "call urlscan to extract URLs out of a message"
 
 # Notification
-set new_mail_command="notify-send 'New Email in %f' '%n new messages, %u unread.' &"
+# set new_mail_command="notify-send 'New Email in %f' '%n new messages, %u unread.' &"
 
 # Archiving emails
 macro index,pager A "<save-message>=kuzzmi-gmail/archive<enter>" "Archive Message"
@@ -112,3 +113,7 @@ macro index,pager A "<save-message>=kuzzmi-gmail/archive<enter>" "Archive Messag
 set query_command="goobook query '%s'"
 bind editor <Tab> complete-query
 macro index,pager a "<pipe-message>goobook add<return>" "add the sender address to Google contacts"
+
+# Notmuch integration
+macro index / "<enter-command>unset wait_key<enter><shell-escape>~/.mutt/mutt-notmuch.py<enter><change-folder-readonly>~/.cache/mutt_results<enter>" \
+            "search mail (using notmuch)"

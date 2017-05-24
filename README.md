@@ -9,9 +9,10 @@ Email configuration is almost identical to one represented
 in this [article](http://stevelosh.com/blog/2012/10/the-homely-mutt/).
 
 It consists of:
+- [offlineimap](http://www.offlineimap.org)
 - [mutt](http://www.mutt.org/) (NeoMutt to be very precise)
 - [msmtp](http://msmtp.sourceforge.net/)
-- [offlineimap](http://www.offlineimap.org)
+- [notmuch](https://notmuchmail.org/)
 
 Both offlineimap and msmtp use [GNOME/Keyring](https://wiki.archlinux.org/index.php/GNOME/Keyring)
 for storing passwords.

@@ -31,7 +31,7 @@
 !.mutt/muttrc
 !.msmtprc
 !.msmtp/
-!.msmtp/Equifax_Secure_CA.cert # This one is needed for msmtp
+!.msmtp/Equifax_Secure_CA.cert
 
 # Local Scripts -------------------------------------
 #

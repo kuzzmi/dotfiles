@@ -1,13 +1,15 @@
 [general]
 ui = ttyui
 accounts = kuzzmi-gmail
-pythonfile = ~/.mutt/offlineimap.py
+pythonfile = ~/.offlineimap/offlineimap.py
 fsync = False
 
 [Account kuzzmi-gmail]
 localrepository = kuzzmi-gmail-local
 remoterepository = kuzzmi-gmail-remote
 postsyncbook = notmuch new
+autorefresh = 0.5
+quick = 10
 
 [Repository kuzzmi-gmail-local]
 type = Maildir
@@ -21,6 +23,8 @@ nametrans = lambda folder: {'drafts':  '[Gmail]/Drafts',
 
 [Repository kuzzmi-gmail-remote]
 maxconnections = 1
+keepalive = 60
+holdconnectionopen = yes
 type = Gmail
 remoteusereval = get_username("kuzzmi-gmail")
 remotepasseval = get_password("kuzzmi-gmail")

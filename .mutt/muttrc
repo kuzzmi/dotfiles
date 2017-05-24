@@ -99,6 +99,9 @@ source ./mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
 macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
+# Using Markdown to create HTML message
+macro compose \ci "<pipe-entry> markdown > ~/.mutt/temp/markdown.md" "call urlscan to extract URLs out of a message"
+
 # Notification
 set new_mail_command="notify-send 'New Email in %f' '%n new messages, %u unread.' &"
 

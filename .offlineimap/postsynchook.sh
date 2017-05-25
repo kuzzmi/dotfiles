@@ -25,7 +25,7 @@ if [ $num_mail -gt 0 ]; then
 
     if [ $actual_num_mail -gt 0 ]; then
         for i in $(echo $diff); do
-            message="$message\n$(grep -m1 '^From: ' $i|sed 's/From: //'|sed 's/ <[^>]*>//')\n$(grep -m1 '^Subject: ' $i|sed 's/Subject: //')\n"
+            message="$message\nFrom: $(grep -m1 '^From: ' $i|sed 's/From: //'|sed 's/ <[^>]*>//')\n"
         done
         echo $diff
         echo $actual_num_mail

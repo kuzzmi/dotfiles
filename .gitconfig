@@ -14,3 +14,5 @@
     pl = "pull --rebase"
     pull = "pull --rebase"
     ps = "push"
+[url "git@bitbucket.org:"]
+	insteadOf = https://bitbucket.org/

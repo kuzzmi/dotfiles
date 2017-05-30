@@ -26,6 +26,8 @@ Crontab for offlineimap looks like this:
 On DE startup (in my case this is i3) this [workaround](https://mail.gnome.org/archives/gnome-keyring-list/2012-December/msg00000.html)
 applied to get GNOME/Keyring working in cron.
 
+Notifications are sent when there is _truly_ new unread email. If there are any unread emails in INBOX a file is created and `i3status` checks if the file exists, if it does "New Email" message is displayed.
+
 ### Window Manager
 
 I prefer tiling window managers, so my WM of choice is [i3wm](https://i3wm.org/).
@@ -50,3 +52,7 @@ community/i3status-manjaro 2.11-1 (i3-manjaro)
 
 Required for this setup `dmenu-manjaro`, `i3-gaps` and `i3status-manjaro`
 packages contain patches for additional functionalily.
+
+### Media
+
+Music is backed by [Mopidy](https://www.mopidy.com/) and [Mopidy-Spotify](https://github.com/mopidy/mopidy-spotify)

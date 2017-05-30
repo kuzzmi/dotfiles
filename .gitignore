@@ -45,3 +45,12 @@
 #
 !.extend.xinitrc
 !.extend.Xresources
+
+# Media ---------------------------------------------
+#
+!.config/
+!.config/mopidy/
+!.config/mopidy/mopidy.conf
+!.config/mopidy/run-mopidy.sh
+!.config/ncmpcpp/
+!.config/ncmpcpp/config

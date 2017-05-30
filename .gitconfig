@@ -6,9 +6,11 @@
     editor = "vim"
 
 [alias]
+    g = "gui"
     s = "status -s"
     c = "commit"
     d = "diff"
+    co = "checkout"
     cm = "commit -m"
     ca = "add -A . && git commit -m"
     pl = "pull --rebase"

@@ -9,3 +9,5 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 DEFAULT_SESSION='i3 --shmlog-size 0'
 
 /home/kuzzmi/.local/bin/touchpad.sh
+setxkbmap -model pc104 -layout us,ru -variant colemak,winkeys -option grp:shifts_toggle
+xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'

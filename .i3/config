@@ -1,5 +1,4 @@
 # i3 config file (v4)
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
@@ -33,7 +32,8 @@ bindsym $mod+Return exec terminal
 bindsym $mod+Shift+q kill
 
 # start program launcher
-bindsym $mod+d exec --no-startup-id dmenu_recency -h 29
+# bindsym $mod+d exec --no-startup-id dmenu_recency -h 29
+bindsym $mod+Tab exec --no-startup-id /home/kuzzmi/.local/bin/run-rofi
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
@@ -57,10 +57,9 @@ bindsym $mod+F2 exec google-chrome-stable
 # bindsym $mod+F3 exec pcmanfm
 bindsym $mod+F3 exec terminal -e 'ranger'
 bindsym $mod+Shift+F3 exec gksu pcmanfm
-bindsym $mod+F4 exec terminal -e 'mutt' # Email
+bindsym $mod+F4 exec /home/kuzzmi/.local/bin/open-mutt
 # bindsym $mod+F5 exec terminal -e 'mocp' # Music player
-bindsym $mod+F5 exec terminal -e 'ncmpcpp' # Music player
-bindsym $mod+F12 exec terminal -e '~/.local/bin/wttr'
+bindsym $mod+F5 exec /home/kuzzmi/.local/bin/open-ncmpcpp
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
@@ -117,7 +116,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+Ctrl+space focus mode_toggle
 
 # toggle sticky
 bindsym $mod+Shift+s sticky toggle
@@ -185,7 +184,7 @@ assign [title="mutt"] $ws3
 assign [title="ncmpcpp"] $ws7
 assign [class="Steam"] $ws6
 assign [instance="libreoffice"] $ws4
-assign [instance="google-chrome (/home/kuzzmi/.tmp)"] $ws4
+for_window [title="mutt"] workspace $ws3, focus
 for_window [class="Spotify"] move to workspace $ws7
 for_window [class="libreoffice"] workspace $ws4, focus
 
@@ -274,9 +273,6 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-# Lock screen
-bindsym $mod+9 exec --no-startup-id blurlock
-
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
@@ -290,22 +286,28 @@ exec --no-startup-id exec terminal -e /home/kuzzmi/.local/bin/export-dbus.sh
 exec --no-startup-id onedrive -m
 exec --no-startup-id xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 exec_always --no-startup-id sbxkb
-# exec --no-startup-id start_conky_maia
-# exec --no-startup-id start_conky_green
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id fix_xcursor
 
+# ---------------------- LAYOUTS ---------------------
+
+# Reload layout
+exec --no-startup-id exec i3-msg "workspace $ws1; append_layout /home/kuzzmi/.i3/workspace-1.json"
+exec --no-startup-id exec i3-msg "workspace $ws2; append_layout /home/kuzzmi/.i3/workspace-2.json"
+
 # Autostart user applications
 exec --no-startup-id exec terminal
-exec --no-startup-id exec slack
-exec --no-startup-id exec terminal -e "mutt"
-exec --no-startup-id exec terminal -e "ncmpcpp"
+exec --no-startup-id exec terminal
+exec --no-startup-id exec terminal
+exec --no-startup-id google-chrome
 
+# -------------------- LAYOUTS END -------------------
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
     # i3bar_command i3bar -t
     status_command i3status
+    # status_command i3blocks
     position top
 
     tray_padding 0
@@ -374,32 +376,32 @@ set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 bindsym $mod+Shift+g mode "$mode_gaps"
 
 mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym o      mode "$mode_gaps_outer"
+    bindsym i      mode "$mode_gaps_inner"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
+    bindsym plus  gaps inner current plus 5
+    bindsym minus gaps inner current minus 5
+    bindsym 0     gaps inner current set 0
 
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
+    bindsym Shift+plus  gaps inner all plus 5
+    bindsym Shift+minus gaps inner all minus 5
+    bindsym Shift+0     gaps inner all set 0
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
+    bindsym plus  gaps outer current plus 5
+    bindsym minus gaps outer current minus 5
+    bindsym 0     gaps outer current set 0
 
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
+    bindsym Shift+plus  gaps outer all plus 5
+    bindsym Shift+minus gaps outer all minus 5
+    bindsym Shift+0     gaps outer all set 0
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Check if mutt is running
+# -x flag only match processes whose name (or command line if -f is
+# specified) exactly match the pattern.
+
+if pgrep -x "ncmpcpp" > /dev/null
+then
+    i3-msg "workspace 7:Media, focus"
+else
+    terminal -e 'ncmpcpp'
+fi

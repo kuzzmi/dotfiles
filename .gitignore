@@ -39,7 +39,12 @@
 !.local/
 !.local/bin/
 !.local/bin/export-dbus.sh
-!.local/bin/touchpad.sh
+!.local/bin/touchpad
+!.local/bin/open-mutt
+!.local/bin/open-ncmpcpp
+!.local/bin/run-rofi
+!.local/bin/i3-get-window-criteria
+!.local/bin/export-dbus.sh
 
 # Extenders -----------------------------------------
 #

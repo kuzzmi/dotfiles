@@ -90,3 +90,4 @@ alias update="yaourt -Syua"
 alias printer="system-config-printer"
 alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias mirrors="sudo pacman-mirrors -g"
+alias r="ranger"

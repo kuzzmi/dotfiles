@@ -1,8 +1,13 @@
 # Setting npm stuff
 NPM_PACKAGES="${HOME}/.local/share/node/npm_packages"
 
+RUBY_GEMS="${HOME}/.gem/ruby/2.4.0/bin"
+
+export ANDROID_HOME=$HOME/Android/Sdk
+
 # If you come from bash you might have to change your $PATH.
-export PATH=$NPM_PACKAGES/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH=$NPM_PACKAGES/bin:$RUBY_GEMS:$HOME/.local/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:/usr/local/bin:$PATH
+
 export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
 # Path to your oh-my-zsh installation.
@@ -91,3 +96,10 @@ alias printer="system-config-printer"
 alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias mirrors="sudo pacman-mirrors -g"
 alias r="ranger"
+alias v="vim"
+
+alias t="~/Projects/toggl-cli/toggl.py"
+alias tc="~/Projects/toggl-cli/toggl.py continue"
+
+# added by travis gem
+[ -f /home/kuzzmi/.travis/travis.sh ] && source /home/kuzzmi/.travis/travis.sh

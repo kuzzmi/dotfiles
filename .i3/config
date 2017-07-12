@@ -53,7 +53,7 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F2 exec google-chrome-stable
+bindsym $mod+F2 exec vivaldi-stable
 # bindsym $mod+F3 exec pcmanfm
 bindsym $mod+F3 exec terminal -e 'ranger'
 bindsym $mod+Shift+F3 exec gksu pcmanfm
@@ -143,7 +143,7 @@ set $ws1 "1:Work"
 set $ws2 "2:Web"
 set $ws3 "3:Communication"
 set $ws4 "4:Documents"
-set $ws5 5
+set $ws5 "5:Wallets"
 set $ws6 "6:Steam"
 set $ws7 "7:Media"
 set $ws8 8
@@ -218,6 +218,7 @@ for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 for_window [title="Google Hangouts - kuzzmi@gmail.com"] floating enable
+for_window [instance="crx_ofhbbkphhbklhfoeikjpcbhemlocgigb"] floating enable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -285,7 +286,7 @@ exec --no-startup-id libinput-gestures
 exec --no-startup-id exec terminal -e /home/kuzzmi/.local/bin/export-dbus.sh
 exec --no-startup-id onedrive -m
 exec --no-startup-id xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-exec_always --no-startup-id sbxkb
+# exec_always --no-startup-id sbxkb
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id fix_xcursor
 
@@ -293,24 +294,24 @@ exec_always --no-startup-id fix_xcursor
 
 # Reload layout
 exec --no-startup-id exec i3-msg "workspace $ws1; append_layout /home/kuzzmi/.i3/workspace-1.json"
-exec --no-startup-id exec i3-msg "workspace $ws2; append_layout /home/kuzzmi/.i3/workspace-2.json"
 
 # Autostart user applications
 exec --no-startup-id exec terminal
 exec --no-startup-id exec terminal
 exec --no-startup-id exec terminal
-exec --no-startup-id google-chrome
 
 # -------------------- LAYOUTS END -------------------
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
-    # i3bar_command i3bar -t
-    status_command i3status
-    # status_command i3blocks
+    i3bar_command i3bar -t
+    # status_command i3status
+    status_command i3blocks
     position top
 
     tray_padding 0
+    tray_output none
+    font pango:Input 11
     height 30
 
     separator_symbol " | "
@@ -354,7 +355,7 @@ client.background       #2B2C2B
 #############################
 
 # Set inner/outer gaps
-gaps inner 20
+gaps inner 10
 gaps outer 0
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.

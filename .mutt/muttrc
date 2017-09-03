@@ -6,7 +6,6 @@ set message_cachedir = ~/.mutt/cache/bodies  # where to store bodies
 set certificate_file = ~/.mutt/certificates  # where to store certs
 set mailcap_path     = ~/.mutt/mailcap       # entries for filetypes
 set tmpdir           = ~/.mutt/temp          # where to keep temp files
-set signature        = ~/.mutt/sig           # my signature file
 
 # Basic Options --------------------------------------
 set wait_key = no        # shut up, mutt
@@ -31,28 +30,24 @@ bind index,pager \cj sidebar-next
 bind index,pager \ck sidebar-prev
 bind index,pager \cl sidebar-open
 
+# GPG ----------------------------------------------
+source ~/.mutt/gpg.rc
+
+set pgp_use_gpg_agent = yes
+set pgp_sign_as = 56FC75E7D2CB0D83C3FF89D4E954E8B195A9B855
+set pgp_timeout = 3600
+set crypt_autosign = yes
+set crypt_replyencrypt = yes
+bind index,pager \cp check-traditional-pgp
+
 # Status Bar -----------------------------------------
 set status_chars  = " *%A"
-set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
 
 # Header Options -------------------------------------
 ignore *                                # ignore all headers
 unignore from: to: cc: date: subject:   # show only these
 unhdr_order *                           # some distros order things by default
 hdr_order from: to: cc: date: subject:  # and in this order
-
-# Default inbox.
-set spoolfile = "+kuzzmi-gmail/INBOX"
-
-# Mailboxes to show in the sidebar.
-mailboxes +kuzzmi-gmail/INBOX \
-          +kuzzmi-gmail/archive \
-          +kuzzmi-gmail/sent \
-          +kuzzmi-gmail/drafts \
-
-# Other special folders.
-set mbox      = "+kuzzmi-gmail/archive"
-set postponed = "+kuzzmi-gmail/drafts"
 
 # Index View Options ---------------------------------
 set date_format = "%m/%d %H:%M"
@@ -73,11 +68,9 @@ set reply_to
 set include
 set forward_quote
 set attribution = "On %d, %n wrote:" # format of quoting header
-set editor = "vim"
+set editor = "vim +'norm }' -c 'startinsert'"
 
 # Sending Emails -------------------------------------
-set from     = "kuzzmi@gmail.com"
-set sendmail = "/usr/bin/msmtp -a kuzzmi-gmail"
 set sendmail_wait = 0
 unset record
 
@@ -92,12 +85,13 @@ unset markers              # no ugly plus signs
 set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 alternative_order text/plain text/enriched text/html
 
+bind index,pager g noop
+
 # Pager Key Bindings ---------------------------------
 bind pager k  previous-line
 bind pager j  next-line
 bind pager gg top
 bind pager G  bottom
-
 bind pager R  group-reply
 
 # View attachments properly.
@@ -114,10 +108,6 @@ bind index <space> collapse-thread
 # Ctrl-R to mark all as read
 macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
 
-# Sync email
-macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
-macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
-
 # Saner copy/move dialogs
 macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
 macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
@@ -130,9 +120,6 @@ macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract 
 # Using Markdown to create HTML message
 macro compose \ci "<pipe-entry> markdown > ~/.mutt/temp/markdown.md" "call urlscan to extract URLs out of a message"
 
-# Archiving emails
-macro index,pager A "<save-message>=kuzzmi-gmail/archive<enter>" "Archive Message"
-
 # Google Contacts -----------------------------------
 set query_command="goobook query '%s'"
 bind editor <Tab> complete-query
@@ -143,5 +130,8 @@ macro index,pager a "<pipe-message>goobook add<return>" "add the sender address 
 macro index / "<enter-command>unset wait_key<enter><shell-escape>~/.mutt/mutt-notmuch.py<enter><change-folder-readonly>~/.cache/mutt_results<enter>" \
             "search mail (using notmuch)"
 
-# Colorscheme
-source ./mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
+source './kuzzmi-gmail.conf'
+
+macro index,pager 0 "<pipe-message>mutt-extract-email-for-snooze<enter><shell-escape>mutt-snooze-email<enter>"
+
+bind editor <space> noop

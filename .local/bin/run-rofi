@@ -1,10 +1,7 @@
 #!/bin/bash
 rofi -combi-modi window,run \
     -show combi \
-    -terminal urxvtc -hide-scrollbar true  \
-    -color-window "#3c4254, #9c6d9c, #57607a" \
-    -color-normal "#3c4254, #feddd0, #4b5269, #ffd7af, #3c4254" \
-    -color-active "#3c4254, #268bd2, #4b5269, #268bd2, #feddd0" \
-    -color-urgent "#3c4254, #de5d55, #4b5269, #de5d55, #feddd0" \
+    -hide-scrollbar true  \
     -kb-mode-next Super+Tab \
-    -bw 5 -line-margin 0 -lines 10 -eh 1 -opacity 80
+    -bw 20 -line-margin 5 -lines 15 -eh 1 \
+    -font "Input 16" -padding 100 -separator-style none "$@"

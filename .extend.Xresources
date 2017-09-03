@@ -1,70 +1,67 @@
-! ------------------------------------------------------------------------------
-! ROFI Color theme
-! ------------------------------------------------------------------------------
-rofi.color-enabled: true
-rofi.color-window: #3c4254, #9c6d9c, #57607a
-rofi.color-normal: #3c4254, #feddd0, #4b5269, #ffd7af, #3c4254
-rofi.color-active: #3c4254, #268bd2, #4b5269, #268bd2, #feddd0
-rofi.color-urgent: #3c4254, #de5d55, #4b5269, #de5d55, #feddd0
-
-! ------------------------------------------------------------------------------
-! special
-*.foreground:   #feddd0
-*.background:   #3c4254
-*.cursorColor:  #feddd0
-
-! black
-*.color0:       #4b5269
-*.color8:       #57607a
-
-! red
-*.color1:       #d8686d
-*.color9:       #ed7278
-
-! green
-*.color2:       #918eb3
-*.color10:      #a19ec7
-
-! yellow
-*.color3:       #ebc6a1
-*.color11:      #ffd7af
-
-! blue
-*.color4:       #b84e46
-*.color12:      #cc564e
-
-! magenta
-*.color5:       #875f87
-*.color13:      #9c6d9c
-
-! cyan
-*.color6:       #f77c6c
-*.color14:      #ff806f
-
-! white
-*.color7:       #fdcbac
-*.color15:      #fdcbac
-
-
 Xcursor.theme: Breeze
 Xcursor.size:                     0
 
-XTerm*background:                 #272827
-XTerm*foreground:                 #feddd0
 XTerm*reverseVideo:               on
 XTerm*faceName:                   Input:size=11:antialias=true
 XTerm*selectToClipboard:          true
 
-URxvt.font:                       xft:Input
+URxvt.font:                       xft:Input:size=14:antialias=true
 
 URxvt.depth:                      32
-URxvt.background:                 #3c4254
-URxvt*foreground:                 #feddd0
 URxvt*scrollBar:                  false
 URxvt*mouseWheelScrollPage:       false
 URxvt*cursorBlink:                true
 URxvt*saveLines:                  5000
 URxvt*blurRadius:                 50
+
+! -------------------------------------
+! From wal
+URxvt*foreground: #6393E6
+XTerm*foreground: #6393E6
+URxvt*background: #020203
+XTerm*background: #020203
+URxvt*cursorColor: #6393E6
+XTerm*cursorColor: #020203
+*color0: #020203
+*.color0: #020203
+*color1: #492448
+*.color1: #492448
+*color2: #611962
+*.color2: #611962
+*color3: #BA4067
+*.color3: #BA4067
+*color4: #FAB238
+*.color4: #FAB238
+*color5: #195EBD
+*.color5: #195EBD
+*color6: #C518AA
+*.color6: #C518AA
+*color7: #6393E6
+*.color7: #6393E6
+*color8: #666666
+*.color8: #666666
+*color9: #492448
+*.color9: #492448
+*color10: #611962
+*.color10: #611962
+*color11: #BA4067
+*.color11: #BA4067
+*color12: #FAB238
+*.color12: #FAB238
+*color13: #195EBD
+*.color13: #195EBD
+*color14: #C518AA
+*.color14: #C518AA
+*color15: #6393E6
+*.color15: #6393E6
+*color66: #020203
+rofi.color-window: argb:FF020203, #020203, #611962
+rofi.color-normal: argb:FF020203, #6393E6, #020203, #611962, #020203
+rofi.color-active: argb:FF020203, #6393E6, #020203, #611962, #020203
+rofi.color-urgent: argb:FF020203, #492448, #020203, #492448, #6393E6
+emacs*background: #020203
+emacs*foreground: #6393E6
+! -------------------------------------
 
 ! for 'fake' transparency (without Compton) uncomment the following three lines
 ! URxvt*inheritPixmap:            true

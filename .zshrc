@@ -1,17 +1,4 @@
-# Setting npm stuff
-NPM_PACKAGES="${HOME}/.local/share/node/npm_packages"
-
-RUBY_GEMS="${HOME}/.gem/ruby/2.4.0/bin"
-
-export ANDROID_HOME=$HOME/Android/Sdk
-
-# If you come from bash you might have to change your $PATH.
-export PATH=$NPM_PACKAGES/bin:$RUBY_GEMS:$HOME/.local/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:/usr/local/bin:$PATH
-
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-
-# Path to your oh-my-zsh installation.
-export ZSH=/home/kuzzmi/.oh-my-zsh
+# export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -23,7 +10,7 @@ ZSH_THEME="mh"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
@@ -60,7 +47,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
+plugins=(git yarn gpg-agent zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -97,9 +84,10 @@ alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --colo
 alias mirrors="sudo pacman-mirrors -g"
 alias r="ranger"
 alias v="vim"
+alias f="find . -name"
+alias om="emacs -nw ~/org/index.org"
 
-alias t="~/Projects/toggl-cli/toggl.py"
-alias tc="~/Projects/toggl-cli/toggl.py continue"
+alias m="~/.local/bin/open-mutt"
 
 # added by travis gem
 [ -f /home/kuzzmi/.travis/travis.sh ] && source /home/kuzzmi/.travis/travis.sh

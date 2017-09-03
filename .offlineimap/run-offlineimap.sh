@@ -1,3 +1,2 @@
 #!/bin/sh
-source /home/kuzzmi/.Xdbus ; /usr/bin/offlineimap >> /home/kuzzmi/.offlineimap/log/offlineimap.log 2>&1
-
+source /home/kuzzmi/.Xdbus ; offlineimap -a igor@cureous.life | offlineimap -a igor@kuzzmi.com | offlineimap -a kuzzmi@gmail.com

@@ -8,5 +8,5 @@ if pgrep -x "mutt" > /dev/null
 then
     i3-msg "[title=mutt] focus"
 else
-    terminal -e 'mutt'
+    i3-msg "exec terminal -t mutt -e 'mutt'"
 fi

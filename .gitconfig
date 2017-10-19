@@ -1,6 +1,6 @@
 [user]
     name = Igor Kuzmenko
-    email = igor@kuzzmi.com
+	email = igor@kuzzmi.com
 
 [core]
     editor = "vim"

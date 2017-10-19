@@ -16,51 +16,53 @@ URxvt*blurRadius:                 50
 
 ! -------------------------------------
 ! From wal
-URxvt*foreground: #6393E6
-XTerm*foreground: #6393E6
-URxvt*background: #020203
-XTerm*background: #020203
-URxvt*cursorColor: #6393E6
-XTerm*cursorColor: #020203
-*color0: #020203
-*.color0: #020203
-*color1: #492448
-*.color1: #492448
-*color2: #611962
-*.color2: #611962
-*color3: #BA4067
-*.color3: #BA4067
-*color4: #FAB238
-*.color4: #FAB238
-*color5: #195EBD
-*.color5: #195EBD
-*color6: #C518AA
-*.color6: #C518AA
-*color7: #6393E6
-*.color7: #6393E6
-*color8: #666666
-*.color8: #666666
-*color9: #492448
-*.color9: #492448
-*color10: #611962
-*.color10: #611962
-*color11: #BA4067
-*.color11: #BA4067
-*color12: #FAB238
-*.color12: #FAB238
-*color13: #195EBD
-*.color13: #195EBD
-*color14: #C518AA
-*.color14: #C518AA
-*color15: #6393E6
-*.color15: #6393E6
-*color66: #020203
-rofi.color-window: argb:FF020203, #020203, #611962
-rofi.color-normal: argb:FF020203, #6393E6, #020203, #611962, #020203
-rofi.color-active: argb:FF020203, #6393E6, #020203, #611962, #020203
-rofi.color-urgent: argb:FF020203, #492448, #020203, #492448, #6393E6
-emacs*background: #020203
-emacs*foreground: #6393E6
+URxvt*foreground: #FCFCFD
+XTerm*foreground: #FCFCFD
+URxvt*background: #2D2F3A
+XTerm*background: #2D2F3A
+URxvt*cursorColor: #FCFCFD
+XTerm*cursorColor: #2D2F3A
+*color0: #2D2F3A
+*.color0: #2D2F3A
+*color1: #979AAD
+*.color1: #979AAD
+*color2: #B7B9C6
+*.color2: #B7B9C6
+*color3: #BFC1CC
+*.color3: #BFC1CC
+*color4: #CACCD5
+*.color4: #CACCD5
+*color5: #DBDDE3
+*.color5: #DBDDE3
+*color6: #E9E9ED
+*.color6: #E9E9ED
+*color7: #FCFCFD
+*.color7: #FCFCFD
+*color8: #757575
+*.color8: #757575
+*color9: #979AAD
+*.color9: #979AAD
+*color10: #B7B9C6
+*.color10: #B7B9C6
+*color11: #BFC1CC
+*.color11: #BFC1CC
+*color12: #CACCD5
+*.color12: #CACCD5
+*color13: #DBDDE3
+*.color13: #DBDDE3
+*color14: #E9E9ED
+*.color14: #E9E9ED
+*color15: #FCFCFD
+*.color15: #FCFCFD
+*color66: #2D2F3A
+
+rofi.color-window: argb:AA2D2F3A, #2D2F3A, #B7B9C6
+rofi.color-normal: argb:00000000, #FCFCFD, argb:00000000, #B7B9C6, #2D2F3A
+rofi.color-active: argb:00000000, #FCFCFD, argb:00000000, #B7B9C6, #2D2F3A
+rofi.color-urgent: argb:00000000, #979AAD, argb:00000000, #979AAD, #FCFCFD
+
+emacs*background: #2D2F3A
+emacs*foreground: #FCFCFD
 ! -------------------------------------
 
 ! for 'fake' transparency (without Compton) uncomment the following three lines

@@ -64,7 +64,7 @@ bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 bindsym $mod+t --release exec "killall polybar; polybar rome"
 
-bindsym $mod+n [title="orgmode"] scratchpad show
+bindsym $mod+n exec ~/.local/bin/open-orgmode
 # focus_follows_mouse no
 
 # change focus
@@ -183,7 +183,7 @@ assign [class="Steam"] $ws6
 assign [instance="libreoffice"] $ws4
 for_window [title="^mutt$"] floating enable, move position 100px 100px, resize set 1720 880, move scratchpad, scratchpad show
 for_window [title="scratchpad-termite"] move scratchpad
-for_window [title="^orgmode$"] floating enable, move position 100px 100px, resize set 1000 800, move scratchpad, scratchpad show
+for_window [title="^orgmode$"] move scratchpad, fullscreen, scratchpad show
 for_window [class="Spotify"] move to workspace $ws7
 for_window [class="libreoffice"] workspace $ws4, focus
 

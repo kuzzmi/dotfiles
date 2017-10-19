@@ -3,5 +3,5 @@ rofi -combi-modi window,run \
     -show combi \
     -hide-scrollbar true  \
     -kb-mode-next Super+Tab \
-    -bw 20 -line-margin 5 -lines 15 -eh 1 \
-    -font "Input 16" -padding 100 -separator-style none "$@"
+    -bw 0 -line-margin 15 -lines 10 -eh 1 \
+    -font "Input 16" -padding 200 -separator-style none "$@"

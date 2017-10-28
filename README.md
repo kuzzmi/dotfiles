@@ -17,42 +17,50 @@ It consists of:
 Both offlineimap and msmtp use [GNOME/Keyring](https://wiki.archlinux.org/index.php/GNOME/Keyring)
 for storing passwords.
 
-Crontab for offlineimap looks like this:
-
-```
-* * * * * /home/kuzzmi/.local/bin/run-offlineimap.sh
-```
-
 On DE startup (in my case this is i3) this [workaround](https://mail.gnome.org/archives/gnome-keyring-list/2012-December/msg00000.html)
 applied to get GNOME/Keyring working in cron.
 
-Notifications are sent when there is _truly_ new unread email. If there are any unread emails in INBOX a file is created and `i3status` checks if the file exists, if it does "New Email" message is displayed.
+Notifications are sent when there is a new unread email. 
 
 ### Window Manager
 
-I prefer tiling window managers, so my WM of choice is [i3wm](https://i3wm.org/).
-Particularly for this setup I use `i3-manjaro` group.
-
-By the time of writing this, the group contains the following packages
-that are required:
-
-```
-community/artwork-i3 20170508-1 (i3-manjaro)
-community/conky-i3 20160915-1 (i3-manjaro)
-community/dmenu-manjaro 4.6-12 (i3-manjaro)
-community/i3-default-artwork 20170225-1 (i3-manjaro)
-community/i3-gaps 4.13-1 (i3-manjaro)
-community/i3-help 20160827-1 (i3-manjaro)
-community/i3-scripts 20161003-1
-community/i3-scrot 1.1-1
-community/i3exit 20160915-1 (i3-manjaro)
-community/i3lock 2.8-1 (i3)
-community/i3status-manjaro 2.11-1 (i3-manjaro)
-```
-
-Required for this setup `dmenu-manjaro`, `i3-gaps` and `i3status-manjaro`
-packages contain patches for additional functionalily.
+WM of choice is [i3wm](https://i3wm.org/).
 
 ### Media
 
 Music is backed by [Mopidy](https://www.mopidy.com/) and [Mopidy-Spotify](https://github.com/mopidy/mopidy-spotify)
+
+### Fonts
+
+Font for a terminal: [Input Condensed](http://input.fontbureau.com/download/index.html?size=14&language=python&theme=solarized-dark&family=InputMono&width=200&weight=400&line-height=1.4&a=ss&g=0&i=serifs_round&l=serifs_round&zero=0&asterisk=height&braces=0&preset=default&customize=please)
+
+### Software
+- xclip
+- polybar
+- calcurse
+- vivaldi
+- rtorrent
+- screen
+- rofi
+- mutt
+- offlineimap
+
+### Configuration
+
+#### Keyboard
+
+##### Layout
+`.xorg.conf.d` contains `00-keyboard.conf`, which is responsible for setting the keyboard layout.
+`.xmodmap` contains remapping of `Caps Lock` to `Esc`.
+
+##### Keypress autorepeat
+`.xinitrc` is configured at values `250 50`
+
+#### Software:
+- vim
+- i3
+- polybar + binaries
+
+### Themes
+
+[Arc Darker](https://github.com/horst3180/Arc-theme#installation) + [Arc Icons](https://github.com/horst3180/arc-icon-theme)

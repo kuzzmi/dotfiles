@@ -8,12 +8,11 @@
 !LICENSE
 !README.md
 
-# i3 and company ------------------------------------
+# i3 ------------------------------------------------
 #
 !.i3status.conf
 !.i3/
 !.i3/config
-!.dmenurc
 
 # Oh-my-zsh -----------------------------------------
 #
@@ -53,7 +52,7 @@
 !.extend.xinitrc
 !.extend.Xresources
 
-# Media ---------------------------------------------
+# Config --------------------------------------------
 #
 !.config/
 !.config/mopidy/
@@ -61,3 +60,4 @@
 !.config/mopidy/run-mopidy.sh
 !.config/ncmpcpp/
 !.config/ncmpcpp/config
+!.config/polybar/config

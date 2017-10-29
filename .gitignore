@@ -61,4 +61,5 @@
 !.config/mopidy/run-mopidy.sh
 !.config/ncmpcpp/
 !.config/ncmpcpp/config
+!.config/polybar/
 !.config/polybar/config

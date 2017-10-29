@@ -72,3 +72,6 @@
 
 !.config/dunst/
 !.config/dunst/dunstrc
+
+!.config/compton/
+!.config/compton/config

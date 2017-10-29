@@ -3,7 +3,7 @@ allow_bold = true
 #audible_bell = false
 clickable_url = true
 #dynamic_title = true
-font = Input 14
+font = Input 18
 #fullscreen = true
 #geometry = 640x480
 #icon_name = terminal
@@ -35,32 +35,44 @@ scrollback_lines = 10000
 #size_hints = false
 
 [colors]
-# If unset, will reverse foreground and background
-# highlight = #2f2f2f
-# 
-# # special
-# foreground      = #c3dcff
-# foreground_bold = #c3dcff
-# cursor          = #c3dcff
-# background      = #1b1422
+
+# special
+foreground      = #d3d0c8
+foreground_bold = #d3d0c8
+cursor          = #d3d0c8
+background      = #2d2d2d
 
 # black
-color0=#2D2F3A
-color1=#979AAD
-color2=#B7B9C6
-color3=#BFC1CC
-color4=#CACCD5
-color5=#DBDDE3
-color6=#E9E9ED
-color7=#FCFCFD
-color8=#757575
-color9=#979AAD
-color10=#B7B9C6
-color11=#BFC1CC
-color12=#CACCD5
-color13=#DBDDE3
-color14=#E9E9ED
-color15=#FCFCFD
+color0  = #2d2d2d
+color8  = #747369
+
+# red
+color1  = #f2777a
+color9  = #f2777a
+
+# green
+color2  = #99cc99
+color10 = #99cc99
+
+# yellow
+color3  = #ffcc66
+color11 = #ffcc66
+
+# blue
+color4  = #6699cc
+color12 = #6699cc
+
+# magenta
+color5  = #cc99cc
+color13 = #cc99cc
+
+# cyan
+color6  = #66cccc
+color14 = #66cccc
+
+# white
+color7  = #d3d0c8
+color15 = #f2f0ec
 
 [hints]
 #font = Monospace 12

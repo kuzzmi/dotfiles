@@ -60,6 +60,15 @@
 !.config/mopidy/
 !.config/mopidy/mopidy.conf
 !.config/mopidy/run-mopidy.sh
+
 !.config/ncmpcpp/
 !.config/ncmpcpp/config
+
+!.config/polybar/
 !.config/polybar/config
+
+!.config/termite/
+!.config/termite/config
+
+!.config/dunst/
+!.config/dunst/dunstrc

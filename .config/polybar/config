@@ -1,0 +1,597 @@
+;=========================================================;
+;                  Snax's polybar config.                 ;
+;=========================================================;
+
+
+;----------------------------------------------------------
+;            C O L O R S
+;----------------------------------------------------------
+
+[colors]
+peach = #FFCD98
+lime = #00FF84
+salmon = #d97464
+darkgrey = #2e2e2e
+lightgrey = #444444
+alert = #FF3E79
+
+xcolor0 = ${xrdb:color0}
+xcolor1 = ${xrdb:color1}
+xcolor2 = ${xrdb:color2}
+xcolor3 = ${xrdb:color3}
+xcolor4 = ${xrdb:color4}
+xcolor5 = ${xrdb:color5}
+xcolor6 = ${xrdb:color6}
+xcolor7 = ${xrdb:color7}
+xcolor8 = ${xrdb:color8}
+xcolor9 = ${xrdb:color9}
+xcolor10 = ${xrdb:color10}
+xcolor11 = ${xrdb:color11}
+xcolor12 = ${xrdb:color12}
+xcolor13 = ${xrdb:color13}
+xcolor14 = ${xrdb:color14}
+xcolor15 = ${xrdb:color15}
+
+fg = ${xrdb:color7}
+bg = ${xrdb:color0}
+
+;----------------------------------------------------------
+;            G L O B A L
+;----------------------------------------------------------
+
+[global/wm]
+margin-top = 0
+margin-bottom = 22
+
+[bar/rome]
+;monitor = ${env:MONITOR:eDP1}
+width = 100%
+height = 32
+offset-x = 0
+offset-y = 0
+fixed-center = true
+;dock = true
+background = ${colors.bg}
+foreground = ${colors.fg}
+
+radius = 0.0
+
+overline-size = 0
+overline-color = ${colors.fg}
+underline-size = 0
+underline-color = ${colors.fg}
+;label-name-overline = ${colors.colorname}
+;format-param-underline = ${colors.colorname}
+
+border-size = 0
+border-bottom-size = 0
+; border-bottom-color = ${colors.darkgrey}
+; border-top-color = ${colors.xcolor0}
+border-color = #00000000
+border-color-foreground = ${colors.peach}
+
+spacing = 0
+padding-left = 0
+padding-right = 0
+;label-padding = 2
+module-margin-left = 2
+module-margin-right = 0
+
+
+;----------------------------------------------------------
+;            F O N T S
+;----------------------------------------------------------
+
+font-0 = Input:size=14;3
+font-1 = PowerlineSymbols:size=12;1
+font-2 = FontAwesome:size=16;3
+font-3 = Input:size=18;1
+; Extra symbols: http://fontawesome.io/cheatsheet/
+
+
+;--------------------------------------
+;          MAIN MODULE LAYOUT
+;--------------------------------------
+
+modules-left = i3
+; modules-center = pomodoro
+modules-right = vpn network eth filesystem-root filesystem-home volume battery wattage email-gmail email-kuzzmi email-cureous date
+
+; All modules in this config:
+; memory
+; bspwm text xwindow tray xkeyboard filesystem mpd backlight cpu memory network
+; bitcoin siacoin bytecoin eth date volume battery temperature powermenu quickmenu
+
+; ------------------------------ I3 ------------------------------
+[module/i3]
+type = internal/i3
+
+; Only show workspaces defined on the same output as the bar
+pin-workspaces = true
+
+; Create click handler used to focus workspace
+; Default: true
+enable-click = true
+
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = true
+
+; Set the scroll cycle direction
+; Default: true
+reverse-scroll = false
+
+;format-suffix = |
+;   ● ○
+label-focused = " %name% "
+; label-focused = 
+label-focused-foreground = ${colors.bg}
+label-focused-background = ${colors.fg}
+; label-focused-padding = 2
+; label-focused-font = 3
+; label-unfocused = 
+label-unfocused = " %name% "
+label-unfocused-foreground = ${colors.fg}
+label-unfocused-background = ${colors.bg}
+; label-unfocused-padding = 2
+; label-unfocused-font = 3
+; label-urgent = 
+label-urgent = " %name% "
+label-urgent-foreground = ${colors.alert}
+label-urgent-background = ${colors.xcolor1}
+; label-urgent-padding = 2
+; label-urgent-font = 3
+; label-visible = 
+label-visible = " %name% "
+label-visible-foreground = ${colors.fg}
+label-visible-background = ${colors.bg}
+; label-visible-padding = 2
+; label-visible-font = 3
+
+
+;----------------------------------------------------------
+;               X W I N D O W
+;----------------------------------------------------------
+
+[module/xwindow]
+type = internal/xwindow
+
+format-prefix = " "
+format-foreground = ${colors.fg}
+format-background = ${colors.bg}
+
+label = %title%
+label-maxlen = 25
+
+
+;----------------------------------------------------------
+;              T R A Y
+;----------------------------------------------------------
+
+;tray-position = center
+;tray-padding = 2
+;tray-offset-x = 21%
+tray-transparent = true
+;tray-background = ${colors.xcolor0}
+
+wm-restack = bspwm
+
+;override-redirect = true
+scroll-up = bspwm-desknext
+scroll-down = bspwm-deskprev
+
+
+;----------------------------------------------------------
+;            X K E Y B O A R D
+;----------------------------------------------------------
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+;  
+format-foreground = ${colors.fg}
+format-background = ${colors.bg}
+
+label-layout = %layout%
+label-indicator-padding = 2
+label-indicator-background = ${colors.salmon}
+
+
+;----------------------------------------------------------
+;           F I L E S Y S T E M
+;----------------------------------------------------------
+
+[module/filesystem-root]
+type = internal/fs
+interval = 25
+fixed-values = true
+
+mount-0 = /
+;mount-1 = /home
+
+format-mounted = <label-mounted>
+format-mounted-prefix = " "
+;format-mounted-prefix = hdd
+format-mounted-foreground = ${colors.fg}
+format-mounted-background = ${colors.bg}
+
+label-mounted = %percentage_used%%
+label-mounted-foreground = ${colors.fg}
+label-mounted-background = ${colors.bg}
+label-unmounted = %mountpoint%: not mounted
+label-unmounted-foreground = ${colors.alert}
+label-unmounted-background = ${colors.bg}
+
+[module/filesystem-home]
+type = internal/fs
+interval = 25
+fixed-values = true
+
+mount-0 = /home
+
+format-mounted = <label-mounted>
+format-mounted-prefix = " "
+;format-mounted-prefix = hdd
+format-mounted-foreground = ${colors.fg}
+format-mounted-background = ${colors.bg}
+
+label-mounted = %percentage_used%%
+label-mounted-foreground = ${colors.fg}
+label-mounted-background = ${colors.bg}
+label-unmounted = %mountpoint%: not mounted
+label-unmounted-foreground = ${colors.alert}
+label-unmounted-background = ${colors.bg}
+
+;----------------------------------------------------------
+;                M P D
+;----------------------------------------------------------
+
+[module/mpd]
+type = internal/mpd
+
+format-online = <label-song>  <icon-prev> <icon-seekb> <icon-stop> <toggle> <icon-seekf> <icon-next>  <icon-repeat> <icon-random>
+
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+icon-prev = <
+icon-seekb = «
+icon-stop = <>
+icon-play = |>
+icon-pause = ll
+icon-next = >
+icon-seekf = »
+
+icon-random = ½
+icon-repeat = O
+
+toggle-on-foreground = ${colors.peach}
+toggle-off-foreground = #66
+
+
+;----------------------------------------------------------
+;             B A C K L I G H T
+;----------------------------------------------------------
+
+[module/backlight]
+type = internal/backlight
+; To list available cards use: $ ls -1 /sys/class/backlight/
+card = intel_backlight
+
+format = <label>
+format-prefix = " "
+;    
+label = %percentage%
+;label = bkl %percentage%
+
+bar-width = 10
+bar-indicator = │
+bar-indicator-foreground = #ff
+bar-indicator-font = 2
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = #9f78e1
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = ${colors.fg}
+
+
+;----------------------------------------------------------
+;               C P U
+;----------------------------------------------------------
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+
+; format = <label>
+format = <ramp-load>
+
+format-prefix = " "
+;  
+;format-prefix = "cpu "
+format-foreground = ${colors.fg}
+format-background = ${colors.bg}
+
+;label = %percentage%%
+
+ramp-load-0 = ▁
+ramp-load-1 = ▂
+ramp-load-2 = ▃
+ramp-load-3 = ▄
+ramp-load-4 = ▅
+ramp-load-5 = ▆
+ramp-load-6 = ▇
+ramp-load-7 = █
+
+
+;----------------------------------------------------------
+;            M E M O R Y
+;----------------------------------------------------------
+
+[module/memory]
+type = internal/memory
+interval = 1
+
+format-prefix = " "
+;format-prefix = ram
+format-foreground = ${colors.fg}
+format-background = ${colors.bg}
+format-margin-top = -5
+
+;label = %gb_used%/%gb_total%
+label = %percentage_used%%
+
+
+;----------------------------------------------------------
+;          W I R E L E S S    N E T W O R K
+;----------------------------------------------------------
+
+[module/network]
+type = internal/network
+; To test interface: $ ls -1 /sys/class/net/
+interface = wlp2s0
+interval = 1
+
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+;format-connected-prefix = " "
+;format-connected-prefix = " net"
+format-connected-foreground = ${colors.lime}
+format-disconnected-prefix = " "
+format-disconnected-foreground = ${colors.alert}
+
+label-connected = " "
+; label-connected = %local_ip%
+label-connected-foreground = ${colors.lime}
+label-disconnected = not connected
+label-disconnected-foreground = ${colors.alert}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+
+click-left = termite -e "nmtui" -t "nmtui"
+
+;----------------------------------------------------------
+;               V P N
+;----------------------------------------------------------
+
+[module/vpn]
+type = internal/network
+interface = tun0
+interval = 1
+
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+label-connected = ""
+label-disconnected = " "
+format-connected-foreground = ${colors.lime}
+format-disconnected-foreground = #F00
+
+;----------------------------------------------------------
+;                 E T H E R N E T
+;----------------------------------------------------------
+
+[module/eth]
+type = internal/network
+interface = enp14s0u1u2
+interval = 1.0
+
+format-connected-prefix = " "
+format-connected-foreground = ${colors.lime}
+format-disconnected-foreground = #F00
+
+label-connected = %local_ip%
+
+
+;----------------------------------------------------------
+;             D A T E  &  T I M E
+;----------------------------------------------------------
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = " %d.%m.%Y"
+
+time = "%H:%M:%S"
+
+format-foreground = ${colors.fg}
+format-background = ${colors.bg}
+
+label = "%date% %time% "
+
+;----------------------------------------------------------
+;            V O L U M E
+;----------------------------------------------------------
+
+[module/volume]
+type = internal/volume
+
+master-soundcard = default
+speaker-soundcard = default
+headphone-soundcard = default
+mapping = true
+
+format-volume = <ramp-volume>
+;<label-volume>
+;format-volume = <bar-volume>
+;format-volume-prefix = " vol"
+;     
+
+label-volume = %percentage%
+label-volume-foreground = ${colors.fg}
+label-volume-background = ${colors.bg}
+label-muted = 
+;muted
+label-muted-foreground = ${colors.fg}
+label-muted-background = ${colors.bg}
+
+ramp-volume-0 = ""
+ramp-volume-0-foreground = ${colors.fg}
+ramp-volume-0-background = ${colors.bg}
+ramp-volume-1 = ""
+ramp-volume-1-foreground = ${colors.fg}
+ramp-volume-1-background = ${colors.bg}
+ramp-volume-2 = ""
+ramp-volume-2-foreground = ${colors.fg}
+ramp-volume-2-background = ${colors.bg}
+ramp-volume-3 = ""
+ramp-volume-3-foreground = ${colors.fg}
+ramp-volume-3-background = ${colors.bg}
+
+bar-volume-width = 10
+bar-volume-background = #495858
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = true
+bar-volume-indicator = "|"
+bar-volume-indicator-font = 1
+bar-volume-fill = ─
+bar-volume-fill-font = 5
+bar-volume-empty = ─
+bar-volume-empty-font = 5
+
+
+;----------------------------------------------------------
+;             B A T T E R Y
+;----------------------------------------------------------
+
+[module/battery]
+type = internal/battery
+; To list battery & adapter: $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC0
+full-at = 99
+
+format-charging = <animation-charging> <label-charging>
+format-charging-foreground = ${colors.fg}
+format-charging-background = ${colors.bg}
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-foreground = ${colors.fg}
+format-discharging-background = ${colors.bg}
+format-full = <label-full>
+format-full-foreground = ${colors.fg}
+format-full-background = ${colors.bg}
+
+label-charging = "%percentage%%"
+label-discharging = "%percentage%%"
+label-discharging-foreground = ${colors.fg}
+label-full = " %percentage%%"
+
+ramp-capacity-0 = 
+ramp-capacity-0-foreground = ${colors.alert}
+ramp-capacity-1 = 
+ramp-capacity-1-foreground = ${colors.peach}
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 750
+
+
+[module/wattage]
+type = custom/script
+interval = 1
+format-prefix = " "
+format = "<label>"
+tail = true
+exec = ~/.local/bin/get_watts
+
+;----------------------------------------------------------
+;                    E M A I L
+;----------------------------------------------------------
+[module/email-gmail]
+type = custom/script
+exec = echo @gmail
+exec-if = ~/.local/bin/polybar/email.sh kuzzmi-gmail
+interval = 1
+format-underline = #268bd2
+format-prefix = " "
+format-foreground = ${colors.lime}
+click-left = ~/.local/bin/open-mutt
+
+[module/email-kuzzmi]
+type = custom/script
+exec = echo @kuzzmi
+exec-if = ~/.local/bin/polybar/email.sh igor@kuzzmi.com
+interval = 1
+format-underline = #268bd2
+format-prefix = " "
+format-foreground = ${colors.lime}
+click-left = ~/.local/bin/open-mutt
+
+[module/email-cureous]
+type = custom/script
+exec = echo @cureous
+exec-if = ~/.local/bin/polybar/email.sh igor@cureous.life
+interval = 1
+format-underline = #268bd2
+format-prefix = " "
+format-foreground = ${colors.lime}
+click-left = ~/.local/bin/open-mutt
+
+
+;----------------------------------------------------------
+;                   C O I N S
+;----------------------------------------------------------
+[module/bitcoin]
+type = custom/script
+interval = 30
+format = <label>
+format-prefix = " "
+tail = true
+exec = ~/.local/bin/cc_rate_usd bitcoin
+
+[module/siacoin]
+type = custom/script
+interval = 30
+format = <label>
+tail = true
+exec = ~/.local/bin/i3blocks/siacoin
+
+[module/bytecoin]
+type = custom/script
+interval = 30
+format = <label>
+tail = true
+exec = ~/.local/bin/i3blocks/bytecoin
+
+
+;#########################################################;
+;                 E N D    O F    F I L E                 :
+;#########################################################;

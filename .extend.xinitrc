@@ -6,4 +6,6 @@
 
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
+xset r rate 250 50 &
+
 DEFAULT_SESSION='i3 --shmlog-size 0'

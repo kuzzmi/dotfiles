@@ -1,6 +1,6 @@
 [user]
     name = Igor Kuzmenko
-	email = igor@kuzzmi.com
+    email = igor@kuzzmi.com
 
 [core]
     editor = "vim"
@@ -16,5 +16,6 @@
     pl = "pull --rebase"
     pull = "pull --rebase"
     ps = "push"
+
 [url "git@bitbucket.org:"]
     insteadOf = https://bitbucket.org/

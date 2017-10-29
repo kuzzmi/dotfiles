@@ -1,12 +1,14 @@
-# i3 config file (v4)
+#############################
+# This file is licensed under the MIT License (MIT) available on
+# http://opensource.org/licenses/MIT.
+#############################
 
+# This is useful to be able to update just the name of the terminal emulator
+# whenever I decide to update it
 set $TERMINAL termite
 
-# Set mod key (Mod1=<Alt>, Mod4=<Super>)
+# Set mod key (Mod4=<Super>)
 set $mod Mod4
-
-# set default desktop layout (default is tiling)
-# workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
 new_window pixel 1
@@ -30,33 +32,25 @@ bindsym $mod+Ctrl+Return exec $TERMINAL -d "`xcwd`"
 bindsym $mod+BackSpace kill
 
 # start program launcher
-bindsym $mod+Tab exec --no-startup-id /home/kuzzmi/.local/bin/run-rofi
+bindsym $mod+Tab exec --no-startup-id ~/.local/bin/run-rofi
 
-################################################################################################
-## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
-################################################################################################
-
-#exec --no-startup-id volumeicon
-bindsym $mod+Ctrl+m exec $TERMINAL -e 'alsamixer' -t alsamixer
-#exec --no-startup-id pulseaudio
+## sound-section - after Alsa -> Pulseaudio
+exec --no-startup-id pulseaudio
+bindsym $mod+Ctrl+m exec pavucontrol
+#bindsym $mod+Ctrl+m exec $TERMINAL -e 'alsamixer' -t alsamixer
 #exec --no-startup-id pa-applet
-#bindsym $mod+Ctrl+m exec pavucontrol
 
-################################################################################################
-
+#############################
 # Start Applications
 # bindsym $mod+Ctrl+b exec $TERMINAL -e 'bmenu'
 bindsym $mod+F2 exec vivaldi-stable
-# bindsym $mod+F3 exec pcmanfm
 bindsym $mod+Shift+F3 exec gksu pcmanfm
 bindsym $mod+F3 exec $TERMINAL -e 'ranger'
 bindsym $mod+m exec ~/.local/bin/open-mutt
 bindsym $mod+F11 exec $TERMINAL -e 'nmtui' -t 'nmtui'
 bindsym $mod+F12 --release exec ~/.local/bin/toggle-major-profile
 # bindsym $mod+F5 exec $TERMINAL -e 'mocp' # Music player
-# bindsym $mod+F5 exec /home/kuzzmi/.local/bin/open-ncmpcpp
-# bindsym $mod+t exec --no-startup-id pkill compton
-# bindsym $mod+Ctrl+t exec --no-startup-id compton -b
+# bindsym $mod+F5 exec ~/.local/bin/open-ncmpcpp
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
@@ -134,9 +128,6 @@ bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
 
 # Workspace names
-# to display names or symbols instead of plain workspace numbers you can use
-# something like: set $ws1 1:mail
-#                 set $ws2 2:
 set $ws1 1
 set $ws2 2
 set $ws3 3
@@ -219,7 +210,6 @@ for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 for_window [class="Git-gui"] floating enable
 for_window [class="Seahorse"] floating enable
-for_window [instance="crx_ofhbbkphhbklhfoeikjpcbhemlocgigb"] floating enable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -237,44 +227,39 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+0 mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+	bindsym l exec --no-startup-id i3exit lock, mode "default"
+	bindsym s exec --no-startup-id i3exit suspend, mode "default"
+	bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+	bindsym e exec --no-startup-id i3exit logout, mode "default"
+	bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+	bindsym r exec --no-startup-id i3exit reboot, mode "default"
+	bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
 
-    # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+	# exit system mode: "Enter" or "Escape"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym odiaeresis resize grow width 5 px or 5 ppt
+	bindsym h resize shrink width 5 px or 5 ppt
+	bindsym j resize grow height 5 px or 5 ppt
+	bindsym k resize shrink height 5 px or 5 ppt
+	bindsym l resize grow width 5 px or 5 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+	# same bindings, but for the arrow keys
+	bindsym Left resize shrink width 10 px or 10 ppt
+	bindsym Down resize grow height 10 px or 10 ppt
+	bindsym Up resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow width 10 px or 10 ppt
 
-        # exit resize mode: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+	# exit resize mode: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
-# -------------------- AUTOSTART -------------------
+#############################
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
@@ -288,23 +273,24 @@ exec --no-startup-id libinput-gestures
 exec --no-startup-id exec $TERMINAL -e /home/kuzzmi/.local/bin/export-dbus.sh
 exec --no-startup-id exec $TERMINAL -t scratchpad-termite
 exec --no-startup-id exec $TERMINAL -t orgmode -e "emacs -nw ~/org/index.org"
-
-exec --no-startup-id setxkbmap -model pc104 -layout us,ua,ru -variant colemak,winkeys,winkeys -option grp:shifts_toggle; sleep 1; xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id fix_xcursor
-# ------------------ END AUTOSTART -------------------
 
-# ---------------------- LAYOUTS ---------------------
+## Doesn't work :(
+# exec --no-startup-id setxkbmap -model pc104 -layout us,ua,ru -variant colemak,winkeys,winkeys -option grp:shifts_toggle; sleep 1; xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+#############################
 
-# Reload layout
+#############################
+# Layouts
+# Restart layout
 exec --no-startup-id exec ~/.i3/terminal-layout.sh
 
 bindsym $mod+u exec ~/.i3/terminal-layout.sh
 
-# -------------------- LAYOUTS END -------------------
+#############################
 
-# ----------------------------------------------------
+#############################
+# Tile headers
 client.focused          #808280 #808280 #80FFF9 #FDF6E3
 client.focused_inactive #434745 #434745 #16A085 #454948
 client.unfocused        #434745 #434745 #16A085 #454948
@@ -312,20 +298,13 @@ client.urgent           #CB4B16 #FDF6E3 #16A085 #268BD2
 client.placeholder      #000000 #0c0c0c #ffffff #000000 #0c0c0c
 
 client.background       #2B2C2B
-# ----------------------------------------------------
-
-#############################
-### settings for i3-gaps: ###
 #############################
 
+#############################
+# i3-gaps
 # Set inner/outer gaps
 gaps inner 10
 gaps outer 0
-
-# Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
-# gaps inner|outer current|all set|plus|minus <px>
-# gaps inner all set 10
-# gaps outer all plus 5
 
 # Smart gaps (gaps used if only more than one container on the workspace)
 smart_gaps on

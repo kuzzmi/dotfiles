@@ -48,10 +48,11 @@
 !.local/bin/i3-get-window-criteria
 !.local/bin/export-dbus.sh
 
-# Extenders -----------------------------------------
+# Xfiles --------------------------------------------
 #
 !.extend.xinitrc
 !.extend.Xresources
+!.xmodmap
 
 # Config --------------------------------------------
 #

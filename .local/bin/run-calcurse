@@ -1,0 +1,9 @@
+#!/bin/bash
+
+lock=~/.calcurse/.calcurse.pid
+
+if [ -f "$lock" ]; then
+    screen -d -r calcurse
+else
+    screen -S calcurse -d -m calcurse
+fi

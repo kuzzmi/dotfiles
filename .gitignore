@@ -13,7 +13,6 @@
 !.i3status.conf
 !.i3/
 !.i3/config
-!.dmenurc
 
 # Oh-my-zsh -----------------------------------------
 #
@@ -43,6 +42,7 @@
 !.local/bin/open-mutt
 !.local/bin/open-ncmpcpp
 !.local/bin/run-rofi
+!.local/bin/run-calcurse
 !.local/bin/i3-get-window-criteria
 !.local/bin/export-dbus.sh
 

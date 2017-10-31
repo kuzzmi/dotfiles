@@ -52,7 +52,7 @@
 #
 !.extend.xinitrc
 !.extend.Xresources
-!.xmodmap
+!.Xmodmap
 
 # Config --------------------------------------------
 #

@@ -40,7 +40,6 @@
 !.local/bin/export-dbus.sh
 !.local/bin/touchpad
 !.local/bin/run-mutt
-!.local/bin/run-ncmpcpp
 !.local/bin/run-rofi
 !.local/bin/run-calcurse
 !.local/bin/run-offlineimap.sh

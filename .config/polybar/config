@@ -1,11 +1,7 @@
-;=========================================================;
-;                  Snax's polybar config.                 ;
-;=========================================================;
+; kuzzmi's polybar config
 
-
-;----------------------------------------------------------
-;            C O L O R S
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Colors
 
 [colors]
 peach = #FFCD98
@@ -35,22 +31,19 @@ xcolor15 = ${xrdb:color15}
 fg = ${xrdb:color7}
 bg = ${xrdb:color0}
 
-;----------------------------------------------------------
-;            G L O B A L
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Global
 
 [global/wm]
 margin-top = 0
 margin-bottom = 22
 
 [bar/rome]
-;monitor = ${env:MONITOR:eDP1}
 width = 100%
-height = 36
+height = 42
 offset-x = 0
 offset-y = 0
 fixed-center = true
-;dock = true
 background = ${colors.bg}
 foreground = ${colors.fg}
 
@@ -60,8 +53,6 @@ overline-size = 0
 overline-color = ${colors.fg}
 underline-size = 0
 underline-color = ${colors.fg}
-;label-name-overline = ${colors.colorname}
-;format-param-underline = ${colors.colorname}
 
 border-size = 0
 border-bottom-size = 0
@@ -70,7 +61,7 @@ border-bottom-size = 0
 border-color = #00000000
 border-color-foreground = ${colors.peach}
 
-spacing = 0
+spacing = 1
 padding-left = 0
 padding-right = 0
 ;label-padding = 2
@@ -78,9 +69,8 @@ module-margin-left = 2
 module-margin-right = 0
 
 
-;----------------------------------------------------------
-;            F O N T S
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Fonts
 
 font-0 = Input:size=16;3
 font-1 = PowerlineSymbols:size=12;1
@@ -88,21 +78,109 @@ font-2 = FontAwesome:size=18;3
 font-3 = Input:size=18;1
 ; Extra symbols: http://fontawesome.io/cheatsheet/
 
-
-;--------------------------------------
-;          MAIN MODULE LAYOUT
-;--------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Layout
 
 modules-left = i3
-; modules-center = pomodoro
+modules-center = mpd
 modules-right = vpn network eth filesystem-root filesystem-home volume battery wattage email-gmail email-kuzzmi email-cureous date
 
-; All modules in this config:
-; memory
-; bspwm text xwindow tray xkeyboard filesystem mpd backlight cpu memory network
-; bitcoin siacoin bytecoin eth date volume battery temperature powermenu quickmenu
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Modules
 
-; ------------------------------ I3 ------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; MPD
+[module/mpd]
+type = internal/mpd
+
+host = localhost
+port = 6600
+
+; Seconds to sleep between progressbar/song timer sync
+; Default: 1
+; interval = 2
+; Available tags:
+;   <label-song> (default)
+;   <label-time>
+;   <bar-progress>
+;   <toggle> - gets replaced with <icon-(pause|play)>
+;   <toggle-stop> - gets replaced with <icon-(stop|play)>
+;   <icon-random>
+;   <icon-repeat>
+;   <icon-repeatone>
+;   <icon-prev>
+;   <icon-stop>
+;   <icon-play>
+;   <icon-pause>
+;   <icon-next>
+;   <icon-seekb>
+;   <icon-seekf>
+format-online =  <label-song> <label-time>  <icon-prev> <toggle> <icon-next> <icon-repeat> <icon-random>
+; <icon-seekb> <bar-progress> <icon-seekf><icon-stop>
+; format-online = <label-song>  <icon-prev> <icon-seekb> <icon-stop> <toggle> <icon-seekf> <icon-next>  <icon-repeat> <icon-random>
+; format-playing = ${self.format-online}
+; format-paused = ${self.format-online}
+; format-stopped = ${self.format-online}
+
+label-song = 🎜  %artist% - %title%
+label-song-maxlen = 40
+label-song-ellipsis = true
+
+format-offline = <label-offline>
+
+label-time = %elapsed% / %total%
+
+label-offline = 🎜  mpd is offline
+
+; Only applies if <icon-X> is used
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+icon-seekb = 
+icon-seekf = 
+icon-random = 
+icon-repeat = 
+
+; Used to display the state of random/repeat/repeatone
+; Only applies if <icon-[random|repeat|repeatone]> is used
+toggle-on-foreground = ${colors.lime}
+toggle-off-foreground = #66
+; toggle-on-foreground  = ${colors.bg}
+; toggle-off-foreground = ${colors.fg}
+
+; Only applies if <bar-progress> is used
+bar-progress-width = 30
+bar-progress-indicator = |
+bar-progress-fill = ─
+bar-progress-empty = ─
+
+;
+;[module/mpd]
+;type = internal/mpd
+;
+;format-online = <label-song>  <icon-prev> <icon-seekb> <icon-stop> <toggle> <icon-seekf> <icon-next>  <icon-repeat> <icon-random>
+;
+;label-song-maxlen = 25
+;label-song-ellipsis = true
+;
+;icon-prev = <
+;icon-seekb = «
+;icon-stop = <>
+;icon-play = |>
+;icon-pause = ll
+;icon-next = >
+;icon-seekf = »
+;
+;icon-random = ½
+;icon-repeat = O
+;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; i3
+
 [module/i3]
 type = internal/i3
 
@@ -149,9 +227,8 @@ label-visible-background = ${colors.bg}
 ; label-visible-font = 3
 
 
-;----------------------------------------------------------
-;               X W I N D O W
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; XWindow
 
 [module/xwindow]
 type = internal/xwindow
@@ -163,10 +240,8 @@ format-background = ${colors.bg}
 label = %title%
 label-maxlen = 25
 
-
-;----------------------------------------------------------
-;              T R A Y
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Tray
 
 ;tray-position = center
 ;tray-padding = 2
@@ -181,9 +256,8 @@ scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
 
 
-;----------------------------------------------------------
-;            X K E Y B O A R D
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Keyboard
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -199,9 +273,8 @@ label-indicator-padding = 2
 label-indicator-background = ${colors.salmon}
 
 
-;----------------------------------------------------------
-;           F I L E S Y S T E M
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Filesystem
 
 [module/filesystem-root]
 type = internal/fs
@@ -244,36 +317,8 @@ label-unmounted = %mountpoint%: not mounted
 label-unmounted-foreground = ${colors.alert}
 label-unmounted-background = ${colors.bg}
 
-;----------------------------------------------------------
-;                M P D
-;----------------------------------------------------------
-
-[module/mpd]
-type = internal/mpd
-
-format-online = <label-song>  <icon-prev> <icon-seekb> <icon-stop> <toggle> <icon-seekf> <icon-next>  <icon-repeat> <icon-random>
-
-label-song-maxlen = 25
-label-song-ellipsis = true
-
-icon-prev = <
-icon-seekb = «
-icon-stop = <>
-icon-play = |>
-icon-pause = ll
-icon-next = >
-icon-seekf = »
-
-icon-random = ½
-icon-repeat = O
-
-toggle-on-foreground = ${colors.peach}
-toggle-off-foreground = #66
-
-
-;----------------------------------------------------------
-;             B A C K L I G H T
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Backlight
 
 [module/backlight]
 type = internal/backlight
@@ -298,9 +343,8 @@ bar-empty-font = 2
 bar-empty-foreground = ${colors.fg}
 
 
-;----------------------------------------------------------
-;               C P U
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; CPU
 
 [module/cpu]
 type = internal/cpu
@@ -327,9 +371,8 @@ ramp-load-6 = ▇
 ramp-load-7 = █
 
 
-;----------------------------------------------------------
-;            M E M O R Y
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Memory
 
 [module/memory]
 type = internal/memory
@@ -345,9 +388,8 @@ format-margin-top = -5
 label = %percentage_used%%
 
 
-;----------------------------------------------------------
-;          W I R E L E S S    N E T W O R K
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; WLAN
 
 [module/network]
 type = internal/network
@@ -377,9 +419,8 @@ ramp-signal-4 = 
 
 click-left = termite -e "nmtui" -t "nmtui"
 
-;----------------------------------------------------------
-;               V P N
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; VPN
 
 [module/vpn]
 type = internal/network
@@ -393,14 +434,13 @@ label-disconnected = " "
 format-connected-foreground = ${colors.lime}
 format-disconnected-foreground = #F00
 
-;----------------------------------------------------------
-;                 E T H E R N E T
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Ethernet
 
 [module/eth]
 type = internal/network
-interface = enp14s0u1u2
-interval = 1.0
+interface = enp0s25
+interval = 5
 
 format-connected-prefix = " "
 format-connected-foreground = ${colors.lime}
@@ -409,9 +449,8 @@ format-disconnected-foreground = #F00
 label-connected = %local_ip%
 
 
-;----------------------------------------------------------
-;             D A T E  &  T I M E
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Date and Time
 
 [module/date]
 type = internal/date
@@ -426,9 +465,8 @@ format-background = ${colors.bg}
 
 label = "%date% %time% "
 
-;----------------------------------------------------------
-;            V O L U M E
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Volume
 
 [module/volume]
 type = internal/volume
@@ -483,9 +521,8 @@ bar-volume-empty = ─
 bar-volume-empty-font = 5
 
 
-;----------------------------------------------------------
-;             B A T T E R Y
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Battery
 
 [module/battery]
 type = internal/battery
@@ -532,9 +569,9 @@ format = "<label>"
 tail = true
 exec = ~/.local/bin/get_watts
 
-;----------------------------------------------------------
-;                    E M A I L
-;----------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Email
+
 [module/email-gmail]
 type = custom/script
 exec = echo @gmail
@@ -564,34 +601,3 @@ format-underline = #268bd2
 format-prefix = " "
 format-foreground = ${colors.lime}
 click-left = ~/.local/bin/open-mutt
-
-
-;----------------------------------------------------------
-;                   C O I N S
-;----------------------------------------------------------
-[module/bitcoin]
-type = custom/script
-interval = 30
-format = <label>
-format-prefix = " "
-tail = true
-exec = ~/.local/bin/cc_rate_usd bitcoin
-
-[module/siacoin]
-type = custom/script
-interval = 30
-format = <label>
-tail = true
-exec = ~/.local/bin/i3blocks/siacoin
-
-[module/bytecoin]
-type = custom/script
-interval = 30
-format = <label>
-tail = true
-exec = ~/.local/bin/i3blocks/bytecoin
-
-
-;#########################################################;
-;                 E N D    O F    F I L E                 :
-;#########################################################;

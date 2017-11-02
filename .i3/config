@@ -52,6 +52,7 @@ bindsym $mod+F11 exec $TERMINAL -e 'nmtui' -t 'nmtui'
 bindsym $mod+F12 --release exec ~/.local/bin/toggle-major-profile
 bindsym $mod+F5 exec $TERMINAL -e 'ncmpcpp' -t 'ncmpcpp'
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+bindsym $mod+Pause exec mpc toggle
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s

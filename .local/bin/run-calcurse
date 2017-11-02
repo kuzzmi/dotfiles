@@ -1,9 +1,12 @@
-#!/bin/bash
+#!/bin/zsh
 
 lock=~/.calcurse/.calcurse.pid
+is_running=$(screen -list | grep calcurse)
 
-if [ -f "$lock" ]; then
+if [[ -n "$is_running" && -f "$lock" ]]; then
+    echo "running... attaching..."
     screen -d -r calcurse
 else
-    screen -S calcurse -d -m calcurse
+    echo "not running... starting..."
+    screen -S calcurse -m calcurse
 fi

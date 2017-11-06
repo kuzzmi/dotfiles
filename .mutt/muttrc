@@ -130,7 +130,7 @@ macro index,pager a "<pipe-message>goobook add<return>" "add the sender address 
 macro index / "<enter-command>unset wait_key<enter><shell-escape>~/.mutt/mutt-notmuch.py<enter><change-folder-readonly>~/.cache/mutt_results<enter>" \
             "search mail (using notmuch)"
 
-source './kuzzmi-gmail.conf'
+source './gmail.conf'
 
 macro index,pager 0 "<pipe-message>mutt-extract-email-for-snooze<enter><shell-escape>mutt-snooze-email<enter>"
 

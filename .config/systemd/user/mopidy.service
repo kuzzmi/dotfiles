@@ -1,0 +1,11 @@
+[Unit]
+Description=Mopidy as a Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/kuzzmi/.local/bin/run-mopidy
+
+[Install]
+WantedBy=multi-user.target
+Alias=mopidy.service

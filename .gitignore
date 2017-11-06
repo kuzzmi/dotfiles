@@ -10,7 +10,6 @@
 
 # i3 ------------------------------------------------
 #
-!.i3status.conf
 !.i3/
 !.i3/config
 
@@ -25,10 +24,21 @@
 !.offlineimap/offlineimap.py
 !.offlineimap/
 !.offlineimap/postsynchook.sh
+
 !.notmuch-config
+
 !.mutt/
 !.mutt/muttrc
 !.mutt/mutt-notmuch.py
+!.mutt/view_attachment.sh
+!.mutt/gpg.rc
+!.mutt/gmail.conf
+!.mutt/gmail.sig
+!.mutt/kuzzmi.conf
+!.mutt/kuzzmi.sig
+!.mutt/cureous.conf
+!.mutt/cureous.sig
+
 !.msmtprc
 !.msmtp/
 !.msmtp/Equifax_Secure_CA.cert
@@ -42,23 +52,20 @@
 !.local/bin/run-mutt
 !.local/bin/run-rofi
 !.local/bin/run-calcurse
-!.local/bin/run-offlineimap.sh
-!.local/bin/run-mopidy.sh
+!.local/bin/run-offlineimap
+!.local/bin/run-mopidy
 !.local/bin/i3-get-window-criteria
-!.local/bin/export-dbus.sh
 
 # Xfiles --------------------------------------------
 #
 !.extend.xinitrc
 !.extend.Xresources
-!.Xmodmap
 
 # Config --------------------------------------------
 #
 !.config/
 !.config/mopidy/
 !.config/mopidy/mopidy.conf
-!.config/mopidy/run-mopidy.sh
 
 !.config/ncmpcpp/
 !.config/ncmpcpp/config
@@ -73,3 +80,8 @@
 !.config/dunst/dunstrc
 
 !.config/compton.conf
+
+# Systemd user units --------------------------------
+!.config/systemd
+!.config/systemd/user
+!.config/systemd/user/mopidy.service

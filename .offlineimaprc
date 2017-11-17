@@ -15,10 +15,11 @@ localfolders = ~/.mail/kuzzmi@gmail.com
 
 [Repository kuzzmi@gmail.com-remote]
 maxconnections = 5
+maxsyncaccounts = 3
 auth_mechanisms = LOGIN
 type = Gmail
-remoteusereval = get_username("kuzzmi-gmail")
-remotepasseval = get_password("kuzzmi-gmail")
+remoteusereval = get_username("gmail")
+remotepasseval = get_password("gmail")
 realdelete = no
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 
@@ -40,11 +41,12 @@ localfolders = ~/.mail/igor@kuzzmi.com
 
 [Repository igor@kuzzmi.com-remote]
 maxconnections = 5
+maxsyncaccounts = 3
 auth_mechanisms = LOGIN
 type = IMAP
 remotehost = imappro.zoho.com
-remoteusereval = get_username("kuzzmi.com")
-remotepasseval = get_password("kuzzmi.com")
+remoteusereval = get_username("kuzzmi")
+remotepasseval = get_password("kuzzmi")
 realdelete = no
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 folderfilter = lambda folder: folder not in ['Trash',
@@ -63,6 +65,7 @@ localfolders = ~/.mail/igor@cureous.life
 
 [Repository igor@cureous.life-remote]
 maxconnections = 5
+maxsyncaccounts = 3
 auth_mechanisms = LOGIN
 type = IMAP
 remotehost = imappro.zoho.eu

@@ -1,62 +1,50 @@
 Xcursor.theme: Breeze
 Xcursor.size: 0
 
-! -------------------------------------
-! From wal
-*color0: #2D2F3A
-*.color0: #2D2F3A
-*color1: #979AAD
-*.color1: #979AAD
-*color2: #B7B9C6
-*.color2: #B7B9C6
-*color3: #BFC1CC
-*.color3: #BFC1CC
-*color4: #CACCD5
-*.color4: #CACCD5
-*color5: #DBDDE3
-*.color5: #DBDDE3
-*color6: #E9E9ED
-*.color6: #E9E9ED
-*color7: #FCFCFD
-*.color7: #FCFCFD
-*color8: #757575
-*.color8: #757575
-*color9: #979AAD
-*.color9: #979AAD
-*color10: #B7B9C6
-*.color10: #B7B9C6
-*color11: #BFC1CC
-*.color11: #BFC1CC
-*color12: #CACCD5
-*.color12: #CACCD5
-*color13: #DBDDE3
-*.color13: #DBDDE3
-*color14: #E9E9ED
-*.color14: #E9E9ED
-*color15: #FCFCFD
-*.color15: #FCFCFD
-*color66: #2D2F3A
+! special
+*.foreground:   #c0c5ce
+*.background:   #2b303b
+*.cursorColor:  #c0c5ce
+
+! black
+*.color0:       #2b303b
+*.color8:       #65737e
+
+! red
+*.color1:       #bf616a
+*.color9:       #bf616a
+
+! green
+*.color2:       #a3be8c
+*.color10:      #a3be8c
+
+! yellow
+*.color3:       #ebcb8b
+*.color11:      #ebcb8b
+
+! blue
+*.color4:       #8fa1b3
+*.color12:      #8fa1b3
+
+! magenta
+*.color5:       #b48ead
+*.color13:      #b48ead
+
+! cyan
+*.color6:       #96b5b4
+*.color14:      #96b5b4
+
+! white
+*.color7:       #c0c5ce
+*.color15:      #eff1f5
 
 ! -------------------------------------
 ! rofi settings
-! rofi.color-window: argb:AA2D2F3A, #2D2F3A, #B7B9C6
-! rofi.color-normal: argb:00000000, #FCFCFD, argb:00000000, #B7B9C6, #2D2F3A
-! rofi.color-active: argb:00000000, #FCFCFD, argb:00000000, #B7B9C6, #2D2F3A
-! rofi.color-urgent: argb:00000000, #979AAD, argb:00000000, #979AAD, #FCFCFD
 
-rofi.modi:                           ssh,window,drun,run
-rofi.sidebar-mode:                   true
-rofi.terminal:                       termite
-rofi.ssh-client:                     ssh
-rofi.ssh-command:                    {terminal} -e "{ssh-client} {host}"
-rofi.opacity:                        100
-rofi.width:                          50
-rofi.lines:                          10
-rofi.columns:                        1
-rofi.separator-style:                none
-rofi.kb-mode-next:                   Alt+l
-rofi.kb-mode-previous:               Alt+h
-rofi.font:                           Input 20
+! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
+rofi.color-normal: #353944,  #FFFFFF,  #353944,  #5294E2,  #FFFFFF
+!                  'background', 'border'
+rofi.color-window: #353944,      #404552
 rofi.fg:                             #5294E2
 rofi.bg:                             #5d729f
 rofi.fg-active:                      #34405a
@@ -72,10 +60,19 @@ rofi.hlfg:                           #34405a
 rofi.hlbg:                           #34405a
 rofi.bc:                             #789ee1
 
-! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
-rofi.color-normal: #353944,  #FFFFFF,  #353944,  #5294E2,  #FFFFFF
-!                  'background', 'border'
-rofi.color-window: #353944,      #404552
+rofi.modi:                           ssh,window,drun,run
+rofi.sidebar-mode:                   true
+rofi.terminal:                       termite
+rofi.ssh-client:                     ssh
+rofi.ssh-command:                    {terminal} -e "{ssh-client} {host}"
+rofi.opacity:                        100
+rofi.width:                          50
+rofi.lines:                          10
+rofi.columns:                        1
+rofi.separator-style:                none
+rofi.kb-mode-next:                   Alt+l
+rofi.kb-mode-previous:               Alt+h
+rofi.font:                           Input 20
 
 rofi.bw:                             10
 rofi.location:                       0

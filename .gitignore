@@ -38,6 +38,7 @@
 !.mutt/kuzzmi.sig
 !.mutt/cureous.conf
 !.mutt/cureous.sig
+!.mutt/mailcap
 
 !.msmtprc
 !.msmtp/
@@ -60,6 +61,7 @@
 #
 !.extend.xinitrc
 !.extend.Xresources
+!.extend.profile
 
 # Config --------------------------------------------
 #

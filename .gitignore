@@ -1,3 +1,5 @@
+# ---------------------------------------------------
+
 # Exclude everything --------------------------------
 *
 
@@ -87,3 +89,8 @@
 !.config/systemd
 !.config/systemd/user
 !.config/systemd/user/mopidy.service
+
+# Screen layouyts -----------------------------------
+!.screenlayout/
+!.screenlayout/docking.sh
+!.screenlayout/laptop.sh

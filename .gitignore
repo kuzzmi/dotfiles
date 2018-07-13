@@ -1,0 +1,8 @@
+*.swp
+.netrwhist
+.netrw*
+bundle
+plugged
+.netrwbook
+views/
+view

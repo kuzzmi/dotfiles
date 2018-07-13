@@ -1,0 +1,24 @@
+[user]
+    name = Igor Kuzmenko
+    email = igor@kuzzmi.com
+
+[core]
+    editor = "vim"
+
+[alias]
+    g = "gui"
+    s = "status -s"
+    c = "commit"
+    d = "diff"
+    co = "checkout"
+    cm = "commit -m"
+    ca = "add -A . && git commit -m"
+    pl = "pull --rebase"
+    pull = "pull --rebase"
+    ps = "push"
+
+[url "git@bitbucket.org:"]
+    insteadOf = https://bitbucket.org/
+
+[push]
+    default = current

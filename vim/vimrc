@@ -551,7 +551,11 @@ let g:closetag_filenames = "*.html,*.js,*.jsx"
 " Vimwiki {{{
 " =========
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.mkd': 'markdown', '.wiki': 'media'}
-let g:vimwiki_list = [{ 'path': '~/vimwiki', 'path_html': '~/.vimwiki_html'}]
+let g:vimwiki_list = [{
+    \ 'path': '~/vimwiki',
+    \ 'path_html': '~/.vimwiki_html',
+    \ 'auto_tags': 1
+    \ }]
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0

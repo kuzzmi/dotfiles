@@ -6,3 +6,5 @@ plugged
 .netrwbook
 views/
 view
+
+fish/fishd.*

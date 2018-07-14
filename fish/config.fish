@@ -31,6 +31,9 @@ alias ts="task sync"
 alias v="vim"
 alias vw="vim ~/vimwiki/index.wiki"
 
+alias m="neomutt"
+alias mutt="neomutt"
+
 # THEME PURE #
 set fish_function_path /home/kuzzmi/.config/fish/functions/theme-pure $fish_function_path
 

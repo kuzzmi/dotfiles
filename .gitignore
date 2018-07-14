@@ -8,3 +8,7 @@ views/
 view
 
 fish/fishd.*
+
+tmp
+temp
+.tmp

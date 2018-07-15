@@ -326,27 +326,9 @@ nnoremap <leader>b :<C-u>Unite -start-insert menu:bookmarks <cr>
 nnoremap <leader>g :<C-u>Unite -auto-resize -buffer-name=files -start-insert file_rec:<C-r>=substitute(expand('%:h'), "\\", "\/", "g")<cr><cr>
 " }}}
 " Colors and font settings {{{
-" set t_Co=256
-" 
-" if !has("gui_running")
-"     " If using ConEmu
-"     if !empty($CONEMUBUILD)
-"         set term=pcansi
-"         set t_Co=256
-"     endif
-"     " colorscheme wal
-"     " colorscheme onedark
-"     " colorscheme bubblegum-256-dark
-" else
-"     if has("gui_gtk2")
-"         set guifont=Inconsolata\ 12
-"     elseif has("gui_macvim")
-"         set guifont=Menlo\ Regular:h14
-"     elseif has("gui_win32")
-"         set guifont=InputMonoCompressed:h16
-"     endif
-"     colorscheme noclown
-" endif
+set t_Co=256
+set background=dark
+colorscheme solarized
 " }}}
 " Folding {{{
 " =======

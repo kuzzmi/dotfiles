@@ -302,8 +302,8 @@ let g:unite_source_menu_menus.bookmarks = {
 
 " Define our list of [Label, Command] pairs
 let g:unite_source_menu_menus.bookmarks.command_candidates = [
-\   ['vimrc                              [file]', 'e $HOME/vimfiles/vimrc'],
-\   ['js.snippets                        [file]', 'e $HOME/vimfiles/snippets/javascript/js.snippets'],
+\   ['vimrc                              [file]', 'e $HOME/.vim/vimrc'],
+\   ['js.snippets                        [file]', 'e $HOME/.vim/snippets/javascript/js.snippets'],
 \   ['----------------- Files -----------------', ''],
 \   ['Find in sources...              [command]', 'exe "Ag " input("pattern: ")'],
 \   ['Remove and close current file   [command]', 'call delete(expand("%")) | bdelete!'],

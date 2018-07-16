@@ -41,12 +41,15 @@ hdr_order from: to: cc: date: subject:  # and in this order
 
 # Index View Options ---------------------------------
 set date_format = "%m/%d %H:%M"
-set index_format = "[%Z]  %D  %-20.20F  %s"
+set index_format = "[%Z] %D %-20.20F %s"
 set sort = threads                         # like gmail
 set sort_aux = reverse-last-date-received  # like gmail
 set uncollapse_jump                        # don't collapse on an unread message
 set sort_re                                # thread based on regex
 set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set sidebar_visible = yes
+set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+set mail_check_stats
 
 # Composite View Options -----------------------------
 set realname = "Igor Kuzmenko"

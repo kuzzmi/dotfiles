@@ -1,0 +1,434 @@
+; kuzzmi's polybar config
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Colors
+
+[colors]
+peach     = #FFCD98
+lime      = #00FF84
+alert     = #FF3E79
+
+; solarized dark
+xcolor0 = #073642
+xcolor1 = #dc322f
+xcolor2 = #859900
+xcolor3 = #b58900
+xcolor4 = #268bd2
+xcolor5 = #d33682
+xcolor6 = #2aa198
+xcolor7 = #eee8d5
+xcolor8 = #002b36
+xcolor9 = #cb4b16
+xcolor10 = #586e75
+xcolor11 = #657b83
+xcolor12 = #839496
+xcolor13 = #6c71c4
+xcolor14 = #93a1a1
+xcolor15 = #fdf6e3
+
+fg = #839496
+bg = #002b36
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Global
+
+[global/wm]
+margin-top = 0
+margin-bottom = 22
+
+[bar/main]
+width = 100%
+height = 30
+offset-x = 0
+offset-y = 0
+fixed-center = true
+background = ${colors.bg}
+foreground = ${colors.fg}
+
+radius = 0.0
+
+overline-size = 0
+overline-color = ${colors.fg}
+underline-size = 0
+underline-color = ${colors.fg}
+
+border-size = 0
+border-bottom-size = 0
+border-color = #00000000
+border-color-foreground = ${colors.peach}
+
+spacing = 1
+padding-left = 0
+padding-right = 0
+;label-padding = 2
+module-margin-left = 2
+module-margin-right = 0
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Fonts
+
+font-0 = Input:size=14;3
+font-1 = PowerlineSymbols:size=14;1
+font-2 = FontAwesome:size=16;2
+; Extra symbols: http://fontawesome.io/cheatsheet/
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Layout
+
+modules-left = i3
+modules-center =
+modules-right = vpn wlan eth xkeyboard filesystem volume battery wattage date
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Modules
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; MPD
+[module/mpd]
+type = internal/mpd
+
+host = localhost
+port = 6600
+
+; Seconds to sleep between progressbar/song timer sync
+; Default: 1
+; interval = 2
+; Available tags:
+;   <label-song> (default)
+;   <label-time>
+;   <bar-progress>
+;   <toggle> - gets replaced with <icon-(pause|play)>
+;   <toggle-stop> - gets replaced with <icon-(stop|play)>
+;   <icon-random>
+;   <icon-repeat>
+;   <icon-repeatone>
+;   <icon-prev>
+;   <icon-stop>
+;   <icon-play>
+;   <icon-pause>
+;   <icon-next>
+;   <icon-seekb>
+;   <icon-seekf>
+format-online =  <label-song> <label-time>  <icon-prev> <toggle> <icon-next> <icon-repeat> <icon-random>
+; <icon-seekb> <bar-progress> <icon-seekf><icon-stop>
+; format-online = <label-song>  <icon-prev> <icon-seekb> <icon-stop> <toggle> <icon-seekf> <icon-next>  <icon-repeat> <icon-random>
+; format-playing = ${self.format-online}
+; format-paused = ${self.format-online}
+; format-stopped = ${self.format-online}
+
+label-song = 🎜  %artist% - %title%
+label-song-maxlen = 40
+label-song-ellipsis = true
+
+format-offline = <label-offline>
+
+label-time = %elapsed% / %total%
+
+label-offline = 🎜  mpd is offline
+
+; Only applies if <icon-X> is used
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+icon-seekb = 
+icon-seekf = 
+icon-random = 
+icon-repeat = 
+
+; Used to display the state of random/repeat/repeatone
+; Only applies if <icon-[random|repeat|repeatone]> is used
+toggle-on-foreground = ${colors.lime}
+toggle-off-foreground = #66
+; toggle-on-foreground  = ${colors.bg}
+; toggle-off-foreground = ${colors.fg}
+
+; Only applies if <bar-progress> is used
+bar-progress-width = 30
+bar-progress-indicator = |
+bar-progress-fill = ─
+bar-progress-empty = ─
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; i3
+
+[module/i3]
+type = internal/i3
+
+; Only show workspaces defined on the same output as the bar
+pin-workspaces = true
+
+; Create click handler used to focus workspace
+; Default: true
+enable-click = true
+
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = true
+
+; Set the scroll cycle direction
+; Default: true
+reverse-scroll = false
+
+;format-suffix = |
+;   ● ○
+label-focused = " %name% "
+label-focused-foreground = ${colors.bg}
+label-focused-background = ${colors.fg}
+label-unfocused = " %name% "
+label-unfocused-foreground = ${colors.fg}
+label-unfocused-background = ${colors.bg}
+label-urgent = " %name% "
+label-urgent-foreground = ${colors.alert}
+label-urgent-background = ${colors.xcolor1}
+label-visible = " %name% "
+label-visible-foreground = ${colors.fg}
+label-visible-background = ${colors.bg}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Keyboard
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+;  
+format-foreground = ${colors.fg}
+format-background = ${colors.bg}
+
+label-layout = %layout%
+label-indicator-padding = 2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Filesystem
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+fixed-values = true
+
+mount-0 = /
+mount-1 = /home
+
+; format-mounted-prefix = " "
+format-mounted-foreground = ${colors.fg}
+format-mounted-background = ${colors.bg}
+
+label-mounted = "%mountpoint% %percentage_used%%"
+label-mounted-foreground = ${colors.fg}
+label-mounted-background = ${colors.bg}
+label-unmounted = %mountpoint%
+label-unmounted-foreground = ${colors.alert}
+label-unmounted-background = ${colors.bg}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; CPU
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+
+; format = <label>
+format = <ramp-load>
+
+format-prefix = " "
+;  
+;format-prefix = "cpu "
+format-foreground = ${colors.fg}
+format-background = ${colors.bg}
+
+;label = %percentage%%
+
+ramp-load-0 = ▁
+ramp-load-1 = ▂
+ramp-load-2 = ▃
+ramp-load-3 = ▄
+ramp-load-4 = ▅
+ramp-load-5 = ▆
+ramp-load-6 = ▇
+ramp-load-7 = █
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Memory
+
+[module/memory]
+type = internal/memory
+interval = 1
+
+format-prefix = " "
+;format-prefix = ram
+format-foreground = ${colors.fg}
+format-background = ${colors.bg}
+format-margin-top = -5
+
+;label = %gb_used%/%gb_total%
+label = %percentage_used%%
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; WLAN
+
+[module/wlan]
+type = internal/network
+; To test interface: $ ls -1 /sys/class/net/
+interface = wlp2s0
+interval = 1
+
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+format-connected-foreground = ${colors.lime}
+format-disconnected-prefix = " "
+format-disconnected-foreground = ${colors.alert}
+
+label-connected = " "
+label-connected-foreground = ${colors.lime}
+label-disconnected = not connected
+label-disconnected-foreground = ${colors.alert}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; VPN
+
+[module/vpn]
+type = internal/network
+interface = tun0
+interval = 1
+
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+label-connected = ""
+label-disconnected = " "
+format-connected-foreground = ${colors.lime}
+format-disconnected-foreground = ${colors.alert}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Ethernet
+
+[module/eth]
+type = internal/network
+interface = enp0s25
+interval = 5
+
+format-connected-prefix = " "
+format-connected-foreground = ${colors.lime}
+format-disconnected-foreground = #F00
+
+label-connected = %local_ip%
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Date and Time
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = " %d/%m"
+
+time = "%H:%M:%S"
+
+format-foreground = ${colors.fg}
+format-background = ${colors.bg}
+
+label = "%date% %time% "
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Volume
+
+[module/volume]
+type = internal/volume
+
+master-soundcard = default
+speaker-soundcard = default
+headphone-soundcard = default
+mapping = true
+
+format-volume = <ramp-volume>
+;<label-volume>
+;format-volume = <bar-volume>
+;format-volume-prefix = " vol"
+;     
+
+label-volume = %percentage%
+label-volume-foreground = ${colors.fg}
+label-volume-background = ${colors.bg}
+label-muted = 
+;muted
+label-muted-foreground = ${colors.fg}
+label-muted-background = ${colors.bg}
+
+ramp-volume-0 = ""
+ramp-volume-0-foreground = ${colors.fg}
+ramp-volume-0-background = ${colors.bg}
+ramp-volume-1 = ""
+ramp-volume-1-foreground = ${colors.fg}
+ramp-volume-1-background = ${colors.bg}
+ramp-volume-2 = ""
+ramp-volume-2-foreground = ${colors.fg}
+ramp-volume-2-background = ${colors.bg}
+ramp-volume-3 = ""
+ramp-volume-3-foreground = ${colors.fg}
+ramp-volume-3-background = ${colors.bg}
+
+bar-volume-width = 10
+bar-volume-background = #495858
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = true
+bar-volume-indicator = "|"
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Battery
+
+[module/battery]
+type = internal/battery
+; To list battery & adapter: $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC0
+full-at = 99
+
+format-charging = <animation-charging> <label-charging>
+format-charging-foreground = ${colors.fg}
+format-charging-background = ${colors.bg}
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-foreground = ${colors.fg}
+format-discharging-background = ${colors.bg}
+format-full = <label-full>
+format-full-foreground = ${colors.fg}
+format-full-background = ${colors.bg}
+
+label-charging = "%percentage%%"
+label-discharging = "%percentage%%"
+label-discharging-foreground = ${colors.fg}
+label-full = " %percentage%%"
+
+ramp-capacity-0 = 
+ramp-capacity-0-foreground = ${colors.alert}
+ramp-capacity-1 = 
+ramp-capacity-1-foreground = ${colors.peach}
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 750
+
+[module/wattage]
+type = custom/script
+interval = 1
+format-prefix = " "
+format = "<label>"
+tail = true
+exec = ~/.local/bin/get_watts

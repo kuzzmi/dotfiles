@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# But not these
+!.gitignore
+!build
+!xmonad.hs

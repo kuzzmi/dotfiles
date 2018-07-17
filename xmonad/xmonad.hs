@@ -25,20 +25,20 @@ myScratchpadTerminal = "urxvt"
 myPlacement          = fixed (0.5,0.5) -- center of the screen
 
 myManageHook =
-    placeHook myPlacement
-        <+> composeAll
-            [ className =? "Pavucontrol" --> doFloat
-            , className =? "Seahorse"    --> doFloat
-            ]
-        <+> manageScratchPad
+    composeAll
+        [ placeHook myPlacement
+        , className =? "Pavucontrol" --> doFloat
+        , className =? "Seahorse"    --> doFloat
+        , manageScratchPad
+        ]
 
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
     where
-        h = 1/2   -- terminal height, 50%
-        w = 1/2   -- terminal width, 50%
-        t = 1/4   -- distance from top edge, 25%
-        l = 1/4   -- distance from left edge, 25%
+        h = 1/2 -- terminal height, 50%
+        w = 1/2 -- terminal width, 50%
+        t = 1/4 -- distance from top edge, 25%
+        l = 1/4 -- distance from left edge, 25%
 
 myLayout =
     mkToggle (NOBORDERS ?? FULL ?? EOT)
@@ -81,7 +81,7 @@ myKeys =
     ]
     where
         scratchPad = scratchpadSpawnActionTerminal myScratchpadTerminal
-        mail = spawn "alacritty -e neomutt"
+        mail       = spawn "alacritty -e neomutt"
 
 main = do
     xmonad $ def

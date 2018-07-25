@@ -19,6 +19,9 @@ Plug 'tpope/vim-abolish'
 " Some libraries
 Plug 'tomtom/tlib_vim'
 
+" Go support
+Plug 'fatih/vim-go'
+
 " Syntax checking
 Plug 'scrooloose/syntastic'
 Plug 'othree/javascript-libraries-syntax.vim'

@@ -5,6 +5,7 @@ import XMonad.Actions.WithAll
 import XMonad.Hooks.Place
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
@@ -29,6 +30,7 @@ myManageHook =
         [ placeHook myPlacement
         , className =? "Pavucontrol" --> doFloat
         , className =? "Seahorse"    --> doFloat
+        , isFullscreen --> doFullFloat
         , manageScratchPad
         ]
 

@@ -41,4 +41,3 @@ uda.gmailsnippet.label=GMail snippet
 uda.gmaillabels.type=string
 uda.gmaillabels.label=GMail labels
 # END Bugwarrior UDAs
-context=home

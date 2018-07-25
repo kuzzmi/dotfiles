@@ -13,6 +13,9 @@ Plug 'junegunn/limelight.vim'
 " Commenting stuff
 Plug 'tomtom/tcomment_vim'
 
+" Subvert
+Plug 'tpope/vim-abolish'
+
 " Some libraries
 Plug 'tomtom/tlib_vim'
 

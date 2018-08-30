@@ -28,6 +28,8 @@ alias tch="task context home"
 alias tcn="task context none"
 alias tcw="task context work"
 alias ts="task sync"
+alias tah="task add pro:home"
+alias taw="task add pro:work"
 
 alias v="vim"
 alias vw="vim ~/vimwiki/index.wiki"

@@ -28,6 +28,7 @@ Plug 'othree/javascript-libraries-syntax.vim'
 
 " Unite. Cool stuff
 Plug 'Shougo/unite.vim'
+Plug 'tsukkee/unite-tag'
 
 " Plugin for Unite to search MRU sources
 Plug 'Shougo/neomru.vim'

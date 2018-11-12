@@ -1,2 +1,3 @@
 #!/bin/sh
 stack ghc -v ~/.xmonad/xmonad.hs -- -o $@
+# ~/.xmonad/xmonad

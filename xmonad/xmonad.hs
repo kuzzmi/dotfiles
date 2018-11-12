@@ -2,93 +2,102 @@ import XMonad
 
 import XMonad.Actions.WithAll
 
-import XMonad.Hooks.Place
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.Place
 
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.EZConfig (additionalKeys)
+import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.Scratchpad
 
-import XMonad.Layout.Spacing
+import XMonad.Layout.Fullscreen
+import XMonad.Layout.Grid
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
-import XMonad.Layout.Grid
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Spacing
 
 import System.IO
 
 import qualified XMonad.StackSet as W
 
-myTerminal           = "alacritty"
-myMask               = mod4Mask        -- win key
+myMask = mod4Mask -- win key
+
+myTerminal = "alacritty"
+
 myScratchpadTerminal = "urxvt"
-myPlacement          = fixed (0.5,0.5) -- center of the screen
+
+myPlacement = fixed (0.5, 0.5) -- center of the screen
 
 myManageHook =
-    composeAll
-        [ placeHook myPlacement
-        , className =? "Pavucontrol" --> doFloat
-        , className =? "Seahorse"    --> doFloat
-        , isFullscreen --> doFullFloat
-        , manageScratchPad
-        ]
+  composeAll
+    [ manageScratchPad
+    , placeHook myPlacement
+    , isFullscreen --> doFullFloat
+    , className =? "Steam" --> doShift "2"
+    , className =? "Pavucontrol" --> doFloat
+    , className =? "Seahorse" --> doFloat
+    ]
 
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
-    where
-        h = 1/2 -- terminal height, 50%
-        w = 1/2 -- terminal width, 50%
-        t = 1/4 -- distance from top edge, 25%
-        l = 1/4 -- distance from left edge, 25%
+  where
+    d = 1
+    g = 5
+    h = (g - 2 * d) / g
+    w = (g - 2 * d) / g
+    t = d / g
+    l = d / g
 
-myLayout =
-    mkToggle (NOBORDERS ?? FULL ?? EOT)
-    $ tiled ||| grid
-    where
-        gaps    = smartSpacingWithEdge 10
-        grid    = gaps $ Grid
+myLayout = smartBorders . mkToggle (NOBORDERS ?? FULL ?? EOT) $ tiled ||| grid
+  where
+    gaps = smartSpacingWithEdge 10
+    grid = gaps Grid
         -- default tiling algorithm partitions the screen into two panes
-        tiled   = gaps $ Tall nmaster delta ratio
+    tiled = gaps $ Tall nmaster delta ratio
         -- The default number of windows in the master pane
-        nmaster = 1
+    nmaster = 1
         -- Default proportion of screen occupied by master pane
-        ratio   = 1/2
+    ratio = 1 / 2
         -- Percent of screen to increment by when resizing panes
-        delta   = 1/25
+    delta = 1 / 25
 
 myKeys =
-    -- Launch browser
-    [ ((myMask, xK_F2), spawn "inox --force-device-scale-factor=1.5")
+  [ ((myMask, xK_F2), spawn "inox --force-device-scale-factor=1.5") -- Launch browser
     -- Applications menu
-    , ((myMask, xK_Tab), spawn "rofi -show combi")
+  , ((myMask, xK_Tab), spawn "rofi -show combi")
     -- Kill focused
-    , ((myMask, xK_BackSpace), kill)
+  , ((myMask, xK_BackSpace), kill)
     -- Kill all
-    , ((myMask .|. shiftMask, xK_BackSpace), killAll)
+  , ((myMask .|. shiftMask, xK_BackSpace), killAll)
     -- Launch a terminal
-    , ((myMask, xK_Return), spawn myTerminal)
+  , ((myMask, xK_Return), spawn myTerminal)
     -- Swap the focused window and the master window
-    , ((myMask .|. shiftMask, xK_Return), windows W.swapMaster)
+  , ((myMask .|. shiftMask, xK_Return), windows W.swapMaster)
     -- Manage scratchpad
-    , ((myMask, xK_minus), scratchPad)
+  , ((myMask, xK_minus), scratchPad)
     -- Mutt
-    , ((myMask, xK_m), mail)
+  , ((myMask, xK_m), mail)
     -- Toggle fullscreen
-    , ((myMask, xK_f), sendMessage $ Toggle FULL)
+  , ((myMask, xK_f), sendMessage $ Toggle FULL)
     -- Recompile and restart xmonad
-    , ((myMask, xK_q), spawn "stack ghc -v ~/.xmonad/xmonad.hs; ~/.xmonad/xmonad --restart")
+  , ( (myMask, xK_q)
+    , spawn
+        "stack ghc -v ~/.xmonad/xmonad.hs; ~/.xmonad/xmonad-x86_64-linux --restart")
     -- Run pavucontrol
-    , ((myMask .|. controlMask, xK_m), spawn "pavucontrol")
-    ]
-    where
-        scratchPad = scratchpadSpawnActionTerminal myScratchpadTerminal
-        mail       = spawn "alacritty -e neomutt"
+  , ((myMask .|. controlMask, xK_m), spawn "pavucontrol")
+  ]
+  where
+    scratchPad = scratchpadSpawnActionTerminal myScratchpadTerminal
+    mail = spawn $ myTerminal ++ " -e neomutt"
 
-main = do
-    xmonad $ def
-        { terminal    = myTerminal
-        , modMask     = myMask
-        , manageHook  = myManageHook
-        , layoutHook  = myLayout
-        } `additionalKeys` myKeys
+main =
+  xmonad $
+  def
+    { terminal = myTerminal
+    , modMask = myMask
+    , manageHook = myManageHook
+    , layoutHook = myLayout
+    } `additionalKeys`
+  myKeys

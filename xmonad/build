@@ -1,3 +1,2 @@
 #!/bin/sh
-stack ghc -v ~/.xmonad/xmonad.hs -- -o $@
-# ~/.xmonad/xmonad
+stack --resolver lts-11.20 ghc -v ~/.xmonad/xmonad.hs -- -o $@

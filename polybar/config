@@ -57,10 +57,10 @@ border-bottom-size = 0
 border-color = #00000000
 border-color-foreground = ${colors.peach}
 
-spacing = 1
+spacing = 0
 padding-left = 0
 padding-right = 0
-;label-padding = 2
+label-padding = 0
 module-margin-left = 2
 module-margin-right = 0
 
@@ -76,7 +76,7 @@ font-2 = FontAwesome:size=16;2
 ; Layout
 
 modules-left = i3
-modules-center =
+modules-center = xwin
 modules-right = vpn wlan eth xkeyboard filesystem volume battery wattage date
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -186,6 +186,10 @@ label-visible = " %name% "
 label-visible-foreground = ${colors.fg}
 label-visible-background = ${colors.bg}
 
+[module/xwin]
+type = internal/xwindow
+label-maxlen = 50
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Keyboard
 
@@ -193,13 +197,12 @@ label-visible-background = ${colors.bg}
 type = internal/xkeyboard
 blacklist-0 = num lock
 
-format-prefix = " "
+; format-prefix = " "
 ;  
 format-foreground = ${colors.fg}
 format-background = ${colors.bg}
 
 label-layout = %layout%
-label-indicator-padding = 2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Filesystem
@@ -216,7 +219,7 @@ mount-1 = /home
 format-mounted-foreground = ${colors.fg}
 format-mounted-background = ${colors.bg}
 
-label-mounted = "%mountpoint% %percentage_used%%"
+label-mounted = "%percentage_used%%"
 label-mounted-foreground = ${colors.fg}
 label-mounted-background = ${colors.bg}
 label-unmounted = %mountpoint%
@@ -281,7 +284,7 @@ format-connected-foreground = ${colors.lime}
 format-disconnected-prefix = " "
 format-disconnected-foreground = ${colors.alert}
 
-label-connected = " "
+label-connected = ""
 label-connected-foreground = ${colors.lime}
 label-disconnected = not connected
 label-disconnected-foreground = ${colors.alert}

@@ -28,6 +28,8 @@ alias tch="task context home"
 alias tcn="task context none"
 alias tcw="task context work"
 alias ts="task sync"
+alias tah="task add pro:home"
+alias taw="task add pro:work"
 
 alias v="vim"
 alias vw="vim ~/vimwiki/index.wiki"
@@ -36,6 +38,9 @@ alias m="neomutt"
 alias mutt="neomutt"
 
 alias archive="tar -cvzf"
+alias unarchive="tar -cvzf"
+
+alias wg="wordgrinder"
 
 # THEME PURE #
 set fish_function_path /home/kuzzmi/.config/fish/functions/theme-pure $fish_function_path

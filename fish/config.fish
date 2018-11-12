@@ -38,6 +38,9 @@ alias m="neomutt"
 alias mutt="neomutt"
 
 alias archive="tar -cvzf"
+alias unarchive="tar -cvzf"
+
+alias wg="wordgrinder"
 
 # THEME PURE #
 set fish_function_path /home/kuzzmi/.config/fish/functions/theme-pure $fish_function_path

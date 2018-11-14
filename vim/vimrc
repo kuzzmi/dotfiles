@@ -68,9 +68,6 @@ Plug 'isRuslan/vim-es6'
 " Markdown folding
 Plug 'nelstrom/vim-markdown-folding'
 
-" neocomplete
-Plug 'Shougo/neocomplete.vim'
-
 " Presentation making tool
 Plug 'sotte/presenting.vim'
 
@@ -198,6 +195,9 @@ nnoremap <leader>d yiw:%s:<C-R>":
 
 " Search for current word in cwd
 nnoremap <silent> <F11> yiw:Ag <C-R>"<CR>
+
+" Toggle paste mode
+set pastetoggle=<F12>
 
 " Shortcut to enter visual block substitution
 vnoremap <leader>d y<Esc>:%s:<C-R>":
@@ -527,6 +527,7 @@ set listchars=tab:-\ ,trail:♥
 set list!
 
 " Autocompletion stuff...
+let g:deoplete#enable_at_startup = 1
 " set complete=.,w,b,u,U,t,i,d,k
 " set complete+=k
 " set dictionary=./words/english,./words/russian

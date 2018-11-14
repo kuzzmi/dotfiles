@@ -10,6 +10,12 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
+" Vim FZF
+Plug 'junegunn/fzf.vim'
+
+" Vim Easy Align
+Plug 'junegunn/vim-easy-align'
+
 " Commenting stuff
 Plug 'tomtom/tcomment_vim'
 
@@ -73,9 +79,6 @@ Plug 'sotte/presenting.vim'
 
 " Silver Searcher
 Plug 'rking/ag.vim'
-
-" Vim Easy Align
-Plug 'junegunn/vim-easy-align'
 
 " Argumentative
 Plug 'PeterRincker/vim-argumentative'

@@ -10,3 +10,6 @@
 [submodule "xmonad/xmobar-git"]
 	path = xmonad/xmobar-git
 	url = https://github.com/jaor/xmobar
+[submodule "zsh/oh-my-zsh"]
+	path = zsh/oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh

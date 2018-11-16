@@ -99,7 +99,7 @@ myShowWNameTheme = def
 
 myTerminal           = "alacritty"
 myScratchpadTerminal = "urxvt"
-myStatusBar          = "xmobar -x0 $HOME/.xmonad/xmobarrc"
+myStatusBar          = "xmobar -x0 -o"
 
 myFocusFollowsMouse  = False
 myClickJustFocuses   = True
@@ -132,8 +132,8 @@ myLayout =
   showWS (
   smartBorders .
   mkToggle (NOBORDERS ?? FULL ?? EOT)
-  $ ( addTopBar $ tiled )
-  ||| ( addTopBar $ grid ) )
+  $ ( addTopBar $ avoidStruts $ tiled )
+  ||| ( addTopBar $ avoidStruts $ grid ) )
   where
     addTopBar = noFrillsDeco shrinkText topBarTheme
     showWS    = showWName' myShowWNameTheme
@@ -145,7 +145,7 @@ myLayout =
     delta     = 1 / 25
 
 myKeys =
-  [ ((myMask, xK_F2), spawn "inox --force-device-scale-factor=1.5") -- Launch browser
+  [ ((myMask, xK_F2), spawn "inox --force-device-scale-factor=1.25") -- Launch browser
     -- Applications menu
   , ((myMask, xK_Tab), spawn "rofi -show combi")
     -- Kill focused
@@ -164,9 +164,7 @@ myKeys =
   , ((myMask, xK_f), sendMessage $ Toggle FULL)
     -- Recompile and restart xmonad
   , ((myMask, xK_0), spawn "i3lock -n")
-  , ( (myMask, xK_q)
-    , spawn
-        "stack ghc -v ~/.xmonad/xmonad.hs; ~/.xmonad/xmonad-x86_64-linux --restart")
+  , ( (myMask, xK_q) , spawn "xmonad --recompile && xmonad --restart")
     -- Run pavucontrol
   , ((myMask .|. controlMask, xK_m), spawn "pavucontrol")
   ]
@@ -175,7 +173,6 @@ myKeys =
     mail = spawn $ myTerminal ++ " -e neomutt"
 
 myLogHook h = do
-
     -- following block for copy windows marking
     -- copies <- wsContainingCopies
     -- let check ws | ws `elem` copies =
@@ -186,22 +183,21 @@ myLogHook h = do
     -- ewmhDesktopsLogHook
     --dynamicLogWithPP $ defaultPP
     dynamicLogWithPP $ def
-
-        { ppCurrent             = xmobarColor active "" . wrap "[" "]"
-        , ppTitle               = xmobarColor active "" . shorten 100
-        , ppVisible             = wrap "(" ")"
-        , ppUrgent              = xmobarColor red "" . wrap " " " "
-        -- , ppHidden              = check
-        , ppHiddenNoWindows     = const ""
-        , ppSep                 = xmobarColor red blue " : "
-        , ppWsSep               = " "
-        , ppLayout              = xmobarColor yellow ""
-        , ppOrder               = id
-        , ppOutput              = hPutStrLn h
-        -- , ppSort                = fmap
-        --                           (namedScratchpadFilterOutWorkspace.)
-        --                           (ppSort def)
-        , ppExtras              = [] }
+        { ppCurrent         = xmobarColor active "" . wrap "[" "]"
+        , ppTitle           = xmobarColor active "" . shorten 100
+        , ppVisible         = wrap "(" ")"
+        , ppUrgent          = xmobarColor red "" . wrap " " " "
+        -- , ppHidden       = check
+        , ppHiddenNoWindows = const ""
+        , ppSep             = xmobarColor red blue " : "
+        , ppWsSep           = " "
+        , ppLayout          = xmobarColor yellow ""
+        , ppOrder           = id
+        , ppOutput          = hPutStrLn h
+        -- , ppSort         = fmap
+        --                    (namedScratchpadFilterOutWorkspace.)
+        --                    (ppSort def)
+        , ppExtras          = [] }
 
 main = do
     xmproc <- spawnPipe myStatusBar

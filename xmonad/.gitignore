@@ -5,3 +5,6 @@
 !.gitignore
 !build
 !xmonad.hs
+!xmonad-git
+!xmonad-contrib-git
+!xmobar-git

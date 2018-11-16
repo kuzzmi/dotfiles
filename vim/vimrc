@@ -16,6 +16,11 @@ Plug 'junegunn/fzf.vim'
 " Vim Easy Align
 Plug 'junegunn/vim-easy-align'
 
+
+Plug 'altercation/vim-colors-solarized'
+" Vim JSX
+Plug 'mxw/vim-jsx'
+
 " Commenting stuff
 Plug 'tomtom/tcomment_vim'
 
@@ -330,7 +335,8 @@ endfunction
 
 " Unite key mappings
 nnoremap <leader>f :<C-u>Unite -auto-resize -start-insert file_mru<cr>
-nnoremap <leader>r :<C-u>Unite -auto-resize -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <leader>r :GitFiles<cr>
+" nnoremap <leader>r :<C-u>Unite -auto-resize -buffer-name=files -start-insert file_rec/async:!<cr>
 nnoremap <leader>e :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
 nnoremap <leader>b :<C-u>Unite -start-insert menu:bookmarks <cr>
 nnoremap <leader>g :<C-u>Unite -auto-resize -buffer-name=files -start-insert file_rec:<C-r>=substitute(expand('%:h'), "\\", "\/", "g")<cr><cr>

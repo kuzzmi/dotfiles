@@ -105,8 +105,10 @@ snippet fe
 # Just useful stuff
 snippet ec
 	export const ${0}
+
 snippet bind
 	this.${1:fn} = this.$1.bind(this);
+
 snippet rcl
 	class ${1} extends Component {
 		render() {
@@ -115,6 +117,7 @@ snippet rcl
 			);
 		}
 	}
+
 snippet =req
 	const ${1:package} = require('${0}');
 snippet req
@@ -131,7 +134,6 @@ snippet si
 	setInterval(function() {
 		${0}
 	}, ${1:10});
-# setTimeout function
 snippet st
 	setTimeout(function() {
 		${0}
@@ -140,3 +142,43 @@ snippet /*
 	/*
 	 * ${0}
 	 */
+
+# Webpack
+snippet reactwebpack
+	const path = require('path');
+	const webpack = require('webpack');
+
+	module.exports = {
+		mode: 'development',
+		entry: './src/index.js',
+
+		output: {
+			path: path.resolve(__dirname, './dist/'),
+			filename: 'bundle.js',
+		},
+
+		devServer: {
+			contentBase: path.resolve(__dirname, './dist/'),
+			compress: true,
+			port: 8000,
+			historyApiFallback: true,
+		},
+
+		module: {
+			rules: [{
+				test: /\.js$/,
+				loader: 'babel-loader',
+				exclude: /node_modules/,
+				options: {
+					presets: ['react'],
+				},
+			}, {
+				test: /\.css$/,
+				loader: 'style-loader!css-loader',
+			}],
+		},
+
+		plugins: [
+			new webpack.HotModuleReplacementPlugin(),
+		]
+	};

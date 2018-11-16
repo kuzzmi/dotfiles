@@ -113,7 +113,10 @@ myManageHook =
     , className =? "Steam" --> doShift "2"
     , className =? "Pavucontrol" --> doFloat
     , className =? "Seahorse" --> doFloat
+    , role =? "gimp-toolbox-color-dialog" --> doFloat
+    -- , className =? "Gimp" --> doFloat
     ]
+  where role = stringProperty "WM_WINDOW_ROLE"
 
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)

@@ -64,8 +64,7 @@ myFont  = "-*-terminus-medium-*-*-*-*-160-*-*-*-*-*-*"
 myBigFont  = "-*-terminus-medium-*-*-*-*-240-*-*-*-*-*-*"
 
 topBarTheme= def
-    { fontName            = myFont
-    , inactiveBorderColor = base03
+    { inactiveBorderColor = base03
     , inactiveColor       = base03
     , inactiveTextColor   = base03
     , activeBorderColor   = active
@@ -99,7 +98,7 @@ myShowWNameTheme = def
 
 myTerminal           = "alacritty"
 myScratchpadTerminal = "urxvt"
-myStatusBar          = "xmobar -x0 -o"
+myStatusBar          = "xmobar -x0 -o ~/.xmonad/xmobar.conf"
 
 myFocusFollowsMouse  = False
 myClickJustFocuses   = True
@@ -115,6 +114,7 @@ myManageHook =
     , className =? "Seahorse" --> doFloat
     , role =? "gimp-toolbox-color-dialog" --> doFloat
     -- , className =? "Gimp" --> doFloat
+    , manageDocks
     ]
   where role = stringProperty "WM_WINDOW_ROLE"
 
@@ -130,12 +130,14 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
 
 myLayout =
   showWS (
-  smartBorders .
-  mkToggle (NOBORDERS ?? FULL ?? EOT)
-  $ ( addTopBar $ avoidStruts $ tiled )
-  ||| ( addTopBar $ avoidStruts $ grid ) )
+      avoidStruts .
+      smartBorders .
+      mkToggle (NOBORDERS ?? FULL ?? EOT)
+      $  tiled
+      |||  grid
+  )
   where
-    addTopBar = noFrillsDeco shrinkText topBarTheme
+    -- addTopBar = noFrillsDeco shrinkText topBarTheme
     showWS    = showWName' myShowWNameTheme
     gaps      = smartSpacingWithEdge gap
     grid      = gaps Grid
@@ -172,7 +174,8 @@ myKeys =
     scratchPad = scratchpadSpawnActionTerminal myScratchpadTerminal
     mail = spawn $ myTerminal ++ " -e neomutt"
 
-myLogHook h = do
+myLogHook h =
+    -- do
     -- following block for copy windows marking
     -- copies <- wsContainingCopies
     -- let check ws | ws `elem` copies =
@@ -203,13 +206,14 @@ main = do
     xmproc <- spawnPipe myStatusBar
     xmonad $ myConfig xmproc
 
-myConfig p = def
-    { borderWidth       = border
-    , terminal          = myTerminal
-    , modMask           = myMask
-    , manageHook        = myManageHook
-    , layoutHook        = myLayout
-    , clickJustFocuses  = myClickJustFocuses
-    , focusFollowsMouse = myFocusFollowsMouse
-    } `additionalKeys`
-  myKeys
+myConfig p = docks $ def
+        { borderWidth       = border
+        , terminal          = myTerminal
+        , modMask           = myMask
+        , manageHook        = myManageHook
+        , layoutHook        = myLayout
+        , logHook           = myLogHook p
+        , clickJustFocuses  = myClickJustFocuses
+        , focusFollowsMouse = myFocusFollowsMouse
+        } `additionalKeys`
+    myKeys

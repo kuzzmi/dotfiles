@@ -67,9 +67,8 @@ unfocusColor = base02
 myFont  = "xft:Input:pixelsize=14:regular:antialias=true:hinting=true"
 myBigFont  = "-*-terminus-medium-*-*-*-*-240-*-*-*-*-*-*"
 
-topBarTheme = def
-    { fontName            = myFont
-    , inactiveBorderColor = base03
+topBarTheme= def
+    { inactiveBorderColor = base03
     , inactiveColor       = base03
     , inactiveTextColor   = base03
     , activeBorderColor   = active
@@ -97,7 +96,7 @@ myTabTheme = def
 
 myTerminal           = "alacritty"
 myScratchpadTerminal = "urxvt"
-myStatusBar          = "xmobar -x0 -o"
+myStatusBar          = "xmobar -x0 -o ~/.xmonad/xmobar.conf"
 
 myFocusFollowsMouse  = False
 myClickJustFocuses   = True
@@ -112,7 +111,7 @@ myManageHook =
     , className =? "Pavucontrol" --> doFloat
     , className =? "Seahorse" --> doFloat
     , role =? "gimp-toolbox-color-dialog" --> doFloat
-    -- , className =? "Gimp" --> doFloat
+    , manageDocks
     ]
   where role = stringProperty "WM_WINDOW_ROLE"
 
@@ -130,7 +129,9 @@ myLayout =
     windowNavigation $
     subTabbed $
     boringWindows $
-    smartBorders . mkToggle (NOBORDERS ?? FULL ?? EOT) $ tiled ||| tabs ||| grid
+    avoidStruts .
+    smartBorders .
+    mkToggle (NOBORDERS ?? FULL ?? EOT) $ tiled ||| tabs ||| grid
     where
         gaps    = smartSpacingWithEdge gap
         grid    = gaps Grid
@@ -179,7 +180,8 @@ myKeys =
         scratchPad = scratchpadSpawnActionTerminal myScratchpadTerminal
         mail = spawn $ myTerminal ++ " -e neomutt"
 
-myLogHook h = do
+myLogHook h =
+    -- do
     -- following block for copy windows marking
     -- copies <- wsContainingCopies
     -- let check ws | ws `elem` copies =
@@ -221,4 +223,4 @@ myConfig p = def
     , clickJustFocuses   = myClickJustFocuses
     , focusFollowsMouse  = myFocusFollowsMouse
     } `additionalKeys`
-  myKeys
+    myKeys

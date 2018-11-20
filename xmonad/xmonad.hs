@@ -11,14 +11,18 @@ import XMonad.Util.EZConfig (additionalKeys)
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.Scratchpad
 
+import XMonad.Layout.BinarySpacePartition
 import XMonad.Layout.NoFrillsDecoration
 import XMonad.Layout.Decoration
 import XMonad.Layout.Fullscreen
+import XMonad.Layout.Gaps
 import XMonad.Layout.Grid
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
+import XMonad.Layout.Named
+import XMonad.Layout.Master
 import XMonad.Layout.SimpleDecoration
 import XMonad.Layout.Tabbed
 import XMonad.Layout.SubLayouts
@@ -131,22 +135,31 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
         l = d / g
 
 myLayout =
-    -- windowNavigation $
-    -- subTabbed $
-    -- boringWindows $
+    windowNavigation $
     smartBorders .
-    mkToggle (NOBORDERS ?? FULL ?? EOT) $ tiled ||| tabs ||| grid
+    mkToggle (NOBORDERS ?? FULL ?? EOT) $
+    tiled ||| tabs ||| grid ||| bsp ||| masterTabbed
     where
-        gaps    = smartSpacingWithEdge gap
-        grid    = avoidStruts $ gaps Grid
-        tiled   = avoidStruts $ gaps $ Tall nmaster delta ratio
+        myGaps  = smartSpacingWithEdge gap
+        bsp     = avoidStruts $ myGaps emptyBSP
+        grid    = avoidStruts $ myGaps Grid
+        tiled   = avoidStruts $ myGaps $ Tall nmaster delta ratio
         tabs    = avoidStruts $ tabbedBottom shrinkText myTabTheme
         nmaster = 1
-        ratio   = 1 / 3
-        delta   = 1 / 10
+        ratio   = 2 / 3
+        delta   = 1 / 15
+
+        masterTabbed = named "Master-Tabbed Wide"
+            $ avoidStruts
+            $ gaps [(U, gap*2),(D, gap*2),(L, gap*2),(R, gap*2)]
+            $ mastered (1/100) (1/4)
+            $ gaps [(U, 0),(D, 0),(L, gap*2),(R, 0)]
+            $ mastered (1/100) (2/3)
+            $ gaps [(U, 0),(D, 0),(L, gap*2),(R, 0)]
+            $ tabbed shrinkText myTabTheme
 
 myKeys =
-    [ ((myMask, xK_F2), spawn "inox --force-device-scale-factor=1.25") -- Launch browser
+    [ ((myMask, xK_F2), spawn "inox --force-device-scale-factor=1.5") -- Launch browser
       -- Applications menu
     , ((myMask, xK_Tab), spawn "rofi -show combi")
       -- Kill focused
@@ -185,32 +198,19 @@ myKeys =
         mail = spawn $ myTerminal ++ " -e neomutt"
 
 myLogHook h =
-    -- do
-    -- following block for copy windows marking
-    -- copies <- wsContainingCopies
-    -- let check ws | ws `elem` copies =
-    --                pad . xmobarColor yellow red . wrap "*" " "  $ ws
-    --              | otherwise = pad ws
-
-    -- fadeWindowsLogHook myFadeHook
-    -- ewmhDesktopsLogHook
-    --dynamicLogWithPP $ defaultPP
     dynamicLogWithPP $ def
         { ppCurrent         = xmobarColor active "" . wrap "[" "]"
         , ppTitle           = xmobarColor active "" . shorten 100
         , ppVisible         = wrap "(" ")"
         , ppUrgent          = xmobarColor red "" . wrap " " " "
-        -- , ppHidden       = check
         , ppHiddenNoWindows = const ""
         , ppSep             = xmobarColor red blue " : "
         , ppWsSep           = " "
         , ppLayout          = xmobarColor yellow ""
         , ppOrder           = id
         , ppOutput          = hPutStrLn h
-        -- , ppSort         = fmap
-        --                    (namedScratchpadFilterOutWorkspace.)
-        --                    (ppSort def)
-        , ppExtras          = [] }
+        , ppExtras          = []
+        }
 
 main = do
     xmproc <- spawnPipe myStatusBar

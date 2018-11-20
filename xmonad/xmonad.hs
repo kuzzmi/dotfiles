@@ -12,7 +12,6 @@ import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.Scratchpad
 
 import XMonad.Layout.NoFrillsDecoration
-import XMonad.Layout.ShowWName
 import XMonad.Layout.Decoration
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.Grid
@@ -20,6 +19,11 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
+import XMonad.Layout.Tabbed
+import XMonad.Layout.SubLayouts
+import XMonad.Layout.WindowNavigation
+import XMonad.Layout.BoringWindows
+import XMonad.Layout.Simplest
 
 import System.IO
 
@@ -49,7 +53,7 @@ cyan    = "#2aa198"
 green   = "#859900"
 
 gap     = 10
-border  = 0
+border  = 3
 
 myNormalBorderColor  = base03
 myFocusedBorderColor = active
@@ -60,10 +64,10 @@ inactive     = base02
 focusColor   = blue
 unfocusColor = base02
 
-myFont  = "-*-terminus-medium-*-*-*-*-160-*-*-*-*-*-*"
+myFont  = "xft:Input:pixelsize=14:regular:antialias=true:hinting=true"
 myBigFont  = "-*-terminus-medium-*-*-*-*-240-*-*-*-*-*-*"
 
-topBarTheme= def
+topBarTheme = def
     { fontName            = myFont
     , inactiveBorderColor = base03
     , inactiveColor       = base03
@@ -82,15 +86,9 @@ myTabTheme = def
     , inactiveColor       = base02
     , activeBorderColor   = active
     , inactiveBorderColor = base02
-    , activeTextColor     = base01
+    , activeTextColor     = base03
     , inactiveTextColor   = base1
-    }
-
-myShowWNameTheme = def
-    { swn_font    = "xft:Roboto:pixelsize=100:regular:antialias=true:hinting=true"
-    , swn_fade    = 0.25
-    , swn_bgcolor = base03
-    , swn_color   = active
+    , decoWidth           = border * 2
     }
 
 ------------------------------------------------------------------------}}}
@@ -120,57 +118,66 @@ myManageHook =
 
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
-  where
-    d = 1
-    g = 5
-    h = (g - 2 * d) / g
-    w = (g - 2 * d) / g
-    t = d / g
-    l = d / g
+    where
+        d = 1
+        g = 5
+        h = (g - 2 * d) / g
+        w = (g - 2 * d) / g
+        t = d / g
+        l = d / g
 
 myLayout =
-  showWS (
-  smartBorders .
-  mkToggle (NOBORDERS ?? FULL ?? EOT)
-  $ ( addTopBar $ avoidStruts $ tiled )
-  ||| ( addTopBar $ avoidStruts $ grid ) )
-  where
-    addTopBar = noFrillsDeco shrinkText topBarTheme
-    showWS    = showWName' myShowWNameTheme
-    gaps      = smartSpacingWithEdge gap
-    grid      = gaps Grid
-    tiled     = gaps $ Tall nmaster delta ratio
-    nmaster   = 1
-    ratio     = 1 / 2
-    delta     = 1 / 25
+    windowNavigation $
+    subTabbed $
+    boringWindows $
+    smartBorders . mkToggle (NOBORDERS ?? FULL ?? EOT) $ tiled ||| tabs ||| grid
+    where
+        gaps    = smartSpacingWithEdge gap
+        grid    = gaps Grid
+        tiled   = gaps $ Tall nmaster delta ratio
+        tabs    = tabbed shrinkText myTabTheme
+        nmaster = 1
+        ratio   = 1 / 2
+        delta   = 1 / 25
 
 myKeys =
-  [ ((myMask, xK_F2), spawn "inox --force-device-scale-factor=1.25") -- Launch browser
-    -- Applications menu
-  , ((myMask, xK_Tab), spawn "rofi -show combi")
-    -- Kill focused
-  , ((myMask, xK_BackSpace), kill)
-    -- Kill all
-  , ((myMask .|. shiftMask, xK_BackSpace), killAll)
-    -- Launch a terminal
-  , ((myMask, xK_Return), spawn myTerminal)
-    -- Swap the focused window and the master window
-  , ((myMask .|. shiftMask, xK_Return), windows W.swapMaster)
-    -- Manage scratchpad
-  , ((myMask, xK_minus), scratchPad)
-    -- Mutt
-  , ((myMask, xK_m), mail)
-    -- Toggle fullscreen
-  , ((myMask, xK_f), sendMessage $ Toggle FULL)
-    -- Recompile and restart xmonad
-  , ((myMask, xK_0), spawn "i3lock -n")
-  , ( (myMask, xK_q) , spawn "xmonad --recompile && xmonad --restart")
-    -- Run pavucontrol
-  , ((myMask .|. controlMask, xK_m), spawn "pavucontrol")
-  ]
-  where
-    scratchPad = scratchpadSpawnActionTerminal myScratchpadTerminal
-    mail = spawn $ myTerminal ++ " -e neomutt"
+    [ ((myMask, xK_F2), spawn "inox --force-device-scale-factor=1.25") -- Launch browser
+      -- Applications menu
+    , ((myMask, xK_Tab), spawn "rofi -show combi")
+      -- Kill focused
+    , ((myMask, xK_BackSpace), kill)
+      -- Kill all
+    , ((myMask .|. shiftMask, xK_BackSpace), killAll)
+      -- Launch a terminal
+    , ((myMask, xK_Return), spawn myTerminal)
+      -- Swap the focused window and the master window
+    , ((myMask .|. shiftMask, xK_Return), windows W.swapMaster)
+      -- Manage scratchpad
+    , ((myMask, xK_minus), scratchPad)
+      -- Mutt
+    , ((myMask, xK_m), mail)
+      -- Toggle fullscreen
+    , ((myMask, xK_f), sendMessage $ Toggle FULL)
+      -- Recompile and restart xmonad
+    , ((myMask, xK_0), spawn "i3lock -n")
+    , ( (myMask, xK_q) , spawn "xmonad --recompile && xmonad --restart")
+      -- Run pavucontrol
+    , ((myMask .|. controlMask, xK_m), spawn "pavucontrol")
+
+    , ((myMask .|. controlMask, xK_h), sendMessage $ pullGroup L)
+    , ((myMask .|. controlMask, xK_l), sendMessage $ pullGroup R)
+    , ((myMask .|. controlMask, xK_k), sendMessage $ pullGroup U)
+    , ((myMask .|. controlMask, xK_j), sendMessage $ pullGroup D)
+
+    , ((myMask .|. controlMask, xK_m), withFocused (sendMessage . MergeAll))
+    , ((myMask .|. controlMask, xK_u), withFocused (sendMessage . UnMerge))
+
+    , ((myMask .|. controlMask, xK_period), onGroup W.focusDown')
+    , ((myMask .|. controlMask, xK_comma), onGroup W.focusUp')
+    ]
+    where
+        scratchPad = scratchpadSpawnActionTerminal myScratchpadTerminal
+        mail = spawn $ myTerminal ++ " -e neomutt"
 
 myLogHook h = do
     -- following block for copy windows marking
@@ -204,12 +211,14 @@ main = do
     xmonad $ myConfig xmproc
 
 myConfig p = def
-    { borderWidth       = border
-    , terminal          = myTerminal
-    , modMask           = myMask
-    , manageHook        = myManageHook
-    , layoutHook        = myLayout
-    , clickJustFocuses  = myClickJustFocuses
-    , focusFollowsMouse = myFocusFollowsMouse
+    { borderWidth        = border
+    , normalBorderColor  = myNormalBorderColor
+    , focusedBorderColor = myFocusedBorderColor
+    , terminal           = myTerminal
+    , modMask            = myMask
+    , manageHook         = myManageHook
+    , layoutHook         = myLayout
+    , clickJustFocuses   = myClickJustFocuses
+    , focusFollowsMouse  = myFocusFollowsMouse
     } `additionalKeys`
   myKeys

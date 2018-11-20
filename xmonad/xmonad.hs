@@ -11,6 +11,7 @@ import XMonad.Util.EZConfig (additionalKeys)
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.Scratchpad
 
+import XMonad.Layout.Tabbed
 import XMonad.Layout.NoFrillsDecoration
 import XMonad.Layout.ShowWName
 import XMonad.Layout.Decoration
@@ -20,6 +21,7 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
+import XMonad.Layout.SimpleDecoration
 
 import System.IO
 
@@ -63,8 +65,9 @@ unfocusColor = base02
 myFont  = "-*-terminus-medium-*-*-*-*-160-*-*-*-*-*-*"
 myBigFont  = "-*-terminus-medium-*-*-*-*-240-*-*-*-*-*-*"
 
-topBarTheme= def
-    { inactiveBorderColor = base03
+topBarTheme = def
+    { fontName            = myFont
+    , inactiveBorderColor = base03
     , inactiveColor       = base03
     , inactiveTextColor   = base03
     , activeBorderColor   = active
@@ -105,46 +108,47 @@ myClickJustFocuses   = True
 myPlacement          = fixed (0.5, 0.5) -- center of the screen
 
 myManageHook =
-  composeAll
-    [ manageScratchPad
-    , placeHook myPlacement
-    , isFullscreen --> doFullFloat
-    , className =? "Steam" --> doShift "2"
-    , className =? "Pavucontrol" --> doFloat
-    , className =? "Seahorse" --> doFloat
-    , role =? "gimp-toolbox-color-dialog" --> doFloat
-    -- , className =? "Gimp" --> doFloat
-    , manageDocks
-    ]
-  where role = stringProperty "WM_WINDOW_ROLE"
+    composeAll
+        [ manageScratchPad
+        , placeHook myPlacement
+        , isFullscreen --> doFullFloat
+        , className =? "Steam" --> doShift "2"
+        , className =? "Pavucontrol" --> doFloat
+        , className =? "Seahorse" --> doFloat
+        , role =? "gimp-toolbox-color-dialog" --> doFloat
+        , composeOne [ isFullscreen -?> doFullFloat ]
+        -- , className =? "Gimp" --> doFloat
+        , manageDocks
+        ]
+    where
+        role = stringProperty "WM_WINDOW_ROLE"
 
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
-  where
-    d = 1
-    g = 5
-    h = (g - 2 * d) / g
-    w = (g - 2 * d) / g
-    t = d / g
-    l = d / g
+    where
+        d = 1
+        g = 5
+        h = (g - 2 * d) / g
+        w = (g - 2 * d) / g
+        t = d / g
+        l = d / g
 
 myLayout =
-  showWS (
-      avoidStruts .
-      smartBorders .
-      mkToggle (NOBORDERS ?? FULL ?? EOT)
-      $  tiled
-      |||  grid
-  )
-  where
-    -- addTopBar = noFrillsDeco shrinkText topBarTheme
-    showWS    = showWName' myShowWNameTheme
-    gaps      = smartSpacingWithEdge gap
-    grid      = gaps Grid
-    tiled     = gaps $ Tall nmaster delta ratio
-    nmaster   = 1
-    ratio     = 1 / 2
-    delta     = 1 / 25
+    showWS (
+        avoidStruts .
+        smartBorders .
+        mkToggle (NOBORDERS ?? FULL ?? EOT)
+        $ tiled
+        ||| grid
+    )
+    where
+        showWS    = showWName' myShowWNameTheme
+        gaps      = smartSpacingWithEdge gap
+        grid      = gaps Grid
+        tiled     = gaps $ Tall nmaster delta ratio
+        nmaster   = 1
+        ratio     = 1 / 2
+        delta     = 1 / 25
 
 myKeys =
   [ ((myMask, xK_F2), spawn "inox --force-device-scale-factor=1.25") -- Launch browser

@@ -28,6 +28,8 @@ alias m="neomutt"
 alias tmx="tmuxinator"
 alias tmxw="tmuxinator work"
 
+alias dotfiles="cd ~/.config/dotfiles"
+
 function gcoz() {
     git branch -a -vv --color=always | grep -v '/HEAD\s' |
         fzf --height 40% --ansi --multi --tac | sed 's/^..//' | awk '{print $1}' |

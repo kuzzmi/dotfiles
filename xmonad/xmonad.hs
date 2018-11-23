@@ -1,6 +1,7 @@
 import XMonad
 
 import XMonad.Actions.WithAll
+import XMonad.Actions.CycleWS
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -69,7 +70,7 @@ inactive     = base02
 focusColor   = blue
 unfocusColor = base02
 
-myFont  = "xft:Input:pixelsize=20:bold:antialias=true:hinting=true"
+myFont  = "xft:Input:pixelsize=18:bold:antialias=true:hinting=true"
 myBigFont  = "-*-terminus-medium-*-*-*-*-240-*-*-*-*-*-*"
 
 topBarTheme = def
@@ -93,7 +94,7 @@ myTabTheme = def
     , inactiveBorderColor = base02
     , activeTextColor     = base03
     , inactiveTextColor   = base1
-    , decoHeight          = 34
+    , decoHeight          = 30
     }
 
 ------------------------------------------------------------------------}}}
@@ -141,19 +142,31 @@ myLayout =
     tiled ||| tabs ||| grid ||| bsp ||| masterTabbed
     where
         myGaps  = smartSpacingWithEdge gap
-        bsp     = avoidStruts $ myGaps emptyBSP
-        grid    = avoidStruts $ myGaps Grid
-        tiled   = avoidStruts $ myGaps $ Tall nmaster delta ratio
-        tabs    = avoidStruts $ tabbedBottom shrinkText myTabTheme
+
         nmaster = 1
         ratio   = 2 / 3
         delta   = 1 / 15
 
+        bsp = named "BSP"
+            $ avoidStruts
+            $ myGaps emptyBSP
+
+        grid = named "Grid"
+            $ avoidStruts
+            $ myGaps Grid
+
+        tiled = named "Tiled"
+            $ avoidStruts
+            $ myGaps
+            $ Tall nmaster delta ratio
+
+        tabs = named "Tabs"
+            $ avoidStruts
+            $ tabbedBottom shrinkText myTabTheme
+
         masterTabbed = named "Master-Tabbed Wide"
             $ avoidStruts
-            $ gaps [(U, gap*2),(D, gap*2),(L, gap*2),(R, gap*2)]
-            $ mastered (1/100) (1/4)
-            $ gaps [(U, 0),(D, 0),(L, gap*2),(R, 0)]
+            $ gaps [(U, gap*2),(D, gap*2),(L, gap*2),(R, 0)]
             $ mastered (1/100) (2/3)
             $ gaps [(U, 0),(D, 0),(L, gap*2),(R, 0)]
             $ tabbed shrinkText myTabTheme
@@ -178,9 +191,12 @@ myKeys =
     , ((myMask, xK_f), sendMessage $ Toggle FULL)
       -- Recompile and restart xmonad
     , ((myMask, xK_0), spawn "i3lock -n")
-    , ( (myMask, xK_q) , spawn "xmonad --recompile && xmonad --restart")
+    , ((myMask, xK_q), spawn "xmonad --recompile && xmonad --restart")
       -- Run pavucontrol
     , ((myMask .|. controlMask, xK_m), spawn "pavucontrol")
+
+    , ((myMask, xK_Left), prevWS)
+    , ((myMask, xK_Right), nextWS)
 
     , ((myMask .|. controlMask, xK_h), sendMessage $ pullGroup L)
     , ((myMask .|. controlMask, xK_l), sendMessage $ pullGroup R)
@@ -200,7 +216,7 @@ myKeys =
 myLogHook h =
     dynamicLogWithPP $ def
         { ppCurrent         = xmobarColor active "" . wrap "[" "]"
-        , ppTitle           = xmobarColor active "" . shorten 100
+        , ppTitle           = xmobarColor active "" . shorten 30
         , ppVisible         = wrap "(" ")"
         , ppUrgent          = xmobarColor red "" . wrap " " " "
         , ppHiddenNoWindows = const ""

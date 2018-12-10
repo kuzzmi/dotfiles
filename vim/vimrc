@@ -6,16 +6,25 @@
 " Plugins {{{
 " ============
 call plug#begin('~/.vim/plugged')
+
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
 " Distraction free editing
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
 " Vim FZF
+Plug '/usr/bin/fzf'
 Plug 'junegunn/fzf.vim'
 
 " Vim Easy Align
 Plug 'junegunn/vim-easy-align'
-
 
 Plug 'altercation/vim-colors-solarized'
 " Vim JSX

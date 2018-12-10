@@ -69,7 +69,7 @@ inactive     = base02
 focusColor   = blue
 unfocusColor = base02
 
-myFont  = "xft:Input:pixelsize=20:bold:antialias=true:hinting=true"
+myFont     = "xft:Input:pixelsize=20:bold:antialias=true:hinting=true"
 myBigFont  = "-*-terminus-medium-*-*-*-*-240-*-*-*-*-*-*"
 
 topBarTheme = def
@@ -146,7 +146,7 @@ myLayout =
         tiled   = avoidStruts $ myGaps $ Tall nmaster delta ratio
         tabs    = avoidStruts $ tabbedBottom shrinkText myTabTheme
         nmaster = 1
-        ratio   = 2 / 3
+        ratio   = 1 / 2
         delta   = 1 / 15
 
         masterTabbed = named "Master-Tabbed Wide"
@@ -172,15 +172,23 @@ myKeys =
     , ((myMask .|. shiftMask, xK_Return), windows W.swapMaster)
       -- Manage scratchpad
     , ((myMask, xK_minus), scratchPad)
+      -- Calculator
+    , ((myMask, xK_c), spawn $ myTerminal ++ " -e bc -l")
       -- Mutt
     , ((myMask, xK_m), mail)
       -- Toggle fullscreen
     , ((myMask, xK_f), sendMessage $ Toggle FULL)
       -- Recompile and restart xmonad
     , ((myMask, xK_0), spawn "i3lock -n")
-    , ( (myMask, xK_q) , spawn "xmonad --recompile && xmonad --restart")
+    , ((myMask, xK_q), spawn "xmonad --recompile && xmonad --restart")
+
+    , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
+    , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.2; scrot -s /tmp/screen.png; xclip -selection clipboard -t image/png -i /tmp/screen.png; rm /tmp/screen.png")
+    , ((shiftMask, xK_Print), spawn "scrot /tmp/screen.png; xclip -selection clipboard -t image/png -i /tmp/screen.png; rm /tmp/screen.png")
+    , ((0, xK_Print), spawn "scrot")
+
       -- Run pavucontrol
-    , ((myMask .|. controlMask, xK_m), spawn "pavucontrol")
+    , ((myMask .|. shiftMask, xK_m), spawn "pavucontrol")
 
     , ((myMask .|. controlMask, xK_h), sendMessage $ pullGroup L)
     , ((myMask .|. controlMask, xK_l), sendMessage $ pullGroup R)

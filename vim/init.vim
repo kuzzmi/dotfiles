@@ -7,37 +7,33 @@
 " ============
 call plug#begin('~/.vim/plugged')
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-Plug 'w0rp/ale'
-
-" Elm support
-Plug 'pbogut/deoplete-elm'
-Plug 'ElmCast/elm-vim'
-
-" Haskell stuff
-Plug 'neovimhaskell/haskell-vim'
-Plug 'parsonsmatt/intero-neovim'
-Plug 'alx741/vim-hindent'
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
 " Distraction free editing
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
+" Vim FZF
+Plug 'junegunn/fzf.vim'
+
+" Vim Easy Align
+Plug 'junegunn/vim-easy-align'
+
+Plug 'altercation/vim-colors-solarized'
+" Vim JSX
+Plug 'mxw/vim-jsx'
+
 " Commenting stuff
 Plug 'tomtom/tcomment_vim'
 
-" Subvert + case switching
+" Subvert
 Plug 'tpope/vim-abolish'
-
-" Speeddating
-Plug 'tpope/vim-speeddating'
-
-" Surround plugin
-Plug 'tpope/vim-surround'
-
-" Repeater for plugins
-Plug 'tpope/vim-repeat'
 
 " Some libraries
 Plug 'tomtom/tlib_vim'
@@ -51,6 +47,7 @@ Plug 'othree/javascript-libraries-syntax.vim'
 
 " Unite. Cool stuff
 Plug 'Shougo/unite.vim'
+Plug 'tsukkee/unite-tag'
 
 " Plugin for Unite to search MRU sources
 Plug 'Shougo/neomru.vim'
@@ -64,6 +61,12 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 " Vim Airline
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" Surround plugin
+Plug 'tpope/vim-surround'
+
+" Repeater for plugins
+Plug 'tpope/vim-repeat'
 
 " Snippets
 Plug 'garbas/vim-snipmate'
@@ -90,15 +93,20 @@ Plug 'sotte/presenting.vim'
 " Silver Searcher
 Plug 'rking/ag.vim'
 
-" Vim Easy Align
-Plug 'junegunn/vim-easy-align'
-
 " Argumentative
 Plug 'PeterRincker/vim-argumentative'
 
+" Close XHTML tags
+Plug 'alvan/vim-closetag'
+
+" Elm support
+Plug 'ElmCast/elm-vim'
+
+" Speeddating
+Plug 'tpope/vim-speeddating'
+
 " Vimwiki
 Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
-
 call plug#end()
 " }}}
 " Syntax highlighting {{{
@@ -276,6 +284,9 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+nnoremap <silent> <F2> :!eslint --fix %<CR>
+inoremap <silent> <F2> <Esc>:!eslint --fix %<CR>
+
 " }}}
 " Elm Vim {{{
 " ==========
@@ -314,10 +325,9 @@ let g:unite_source_menu_menus.bookmarks = {
 
 " Define our list of [Label, Command] pairs
 let g:unite_source_menu_menus.bookmarks.command_candidates = [
-\   ['init.vim                           [file]', 'e $HOME/.config/nvim/init.vim'],
-\   ['js.snippets                        [file]', 'e $HOME/.config/nvim/snippets/javascript/js.snippets'],
+\   ['vimrc                              [file]', 'e $HOME/.vim/vimrc'],
+\   ['js.snippets                        [file]', 'e $HOME/.vim/snippets/javascript/js.snippets'],
 \   ['----------------- Files -----------------', ''],
-\   ['Install plugins                 [command]', 'PlugInstall'],
 \   ['Find in sources...              [command]', 'exe "Ag " input("pattern: ")'],
 \   ['Remove and close current file   [command]', 'call delete(expand("%")) | bdelete!'],
 \   ['New file here...                [command]', 'exe "e %:p:h/" . input("pattern: ")'],
@@ -333,7 +343,8 @@ endfunction
 
 " Unite key mappings
 nnoremap <leader>f :<C-u>Unite -auto-resize -start-insert file_mru<cr>
-nnoremap <leader>r :<C-u>Unite -auto-resize -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <leader>r :GitFiles<cr>
+" nnoremap <leader>r :<C-u>Unite -auto-resize -buffer-name=files -start-insert file_rec/async:!<cr>
 nnoremap <leader>e :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
 nnoremap <leader>b :<C-u>Unite -start-insert menu:bookmarks <cr>
 nnoremap <leader>g :<C-u>Unite -auto-resize -buffer-name=files -start-insert file_rec:<C-r>=substitute(expand('%:h'), "\\", "\/", "g")<cr><cr>
@@ -461,7 +472,7 @@ set guioptions-=L
 set modelines=1
 
 " Automatic reloading of .vimrc
-autocmd! bufwritepost init.vim source %
+autocmd! bufwritepost vimrc source %
 
 " Start scrolling 7 lines before edge
 set so=5
@@ -533,13 +544,16 @@ set listchars=tab:-\ ,trail:♥
 set list!
 
 " Autocompletion stuff...
-set complete=.,w,b,u,U,t,i,d,k
-set complete+=k
+let g:deoplete#enable_at_startup = 1
+" set complete=.,w,b,u,U,t,i,d,k
+" set complete+=k
 " set dictionary=./words/english,./words/russian
 
 " Turn off bell
 autocmd GUIEnter * set noerrorbells visualbell t_vb=
 
+" Closetag files
+let g:closetag_filenames = "*.html,*.js,*.jsx"
 " }}}
 " Vimwiki {{{
 " =========

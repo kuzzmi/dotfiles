@@ -30,7 +30,13 @@ alias tmxw="tmuxinator work"
 
 alias dotfiles="cd ~/.config/dotfiles"
 
-alias е="xkblayout-state set 0 && git status && echo"
+function gcmz() {
+    git merge $(git branch | fzf --height 40% --ansi --multi --tac)
+}
+
+function gcpz() {
+    git cherry-pick $(git log --pretty=format:'%h %s' | fzf --height 40% --ansi --multi | cut -d' ' -f1)
+}
 
 function gcoz() {
     git branch -a -vv --color=always | grep -v '/HEAD\s' |

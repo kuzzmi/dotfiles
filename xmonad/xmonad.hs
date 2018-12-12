@@ -35,6 +35,8 @@ import System.IO
 
 import qualified XMonad.StackSet as W
 
+import qualified Data.Map as M
+
 myMask = mod4Mask -- win key
 
 ------------------------------------------------------------------------}}}
@@ -58,7 +60,7 @@ blue    = "#268bd2"
 cyan    = "#2aa198"
 green   = "#859900"
 
-gap     = 10
+gap     = 5
 border  = 3
 
 myNormalBorderColor  = base03
@@ -110,20 +112,23 @@ myFocusFollowsMouse  = False
 myClickJustFocuses   = True
 myPlacement          = fixed (0.5, 0.5) -- center of the screen
 
+myWorkspaces = map show [1 .. 9 :: Int]
+
 myManageHook =
     composeAll
         [ manageScratchPad
         , placeHook myPlacement
         , isFullscreen --> doFullFloat
+        , name =? "discord" --> doShift "3"
         , className =? "Steam" --> doShift "2"
         , className =? "Pavucontrol" --> doFloat
         , className =? "Seahorse" --> doFloat
         , role =? "gimp-toolbox-color-dialog" --> doFloat
         , composeOne [ isFullscreen -?> doFullFloat ]
-        -- , className =? "Gimp" --> doFloat
         , manageDocks
         ]
     where
+        name = stringProperty "WM_NAME"
         role = stringProperty "WM_WINDOW_ROLE"
 
 manageScratchPad :: ManageHook
@@ -171,6 +176,20 @@ myLayout =
             $ mastered (1/100) (2/3)
             $ gaps [(U, 0),(D, 0),(L, gap*2),(R, 0)]
             $ tabbed shrinkText myTabTheme
+
+myMouseBindings XConfig {XMonad.modMask = modMask} = M.fromList
+    -- mod-button1 %! Set the window to floating mode and move by dragging
+    -- [ ((modMask, button1), \w -> focus w >> mouseMoveWindow w
+    --                                      >> windows W.shiftMaster)
+    -- mod-button2 %! Raise the window to the top of the stack
+    [ (( modMask, button2), windows . (W.shiftMaster .) . W.focusWindow)
+    -- mod-button3 %! Set the window to floating mode and resize by dragging
+    , (( modMask, button3), \w -> focus w >> mouseResizeWindow w
+                                         >> windows W.shiftMaster)
+    , (( modMask, button4 ), const prevWS)
+    , (( modMask, button5 ), const nextWS)
+    -- you may also bind events to the mouse scroll wheel (button4 and button5)
+    ]
 
 myKeys =
     [ ((myMask, xK_F2), spawn myBrowser) -- Launch browser
@@ -252,5 +271,7 @@ myConfig p = docks $ def
     , logHook            = myLogHook p
     , clickJustFocuses   = myClickJustFocuses
     , focusFollowsMouse  = myFocusFollowsMouse
+    , workspaces         = myWorkspaces
+    , mouseBindings      = myMouseBindings
     } `additionalKeys`
     myKeys

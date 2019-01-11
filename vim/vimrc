@@ -15,12 +15,13 @@ else
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
+Plug 'zchee/deoplete-go', { 'do': 'make' }
+
 " Distraction free editing
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
 " Vim FZF
-Plug '/usr/bin/fzf'
 Plug 'junegunn/fzf.vim'
 
 " Vim Easy Align
@@ -40,7 +41,7 @@ Plug 'tpope/vim-abolish'
 Plug 'tomtom/tlib_vim'
 
 " Go support
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'tag': 'v1.18' }
 
 " Syntax checking
 Plug 'scrooloose/syntastic'
@@ -114,7 +115,6 @@ call plug#end()
 syntax on
 filetype plugin indent on
 filetype plugin on
-set omnifunc=syntaxcomplete#Complete
 " }}}
 " FileTypes {{{
 " ============
@@ -366,12 +366,40 @@ set foldmethod=indent
 " Vim-go {{{
 " =========
 "
-let g:go_disable_autoinstall = 0
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
+let g:go_highlight_array_whitespace_error = 0
+let g:go_highlight_chan_whitespace_error = 0
+let g:go_highlight_space_tab_error = 1
+let g:go_highlight_trailing_whitespace_error = 0
 let g:go_highlight_operators = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_arguments = 0
+let g:go_highlight_function_calls = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_string_spellcheck = 0
+let g:go_highlight_format_strings = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_variable_assignments = 0
+let g:go_highlight_variable_declarations = 0
+
+let g:go_fmt_command = "goimports"
+let g:go_fmt_autosave = 1
+
+let g:go_gocode_propose_builtins = 1
+let g:go_gocode_propose_source = 1
+let g:go_gocode_unimported_packages = 1
+
+let g:go_def_mode = 'godef'
+
+" disable vim-go linter
+let g:go_fmt_fail_silently = 1
+
+" $ gocode set unimported-packages true
+" $ gocode set autobuild true
+" // $ go build -i
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 " }}}
 " Syntastic {{{
 " =========

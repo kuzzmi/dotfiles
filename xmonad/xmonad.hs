@@ -212,7 +212,7 @@ myKeys =
       -- Toggle fullscreen
     , ((myMask, xK_f), sendMessage $ Toggle FULL)
       -- Recompile and restart xmonad
-    , ((myMask, xK_0), spawn "i3lock -n")
+    , ((myMask, xK_0), spawn "i3lock -n -c 000000")
     , ((myMask, xK_q), spawn "xmonad --recompile && xmonad --restart")
 
     , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")

@@ -23,6 +23,9 @@
 [url "git@gitlab.com:"]
     insteadOf = https://gitlab.com/
 
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+
 [push]
     default = current
 
@@ -32,5 +35,6 @@
 [gui]
     fontui = -family \"DejaVu Sans\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
     fontdiff = -family \"DejaVu Sans Mono\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
+
 [gpg]
-	program = gpg2
+    program = gpg2

@@ -16,6 +16,7 @@ else
 endif
 
 Plug 'zchee/deoplete-go', { 'do': 'make' }
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 
 " Distraction free editing
 Plug 'junegunn/goyo.vim'

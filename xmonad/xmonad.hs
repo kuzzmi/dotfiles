@@ -106,6 +106,7 @@ myTabTheme = def
 myTerminal           = "alacritty"
 myScratchpadTerminal = "urxvt"
 myStatusBar          = "xmobar -x0 -o ~/.xmonad/xmobar.conf"
+myBrowser            = "inox --force-device-scale-factor=1.25"
 
 myFocusFollowsMouse  = False
 myClickJustFocuses   = True
@@ -191,7 +192,7 @@ myMouseBindings XConfig {XMonad.modMask = modMask} = M.fromList
     ]
 
 myKeys =
-    [ ((myMask, xK_F2), spawn "inox --force-device-scale-factor=1.5") -- Launch browser
+    [ ((myMask, xK_F2), spawn myBrowser) -- Launch browser
       -- Applications menu
     , ((myMask, xK_Tab), spawn "rofi -show combi")
       -- Kill focused

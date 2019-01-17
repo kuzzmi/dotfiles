@@ -286,9 +286,6 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-nnoremap <silent> <F2> :!eslint --fix %<CR>
-inoremap <silent> <F2> <Esc>:!eslint --fix %<CR>
-
 " }}}
 " Elm Vim {{{
 " ==========

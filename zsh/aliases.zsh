@@ -1,7 +1,7 @@
 alias p="sudo pacman"
 alias y="yay"
 alias yn="yay --noconfirm"
-alias update="yaourt -Syua"
+alias update="yay -Syua"
 alias printer="system-config-printer"
 alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias mirrors="sudo pacman-mirrors -g"

@@ -107,7 +107,7 @@ myTabTheme = def
 myTerminal           = "alacritty"
 myScratchpadTerminal = "urxvt"
 myStatusBar          = "xmobar -x0 -o ~/.xmonad/xmobar.conf"
-myBrowser            = "inox --force-device-scale-factor=1.25"
+myBrowser            = "inox --force-device-scale-factor=1.5"
 
 myFocusFollowsMouse  = False
 myClickJustFocuses   = True
@@ -130,6 +130,7 @@ myManageHook =
         , className =? "Inox" --> doShift "2"
         , className =? "Pavucontrol" --> doFloat
         , className =? "Seahorse" --> doFloat
+        , className =? "MEGAsync" --> doFloat
         , role =? "gimp-toolbox-color-dialog" --> doFloat
         , composeOne [ isFullscreen -?> doFullFloat ]
         , manageDocks

@@ -17,6 +17,7 @@ endif
 
 Plug 'zchee/deoplete-go', { 'do': 'make' }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'pbogut/deoplete-elm'
 
 " Distraction free editing
 Plug 'junegunn/goyo.vim'
@@ -45,8 +46,7 @@ Plug 'tomtom/tlib_vim'
 Plug 'fatih/vim-go', { 'tag': 'v1.18' }
 
 " Syntax checking
-Plug 'scrooloose/syntastic'
-Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'w0rp/ale'
 
 " Unite. Cool stuff
 Plug 'Shougo/unite.vim'

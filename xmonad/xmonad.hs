@@ -30,6 +30,7 @@ import XMonad.Layout.SubLayouts
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.BoringWindows
 import XMonad.Layout.Simplest
+import XMonad.Layout.PerWorkspace
 
 import System.IO
 
@@ -119,8 +120,14 @@ myManageHook =
         [ manageScratchPad
         , placeHook myPlacement
         , isFullscreen --> doFullFloat
+
         , name =? "discord" --> doShift "3"
+        , className =? "Discord" --> doShift "3"
+        , className =? "discord" --> doShift "3"
+
+        , className =? "Slack" --> doShift "3"
         , className =? "Steam" --> doShift "2"
+        , className =? "Inox" --> doShift "2"
         , className =? "Pavucontrol" --> doFloat
         , className =? "Seahorse" --> doFloat
         , role =? "gimp-toolbox-color-dialog" --> doFloat
@@ -143,11 +150,14 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
 
 myLayout =
     windowNavigation $
+    onWorkspace "3" tabs .
     smartBorders .
-    mkToggle (NOBORDERS ?? FULL ?? EOT) $
+    full $
     tiled ||| tabs ||| grid ||| bsp ||| masterTabbed
     where
         myGaps  = smartSpacingWithEdge gap
+
+        full = mkToggle (NOBORDERS ?? FULL ?? EOT)
 
         nmaster = 1
         ratio   = 1 / 2

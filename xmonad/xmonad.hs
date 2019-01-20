@@ -2,7 +2,11 @@ import XMonad
 
 import XMonad.Actions.WithAll
 import XMonad.Actions.CycleWS
+import XMonad.Actions.CycleRecentWS
+import XMonad.Actions.GridSelect
 
+import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -22,6 +26,7 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
+import XMonad.Layout.SimpleFloat
 import XMonad.Layout.Named
 import XMonad.Layout.Master
 import XMonad.Layout.SimpleDecoration
@@ -100,6 +105,34 @@ myTabTheme = def
     , decoHeight          = 30
     }
 
+myNavigation :: TwoD a (Maybe a)
+myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
+    where
+        navKeyMap = M.fromList
+            [ ((0, xK_Escape), cancel)
+            , ((0, xK_space), select)
+            , ((0, xK_Return), select)
+            , ((0, xK_slash) , substringSearch myNavigation)
+            , ((0, xK_h)     , move (-1,0)  >> myNavigation)
+            , ((0, xK_Left)  , move (-1,0)  >> myNavigation)
+            , ((0, xK_l)     , move (1,0)   >> myNavigation)
+            , ((0, xK_Right) , move (1,0)   >> myNavigation)
+            , ((0, xK_j)     , move (0,1)   >> myNavigation)
+            , ((0, xK_Down)  , move (0,1)   >> myNavigation)
+            , ((0, xK_Up)    , move (0,-1)  >> myNavigation)
+            , ((0, xK_k)     , move (0,-1)  >> myNavigation)
+            , ((0, xK_0) , setPos (0,0) >> myNavigation)
+            ]
+        navDefaultHandler = const myNavigation
+
+
+myGSTheme = def
+    { gs_font = myFont
+    , gs_cellwidth = 200
+    , gs_cellheight = 50
+    , gs_navigate = myNavigation
+    }
+
 ------------------------------------------------------------------------}}}
 -- Applications & Utilities                                             {{{
 ---------------------------------------------------------------------------
@@ -126,12 +159,13 @@ myManageHook =
         , className =? "discord" --> doShift "3"
 
         , className =? "Slack" --> doShift "3"
-        , className =? "Steam" --> doShift "2"
+        , className =? "Steam" --> doShift "4"
         , className =? "Inox" --> doShift "2"
         , className =? "Pavucontrol" --> doFloat
         , className =? "Seahorse" --> doFloat
         , className =? "MEGAsync" --> doFloat
         , role =? "gimp-toolbox-color-dialog" --> doFloat
+        , role =? "gimp-message-dialog" --> doFloat
         , composeOne [ isFullscreen -?> doFullFloat ]
         , manageDocks
         ]
@@ -151,12 +185,12 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
 
 myLayout =
     windowNavigation $
-    onWorkspace "3" tabs .
     smartBorders .
+    onWorkspace "3" tabs .
     full $
     tiled ||| tabs ||| grid ||| bsp ||| masterTabbed
     where
-        myGaps  = smartSpacingWithEdge gap
+        myGaps = smartSpacingWithEdge gap
 
         full = mkToggle (NOBORDERS ?? FULL ?? EOT)
 
@@ -226,6 +260,8 @@ myKeys =
     , ((myMask, xK_0), spawn "i3lock -n -c 000000")
     , ((myMask, xK_q), spawn "xmonad --recompile && xmonad --restart")
 
+    , (( myMask, xK_b ), cycleRecentWS [xK_b] xK_b xK_b ) -- previous workspace, like in i3
+
     , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
     , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.2; scrot -s /tmp/screen.png; xclip -selection clipboard -t image/png -i /tmp/screen.png; rm /tmp/screen.png")
     , ((shiftMask, xK_Print), spawn "scrot /tmp/screen.png; xclip -selection clipboard -t image/png -i /tmp/screen.png; rm /tmp/screen.png")
@@ -247,6 +283,8 @@ myKeys =
 
     , ((myMask .|. controlMask, xK_period), onGroup W.focusDown')
     , ((myMask .|. controlMask, xK_comma), onGroup W.focusUp')
+
+    , ((myMask, xK_grave), goToSelected myGSTheme)
     ]
     where
         scratchPad = scratchpadSpawnActionTerminal myScratchpadTerminal

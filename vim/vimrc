@@ -15,6 +15,8 @@ else
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
+Plug 'ledger/vim-ledger'
+
 Plug 'zchee/deoplete-go', { 'do': 'make' }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'pbogut/deoplete-elm'
@@ -591,5 +593,14 @@ let g:vimwiki_list = [{
     \ 'auto_tags': 1
     \ }]
 " }}}
+
+" Ledger
+nnoremap <C-s> :r!date "+\%Y/\%m/\%d"<CR>A
+inoremap <C-s> <Esc>:r!date "+\%Y/\%m/\%d"<CR>kddA
+let g:ledger_bin = 'ledger'
+let g:ledger_maxwidth = 80
+let g:ledger_fillstring = '    -'
+let g:ledger_detailed_first = 1
+let g:ledger_align_at = 60
 
 " vim:foldmethod=marker:foldlevel=0

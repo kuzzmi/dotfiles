@@ -43,3 +43,9 @@ function gcoz() {
         fzf --height 40% --ansi --multi --tac | sed 's/^..//' | awk '{print $1}' |
         sed 's#^remotes/[^/]*/##'
 }
+
+alias fin="vim ~/Documents/Finances/ledger.dat"
+alias le="ledger -f ~/Documents/Finances/ledger.dat"
+
+alias sydo="rsync -avzP --delete ~/Documents/ admin@thekzm.myqnapcloud.com:/share/Documents -e \"ssh -p 2201\""
+alias sydi="rsync -avzP admin@thekzm.myqnapcloud.com:/share/Documents/ ~/Documents -e \"ssh -p 2201\""

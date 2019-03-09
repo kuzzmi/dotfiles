@@ -49,6 +49,12 @@ Plug 'fatih/vim-go', { 'tag': 'v1.18' }
 
 " Syntax checking
 Plug 'w0rp/ale'
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\   'css': ['prettier'],
+\}
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma --tab-width=4'
 
 " Unite. Cool stuff
 Plug 'Shougo/unite.vim'

@@ -1,0 +1,34 @@
+snippet t
+	`strftime("%Y/%m/%d")` ${1:transaction}
+	    ${2:account}    ${3:value}
+	    ${0:account}
+
+snippet gas
+	`strftime("%Y/%m/%d")` * Gas
+		Expenses:Car:Audi:Gas  UAH ${1:value}
+		${0:Assets:UBS:Prepaid}
+
+snippet mc
+	`strftime("%Y/%m/%d")` * McDonald's
+		Expenses:Eating Out:Fastfood  UAH ${1:value}.00
+		${0:account}
+
+snippet gro
+	`strftime("%Y/%m/%d")` * Groceries
+		Expenses:Groceries  UAH ${1:value}
+		${0:Budget:Groceries}
+
+snippet lu "Lunch"
+	`strftime("%Y/%m/%d")` Lunch
+		* Expenses:Lunch  UAH ${1:value}
+		${0:Assets:UBS:Prepaid}
+
+snippet su "Support"
+	`strftime("%Y/%m/%d")` * Support
+		Expenses:Support:Wife  USD ${1:value}.00
+		${0:Assets:Cash:Envelope}
+
+snippet brent
+	`strftime("%Y/%m/%d")` * Budgeting for rent
+		Assets:Cash:Envelope  USD 1100.00
+		Budget:House:Rent

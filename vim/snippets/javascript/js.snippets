@@ -143,6 +143,40 @@ snippet /*
 	 * ${0}
 	 */
 
+snippet rnbp
+	import React from 'react';
+	import {
+		View,
+		Text,
+	} from 'react-native';
+
+	const ${1:name} = props => {
+		return (
+			<View>
+				<Text>$1</Text>
+			</View>
+		);
+	};
+
+	export default $1;
+
+snippet rnbcp
+	import React, { Component } from 'react';
+	import {
+		View,
+		Text,
+	} from 'react-native';
+
+	export default class ${1:name} extends Component {
+		render() {
+			return (
+				<View>
+					<Text>$1</Text>
+				</View>
+			);
+		}
+	}
+
 # Webpack
 snippet reactwebpack
 	const path = require('path');

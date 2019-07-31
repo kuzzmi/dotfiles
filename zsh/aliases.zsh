@@ -34,6 +34,10 @@ function gcmz() {
     git merge $(git branch | fzf --height 40% --ansi --multi --tac)
 }
 
+function gcof() {
+    git checkout $(git branch | fzf --height 40% --ansi --multi --tac)
+}
+
 function gcpz() {
     git cherry-pick $(git log --pretty=format:'%h %s' | fzf --height 40% --ansi --multi | cut -d' ' -f1)
 }
@@ -46,6 +50,8 @@ function gcoz() {
 
 alias fin="vim ~/Documents/Finances/ledger/ledger.dat"
 alias le="ledger -f ~/Documents/Finances/ledger/ledger.dat"
+alias leb="le bal"
+alias ler="le reg"
 
 alias sydo="rsync -avzP --delete ~/Documents/ admin@thekzm.myqnapcloud.com:/share/Documents -e \"ssh -p 2201\""
 alias sydi="rsync -avzP admin@thekzm.myqnapcloud.com:/share/Documents/ ~/Documents -e \"ssh -p 2201\""

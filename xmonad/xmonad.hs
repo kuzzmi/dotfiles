@@ -14,7 +14,8 @@ import XMonad.Hooks.Place
 
 import XMonad.Util.EZConfig (additionalKeys)
 import XMonad.Util.Run (spawnPipe)
-import XMonad.Util.Scratchpad
+import XMonad.Util.NamedScratchpad
+import XMonad.Util.WorkspaceCompare
 
 import XMonad.Layout.BinarySpacePartition
 import XMonad.Layout.NoFrillsDecoration
@@ -140,7 +141,7 @@ myGSTheme = def
 myTerminal           = "alacritty"
 myScratchpadTerminal = "urxvt"
 myStatusBar          = "xmobar -x0 -o ~/.xmonad/xmobar.conf"
-myBrowser            = "inox --force-device-scale-factor=1.5"
+myBrowser            = "chromium --force-device-scale-factor=1.25"
 
 myFocusFollowsMouse  = False
 myClickJustFocuses   = True
@@ -150,7 +151,7 @@ myWorkspaces = map show [1 .. 9 :: Int]
 
 myManageHook =
     composeAll
-        [ manageScratchPad
+        [ namedScratchpadManageHook myScratchpads
         , placeHook myPlacement
         , isFullscreen --> doFullFloat
 
@@ -173,15 +174,11 @@ myManageHook =
         name = stringProperty "WM_NAME"
         role = stringProperty "WM_WINDOW_ROLE"
 
-manageScratchPad :: ManageHook
-manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
-    where
-        d = 1
-        g = 5
-        h = (g - 2 * d) / g
-        w = (g - 2 * d) / g
-        t = d / g
-        l = d / g
+-- Scratch Pads
+myScratchpads =
+        [ NS "telegram" "telegram-desktop" ((className =? "Telegram") <||> (className =? "telegram-desktop") <||> (className =? "TelegramDesktop")) (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
+        , NS "terminal" "alacritty --class alacritty-scratch" (className =? "alacritty-scratch") (customFloating $ W.RationalRect (1/4) (1/4) (2/3) (2/3))
+        ]
 
 myLayout =
     windowNavigation $
@@ -249,7 +246,8 @@ myKeys =
       -- Swap the focused window and the master window
     , ((myMask .|. shiftMask, xK_Return), windows W.swapMaster)
       -- Manage scratchpad
-    , ((myMask, xK_minus), scratchPad)
+    , ((myMask, xK_minus), namedScratchpadAction myScratchpads "terminal")
+    , ((myMask, xK_equal), namedScratchpadAction myScratchpads "telegram")
       -- Calculator
     , ((myMask, xK_c), spawn $ myTerminal ++ " -e bc -l")
       -- Mutt
@@ -287,7 +285,6 @@ myKeys =
     , ((myMask, xK_grave), goToSelected myGSTheme)
     ]
     where
-        scratchPad = scratchpadSpawnActionTerminal myScratchpadTerminal
         mail = spawn $ myTerminal ++ " -e neomutt"
 
 myLogHook h =
@@ -303,6 +300,7 @@ myLogHook h =
         , ppOrder           = id
         , ppOutput          = hPutStrLn h
         , ppExtras          = []
+        , ppSort = fmap (.namedScratchpadFilterOutWorkspace) getSortByTag
         }
 
 main = do

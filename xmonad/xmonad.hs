@@ -228,8 +228,8 @@ myMouseBindings XConfig {XMonad.modMask = modMask} = M.fromList
     -- mod-button3 %! Set the window to floating mode and resize by dragging
     , (( modMask, button3), \w -> focus w >> mouseResizeWindow w
                                          >> windows W.shiftMaster)
-    , (( modMask, button4 ), const prevWS)
-    , (( modMask, button5 ), const nextWS)
+    , (( modMask, button4 ), const $ moveTo Prev NonEmptyWS)
+    , (( modMask, button5 ), const $ moveTo Next NonEmptyWS)
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
@@ -300,7 +300,7 @@ myLogHook h =
         , ppOrder           = id
         , ppOutput          = hPutStrLn h
         , ppExtras          = []
-        , ppSort = fmap (.namedScratchpadFilterOutWorkspace) getSortByTag
+        , ppSort            = fmap (.namedScratchpadFilterOutWorkspace) getSortByTag
         }
 
 main = do

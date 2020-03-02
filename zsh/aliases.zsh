@@ -55,3 +55,5 @@ alias ler="le reg"
 
 alias sydo="rsync -avzP --delete ~/Documents/ admin@thekzm.myqnapcloud.com:/share/Documents -e \"ssh -p 2201\""
 alias sydi="rsync -avzP admin@thekzm.myqnapcloud.com:/share/Documents/ ~/Documents -e \"ssh -p 2201\""
+
+alias cal="cal -m"

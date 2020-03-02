@@ -14,8 +14,8 @@ snippet mc
 		${0:account}
 
 snippet gro
-	`strftime("%Y/%m/%d")` * Groceries
-		Expenses:Groceries  UAH ${1:value}
+	`strftime("%Y/%m/%d")` * ${2:Santim}
+		Expenses:Home:Groceries  UAH ${1:value}
 		${0:Budget:Groceries}
 
 snippet lu "Lunch"
@@ -32,3 +32,15 @@ snippet brent
 	`strftime("%Y/%m/%d")` * Budgeting for rent
 		Assets:Cash:Envelope  USD 1100.00
 		Budget:House:Rent
+
+snippet f
+	Assets:Cash:Envelopes:Fund
+
+snippet wi
+	Assets:Cash:Wife
+
+snippet wa
+	Assets:Cash:Wallet
+
+snippet mo
+	Assets:Banking:Monobank:Checking

@@ -6,7 +6,6 @@ import XMonad.Actions.CycleRecentWS
 import XMonad.Actions.GridSelect
 
 import XMonad.Hooks.FadeInactive
-import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -50,59 +49,76 @@ myMask = mod4Mask -- win key
 -- Colors, Fonts, & Themes                                              {{{
 ---------------------------------------------------------------------------
 
-base03  = "#002b36"
-base02  = "#073642"
-base01  = "#586e75"
-base00  = "#657b83"
-base0   = "#839496"
-base1   = "#93a1a1"
-base2   = "#eee8d5"
-base3   = "#fdf6e3"
-yellow  = "#b58900"
-orange  = "#cb4b16"
-red     = "#dc322f"
-magenta = "#d33682"
-violet  = "#6c71c4"
-blue    = "#268bd2"
-cyan    = "#2aa198"
-green   = "#859900"
+-- base03  = "#002b36"
+-- base02  = "#073642"
+-- base01  = "#586e75"
+-- base00  = "#657b83"
+-- base0   = "#839496"
+-- base1   = "#93a1a1"
+-- base2   = "#eee8d5"
+-- base3   = "#fdf6e3"
+-- yellow  = "#b58900"
+-- orange  = "#cb4b16"
+-- red     = "#dc322f"
+-- magenta = "#d33682"
+-- violet  = "#6c71c4"
+-- blue    = "#268bd2"
+-- cyan    = "#2aa198"
+-- green   = "#859900"
+
+bg      = "#F3F3F3"
+fg      = "#707070"
+color00 = "#D3D3D3"
+color01 = "#EF6B7B"
+color02 = "#A1D569"
+color03 = "#F59335"
+color04 = "#4EC2E8"
+color05 = "#FEC7CD"
+color06 = "#95C1C0"
+color07 = "#707070"
+color08 = "#B3B3B3"
+color09 = "#ED5466"
+color10 = "#AFDB80"
+color11 = "#F59335"
+color12 = "#5DC7EA"
+color13 = "#D2A4B4"
+color14 = "#75A1A0"
+color15 = "#909090"
 
 gap     = 5
 border  = 3
 
-myNormalBorderColor  = base03
+myNormalBorderColor  = inactive
 myFocusedBorderColor = active
 
-active       = cyan
-activeWarn   = red
-inactive     = base02
-focusColor   = blue
-unfocusColor = base02
+active   = color04
+inactive = color07
+urgent   = color09
 
 myFont     = "xft:Input:pixelsize=20:bold:antialias=true:hinting=true"
 myBigFont  = "-*-terminus-medium-*-*-*-*-240-*-*-*-*-*-*"
 
 topBarTheme = def
     { fontName            = myFont
-    , inactiveBorderColor = base03
-    , inactiveColor       = base03
-    , inactiveTextColor   = base03
+    , inactiveBorderColor = inactive
+    , inactiveColor       = inactive
+    , inactiveTextColor   = inactive
     , activeBorderColor   = active
     , activeColor         = active
     , activeTextColor     = active
-    , urgentBorderColor   = red
-    , urgentTextColor     = yellow
+    , urgentBorderColor   = color09
+    , urgentTextColor     = color09
     , decoHeight          = 5
     }
 
 myTabTheme = def
     { fontName            = myFont
-    , activeColor         = green
-    , inactiveColor       = base02
-    , activeBorderColor   = green
-    , inactiveBorderColor = base02
-    , activeTextColor     = base03
-    , inactiveTextColor   = base1
+    , activeColor         = active
+    , inactiveColor       = inactive
+    , activeBorderColor   = active
+    , inactiveBorderColor = inactive
+    , activeTextColor     = inactive
+    , inactiveTextColor   = active
     , decoHeight          = 30
     }
 
@@ -141,10 +157,10 @@ myGSTheme = def
 myTerminal           = "alacritty"
 myScratchpadTerminal = "urxvt"
 myStatusBar          = "xmobar -x0 -o ~/.xmonad/xmobar.conf"
-myBrowser            = "chromium --force-device-scale-factor=1.25"
+myBrowser            = "chromium"
 
 myFocusFollowsMouse  = False
-myClickJustFocuses   = True
+myClickJustFocuses   = False
 myPlacement          = fixed (0.5, 0.5) -- center of the screen
 
 myWorkspaces = map show [1 .. 9 :: Int]
@@ -161,7 +177,7 @@ myManageHook =
 
         , className =? "Slack" --> doShift "3"
         , className =? "Steam" --> doShift "4"
-        , className =? "Inox" --> doShift "2"
+        , className =? "Chromium" --> doShift "2"
         , className =? "Pavucontrol" --> doFloat
         , className =? "Seahorse" --> doFloat
         , className =? "MEGAsync" --> doFloat
@@ -177,7 +193,8 @@ myManageHook =
 -- Scratch Pads
 myScratchpads =
         [ NS "telegram" "telegram-desktop" ((className =? "Telegram") <||> (className =? "telegram-desktop") <||> (className =? "TelegramDesktop")) (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
-        , NS "terminal" "alacritty --class alacritty-scratch" (className =? "alacritty-scratch") (customFloating $ W.RationalRect (1/4) (1/4) (2/3) (2/3))
+        , NS "terminal" "alacritty -t alacritty-scratch" (title =? "alacritty-scratch") (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
+        , NS "email" "evolution" (className =? "Evolution") (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
         ]
 
 myLayout =
@@ -185,7 +202,7 @@ myLayout =
     smartBorders .
     onWorkspace "3" tabs .
     full $
-    tiled ||| tabs ||| grid ||| bsp ||| masterTabbed
+    tiled ||| tabs ||| grid ||| bsp
     where
         myGaps = smartSpacingWithEdge gap
 
@@ -212,13 +229,6 @@ myLayout =
             $ avoidStruts
             $ tabbedBottom shrinkText myTabTheme
 
-        masterTabbed = named "Master-Tabbed Wide"
-            $ avoidStruts
-            $ gaps [(U, gap*2),(D, gap*2),(L, gap*2),(R, 0)]
-            $ mastered (1/100) (2/3)
-            $ gaps [(U, 0),(D, 0),(L, gap*2),(R, 0)]
-            $ tabbed shrinkText myTabTheme
-
 myMouseBindings XConfig {XMonad.modMask = modMask} = M.fromList
     -- mod-button1 %! Set the window to floating mode and move by dragging
     [ ((modMask, button1), \w -> focus w >> mouseMoveWindow w
@@ -227,7 +237,7 @@ myMouseBindings XConfig {XMonad.modMask = modMask} = M.fromList
     , (( modMask, button2), windows . (W.shiftMaster .) . W.focusWindow)
     -- mod-button3 %! Set the window to floating mode and resize by dragging
     , (( modMask, button3), \w -> focus w >> mouseResizeWindow w
-                                         >> windows W.shiftMaster)
+                                          >> windows W.shiftMaster)
     , (( modMask, button4 ), const $ moveTo Prev NonEmptyWS)
     , (( modMask, button5 ), const $ moveTo Next NonEmptyWS)
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
@@ -248,10 +258,9 @@ myKeys =
       -- Manage scratchpad
     , ((myMask, xK_minus), namedScratchpadAction myScratchpads "terminal")
     , ((myMask, xK_equal), namedScratchpadAction myScratchpads "telegram")
+    , ((myMask, xK_m), namedScratchpadAction myScratchpads "email")
       -- Calculator
     , ((myMask, xK_c), spawn $ myTerminal ++ " -e bc -l")
-      -- Mutt
-    , ((myMask, xK_m), mail)
       -- Toggle fullscreen
     , ((myMask, xK_f), sendMessage $ Toggle FULL)
       -- Recompile and restart xmonad
@@ -284,19 +293,17 @@ myKeys =
 
     , ((myMask, xK_grave), goToSelected myGSTheme)
     ]
-    where
-        mail = spawn $ myTerminal ++ " -e neomutt"
 
 myLogHook h =
     dynamicLogWithPP $ def
         { ppCurrent         = xmobarColor active "" . wrap "[" "]"
         , ppTitle           = xmobarColor active "" . shorten 30
         , ppVisible         = wrap "(" ")"
-        , ppUrgent          = xmobarColor red "" . wrap " " " "
+        , ppUrgent          = xmobarColor urgent "" . wrap "!" "!"
         , ppHiddenNoWindows = const ""
-        , ppSep             = xmobarColor red blue " : "
+        , ppSep             = xmobarColor urgent "#2F2F30" " : "
         , ppWsSep           = " "
-        , ppLayout          = xmobarColor yellow ""
+        , ppLayout          = xmobarColor color11 ""
         , ppOrder           = id
         , ppOutput          = hPutStrLn h
         , ppExtras          = []

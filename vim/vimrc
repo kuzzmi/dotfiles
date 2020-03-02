@@ -32,7 +32,9 @@ Plug 'junegunn/fzf.vim'
 " Vim Easy Align
 Plug 'junegunn/vim-easy-align'
 
+Plug 'jpo/vim-railscasts-theme'
 Plug 'altercation/vim-colors-solarized'
+
 " Vim JSX
 Plug 'mxw/vim-jsx'
 
@@ -112,8 +114,9 @@ Plug 'PeterRincker/vim-argumentative'
 " Close XHTML tags
 Plug 'alvan/vim-closetag'
 
-" Elm support
-Plug 'ElmCast/elm-vim'
+" " Elm support
+" Plug 'ElmCast/elm-vim'
+" Plug 'andys8/vim-elm-syntax'
 
 " Speeddating
 Plug 'tpope/vim-speeddating'
@@ -305,7 +308,7 @@ let g:elm_format_autosave = 1
 let g:elm_setup_keybindings = 0
 let g:elm_syntastic_show_warnings = 1
 let g:elm_detailed_complete = 1
-au BufWritePost *.elm ElmMake
+" au BufWritePost *.elm ElmMake
 " }}}
 " Unite.vim {{{
 " =========
@@ -361,7 +364,7 @@ nnoremap <leader>g :<C-u>Unite -auto-resize -buffer-name=files -start-insert fil
 " Colors and font settings {{{
 set t_Co=256
 set background=dark
-colorscheme solarized
+colorscheme railscasts
 " }}}
 " Folding {{{
 " =======
@@ -610,5 +613,11 @@ let g:ledger_maxwidth = 80
 let g:ledger_fillstring = '    -'
 let g:ledger_detailed_first = 1
 let g:ledger_align_at = 60
+
+let g:S = 0 "result in global variable S
+function! Sum(number)
+  let g:S = g:S + a:number
+  return a:number
+endfunction
 
 " vim:foldmethod=marker:foldlevel=0

@@ -7,23 +7,20 @@
 " ============
 call plug#begin('~/.vim/plugged')
 
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-endif
+" if has('nvim')
+"     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+"     Plug 'Shougo/deoplete.nvim'
+"     Plug 'roxma/nvim-yarp'
+"     Plug 'roxma/vim-hug-neovim-rpc'
+" endif
 
 Plug 'ledger/vim-ledger'
 
-Plug 'zchee/deoplete-go', { 'do': 'make' }
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-Plug 'pbogut/deoplete-elm'
-
-" Distraction free editing
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
+" Plug 'zchee/deoplete-go', { 'do': 'make' }
+" Plug 'pbogut/deoplete-elm'
+" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'ternjs/tern_for_vim', { 'do': 'cd bundle/tern_for_vim; npm install' }
 
 " Vim FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -34,6 +31,9 @@ Plug 'junegunn/vim-easy-align'
 
 Plug 'jpo/vim-railscasts-theme'
 Plug 'altercation/vim-colors-solarized'
+
+" Vim Typescript
+Plug 'leafgarland/typescript-vim'
 
 " Vim JSX
 Plug 'mxw/vim-jsx'
@@ -52,10 +52,11 @@ Plug 'fatih/vim-go', { 'tag': 'v1.18' }
 Plug 'sebdah/vim-delve'
 
 " Syntax checking
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 let g:ale_fix_on_save = 1
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
+\   'typescript': ['prettier'],
 \   'css': ['prettier'],
 \}
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma --tab-width=4'
@@ -87,23 +88,14 @@ Plug 'tpope/vim-repeat'
 Plug 'garbas/vim-snipmate'
 Plug 'honza/vim-snippets'
 
-" WOOOHOOO Emmet!!!
-Plug 'mattn/emmet-vim'
-
 " Javascript
 Plug 'pangloss/vim-javascript'
-
-" Table mode
-Plug 'dhruvasagar/vim-table-mode'
 
 " ES6
 Plug 'isRuslan/vim-es6'
 
 " Markdown folding
 Plug 'nelstrom/vim-markdown-folding'
-
-" Presentation making tool
-Plug 'sotte/presenting.vim'
 
 " Silver Searcher
 Plug 'rking/ag.vim'
@@ -113,16 +105,6 @@ Plug 'PeterRincker/vim-argumentative'
 
 " Close XHTML tags
 Plug 'alvan/vim-closetag'
-
-" " Elm support
-" Plug 'ElmCast/elm-vim'
-" Plug 'andys8/vim-elm-syntax'
-
-" Speeddating
-Plug 'tpope/vim-speeddating'
-
-" Vimwiki
-Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 call plug#end()
 " }}}
 " Syntax highlighting {{{
@@ -150,6 +132,7 @@ autocmd FileType markdown setlocal linebreak wrap
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
 autocmd FileType handlebars setlocal shiftwidth=2 tabstop=2
 autocmd FileType unite setlocal shiftwidth=2 tabstop=2
+autocmd BufNewFile,BufRead *.tsx set filetype=typescript
 " }}}
 " Line numbers {{{
 " ============
@@ -190,21 +173,6 @@ vnoremap gk k
 " Highlight and stay
 nnoremap * *N
 
-" Emmet.vim
-let g:user_emmet_leader_key='<C-q>'
-
-" Emmet extends jsx with js
-let g:user_emmet_settings = {
-\  'javascript' : {
-\      'extends' : 'jsx',
-\  },
-\}
-
-" Toggle distraction modee
-let g:limelight_default_coefficient = 0.8
-let g:goyo_width = 84 " To include line numbers
-nnoremap <silent> <leader>] :Goyo<CR>
-
 " Highlight last inserted text
 nnoremap gV `[v`]
 
@@ -235,9 +203,6 @@ vnoremap <leader>d y<Esc>:%s:<C-R>":
 
 " Append to end of file
 nnoremap <leader>a Go
-
-" Open a presentation with Goyo
-nnoremap <silent> <leader>p :PresentingStart<CR>:Goyo<CR>
 
 " Increment selected numbers
 function! Incr()
@@ -306,7 +271,6 @@ nmap ga <Plug>(EasyAlign)
 " Autoformat on save
 let g:elm_format_autosave = 1
 let g:elm_setup_keybindings = 0
-let g:elm_syntastic_show_warnings = 1
 let g:elm_detailed_complete = 1
 " au BufWritePost *.elm ElmMake
 " }}}
@@ -409,74 +373,19 @@ let g:go_fmt_fail_silently = 1
 " $ gocode set unimported-packages true
 " $ gocode set autobuild true
 " // $ go build -i
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+" let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+" let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+" let g:deoplete#enable_at_startup = 1
+" call deoplete#custom#option('sources', {
+" \ '_': ['ale'],
+" \})
 " }}}
-" Syntastic {{{
-" =========
-
-let g:syntastic_check_on_wq = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-" let g:syntastic_javascript_checkers = ['eslint']
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_loc_list_height = 5
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-" let g:syntastic_javascript_checkers = ['eslint']
-" let g:syntastic_javascript_eslint_exec = 'eslint_d'
-
-let g:syntastic_error_symbol = '✖'
-let g:syntastic_style_error_symbol = '☠'
-let g:syntastic_warning_symbol = '☸'
-let g:syntastic_style_warning_symbol = '💩'
-
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
-" }}}
+"
 " Vim-airline {{{
-set laststatus=2
-let g:airline#extensions#tabline#enabled = 0
+"set laststatus=2
+" let g:airline#extensions#tabline#enabled = 0
 let g:airline_theme="tomorrow"
 set encoding=utf-8
-
-"
-let g:airline_symbols = {}
-let g:airline_left_sep = ""
-let g:airline_left_alt_sep = ""
-let g:airline_right_sep = ""
-let g:airline_right_alt_sep = ""
-let g:airline_symbols.space = " "
-let g:airline_symbols.branch = ""
-let g:airline_symbols.readonly = ""
-let g:airline_symbols.linenr = "■"
-let g:airline_symbols.maxlinenr = "■"
-" let g:airline_left_sep = ""
-" let g:airline_left_alt_sep = ""
-" let g:airline_right_sep = ""
-" let g:airline_right_alt_sep = ""
-" let g:airline_symbols.branch = ""
-" let g:airline_symbols.readonly = ""
-" let g:airline_symbols.linenr = " "
-" let g:airline_symbols = {}
-" let g:airline_left_sep = "▓▒"
-" let g:airline_left_alt_sep = "▒░"
-" let g:airline_right_sep = "▒▓"
-" let g:airline_right_alt_sep = "░▒"
-" let g:airline_symbols.branch = "br"
-" let g:airline_symbols.readonly = "ro"
-" let g:airline_symbols.linenr = "ln"
-
-" }}}
 " Misc {{{
 " ====
 
@@ -571,38 +480,25 @@ set hlsearch
 set lazyredraw
 
 " Highlighting trail spaces
-highlight ExtraWhitespace ctermfg=red guifg=red
+highlight ExtraWhitespace ctermfg=yellow guifg=red
 " ctermfg=white guifg=white
 match ExtraWhitespace /\s\+$/
 
-" TODO test
-highlight MyTodo ctermbg=white ctermfg=red guibg=white guifg=red
-match MyTodo /TODO.*/
-
-" Displaying spaces as dots and EOL as ¬
+" Displaying trailing spaces as hearts and tabs as -
 set listchars=tab:-\ ,trail:♥
 set list!
-
-" Autocompletion stuff...
-let g:deoplete#enable_at_startup = 1
-" set complete=.,w,b,u,U,t,i,d,k
-" set complete+=k
-" set dictionary=./words/english,./words/russian
 
 " Turn off bell
 autocmd GUIEnter * set noerrorbells visualbell t_vb=
 
+" Cyrillic mapping
+set keymap=russian-colemak
+set iminsert=0
+set imsearch=0
+highlight lCursor guifg=NONE guibg=Cyan
+
 " Closetag files
 let g:closetag_filenames = "*.html,*.js,*.jsx"
-" }}}
-" Vimwiki {{{
-" =========
-let g:vimwiki_ext2syntax = {'.md': 'markdown', '.mkd': 'markdown', '.wiki': 'media'}
-let g:vimwiki_list = [{
-    \ 'path': '~/vimwiki',
-    \ 'path_html': '~/.vimwiki_html',
-    \ 'auto_tags': 1
-    \ }]
 " }}}
 
 " Ledger

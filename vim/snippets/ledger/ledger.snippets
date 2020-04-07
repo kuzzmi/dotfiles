@@ -3,10 +3,8 @@ snippet t
 	    ${2:account}    ${3:value}
 	    ${0:account}
 
-snippet gas
-	`strftime("%Y/%m/%d")` * Gas
-		Expenses:Car:Audi:Gas  UAH ${1:value}
-		${0:Assets:UBS:Prepaid}
+snippet aga
+	Expenses:Car:Audi:Gas  UAH ${1:value}
 
 snippet mc
 	`strftime("%Y/%m/%d")` * McDonald's
@@ -14,9 +12,13 @@ snippet mc
 		${0:account}
 
 snippet gro
-	`strftime("%Y/%m/%d")` * ${2:Santim}
-		Expenses:Home:Groceries  UAH ${1:value}
-		${0:Budget:Groceries}
+	Expenses:Home:Groceries  UAH ${1:value}
+
+snippet lar
+	Expenses:Home:Maid  UAH ${1:value}.00
+
+snippet eato
+	Expenses:Food:Eating out  UAH ${1:value}
 
 snippet lu "Lunch"
 	`strftime("%Y/%m/%d")` Lunch

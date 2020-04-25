@@ -58,19 +58,19 @@ draw_bold_text_with_bright_colors: false
 font:
   # The normal (roman) font face to use.
   normal:
-    family: Input # should be "Menlo" or something on macOS.
+    family: JetBrainsMono # should be "Menlo" or something on macOS.
+    style: Bold
     # Style can be specified to pick a specific face.
-    # style: Regular
 
   # The bold font face
   bold:
-    family: Input # should be "Menlo" or something on macOS.
+    family: JetBrainsMono # should be "Menlo" or something on macOS.
     # Style can be specified to pick a specific face.
-    # style: Bold
+    style: ExtraBold
 
   # The italic font face
   italic:
-    family: Input # should be "Menlo" or something on macOS.
+    family: JetBrainsMono # should be "Menlo" or something on macOS.
     # Style can be specified to pick a specific face.
     # style: Italic
 
@@ -128,34 +128,62 @@ debug:
 #     cyan:    '0x93a1a1'
 #     white:   '0xfdf6e3'
 
+#
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x2b2b2b'
+#     foreground: '0xe6e1dc'
+#
+#   # Normal colors
+#   normal:
+#     black:   '0x2b2b2b'
+#     red:     '0xda4939'
+#     green:   '0xa5c261'
+#     yellow:  '0xffc66d'
+#     blue:    '0x6d9cbe'
+#     magenta: '0xb6b3eb'
+#     cyan:    '0x519f50'
+#     white:   '0xe6e1dc'
+#
+#   # Bright colors
+#   bright:
+#     black:   '0x5a647e'
+#     red:     '0xda4939'
+#     green:   '0xa5c261'
+#     yellow:  '0xffc66d'
+#     blue:    '0x6d9cbe'
+#     magenta: '0xb6b3eb'
+#     cyan:    '0x519f50'
+#     white:   '0xf9f7f3'
 
 colors:
   # Default colors
   primary:
-    background: '0x2b2b2b'
-    foreground: '0xe6e1dc'
+    background: '0x1c2023'
+    foreground: '0xc7ccd1'
 
   # Normal colors
   normal:
-    black:   '0x2b2b2b'
-    red:     '0xda4939'
-    green:   '0xa5c261'
-    yellow:  '0xffc66d'
-    blue:    '0x6d9cbe'
-    magenta: '0xb6b3eb'
-    cyan:    '0x519f50'
-    white:   '0xe6e1dc'
+    black:   '0x1c2023'
+    red:     '0xc7ae95'
+    green:   '0x95c7ae'
+    yellow:  '0xaec795'
+    blue:    '0xae95c7'
+    magenta: '0xc795ae'
+    cyan:    '0x95aec7'
+    white:   '0xc7ccd1'
 
   # Bright colors
   bright:
-    black:   '0x5a647e'
-    red:     '0xda4939'
-    green:   '0xa5c261'
-    yellow:  '0xffc66d'
-    blue:    '0x6d9cbe'
-    magenta: '0xb6b3eb'
-    cyan:    '0x519f50'
-    white:   '0xf9f7f3'
+    black:   '0x747c84'
+    red:     '0xc7ae95'
+    green:   '0x95c7ae'
+    yellow:  '0xaec795'
+    blue:    '0xae95c7'
+    magenta: '0xc795ae'
+    cyan:    '0x95aec7'
+    white:   '0xf3f4f5'
 
 # Colors (Solarized Light)
 # colors:

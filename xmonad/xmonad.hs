@@ -85,8 +85,8 @@ color13 = "#D2A4B4"
 color14 = "#75A1A0"
 color15 = "#909090"
 
-gap     = 5
-border  = 3
+gap     = 20
+border  = 5
 
 myNormalBorderColor  = inactive
 myFocusedBorderColor = active
@@ -95,21 +95,8 @@ active   = color04
 inactive = color07
 urgent   = color09
 
-myFont     = "xft:Input:pixelsize=20:bold:antialias=true:hinting=true"
+myFont     = "xft:JetBrainsMono:weight:900:pixelsize=20:bold:antialias=true:hinting=true"
 myBigFont  = "-*-terminus-medium-*-*-*-*-240-*-*-*-*-*-*"
-
-topBarTheme = def
-    { fontName            = myFont
-    , inactiveBorderColor = inactive
-    , inactiveColor       = inactive
-    , inactiveTextColor   = inactive
-    , activeBorderColor   = active
-    , activeColor         = active
-    , activeTextColor     = active
-    , urgentBorderColor   = color09
-    , urgentTextColor     = color09
-    , decoHeight          = 5
-    }
 
 myTabTheme = def
     { fontName            = myFont
@@ -119,7 +106,7 @@ myTabTheme = def
     , inactiveBorderColor = inactive
     , activeTextColor     = inactive
     , inactiveTextColor   = active
-    , decoHeight          = 30
+    , decoHeight          = 40
     }
 
 myNavigation :: TwoD a (Maybe a)
@@ -194,7 +181,7 @@ myManageHook =
 myScratchpads =
         [ NS "telegram" "telegram-desktop" ((className =? "Telegram") <||> (className =? "telegram-desktop") <||> (className =? "TelegramDesktop")) (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
         , NS "terminal" "alacritty -t alacritty-scratch" (title =? "alacritty-scratch") (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
-        , NS "email" "evolution" (className =? "Evolution") (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
+        , NS "email" "thunderbird" (className =? "Thunderbird") (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
         ]
 
 myLayout =
@@ -245,24 +232,36 @@ myMouseBindings XConfig {XMonad.modMask = modMask} = M.fromList
 
 myKeys =
     [ ((myMask, xK_F2), spawn myBrowser) -- Launch browser
+
       -- Applications menu
     , ((myMask, xK_Tab), spawn "rofi -show combi")
+
       -- Kill focused
     , ((myMask, xK_BackSpace), kill)
+
       -- Kill all
     , ((myMask .|. shiftMask, xK_BackSpace), killAll)
+
       -- Launch a terminal
     , ((myMask, xK_Return), spawn myTerminal)
+
+      -- Launch a terminal
+    , ((myMask .|. controlMask, xK_Return), spawn "alacritty -e ranger")
+
       -- Swap the focused window and the master window
     , ((myMask .|. shiftMask, xK_Return), windows W.swapMaster)
+
       -- Manage scratchpad
     , ((myMask, xK_minus), namedScratchpadAction myScratchpads "terminal")
     , ((myMask, xK_equal), namedScratchpadAction myScratchpads "telegram")
     , ((myMask, xK_m), namedScratchpadAction myScratchpads "email")
+
       -- Calculator
-    , ((myMask, xK_c), spawn $ myTerminal ++ " -e bc -l")
+    , ((myMask, xK_c), spawn "rofi -show calc -modi calc -no-show-match -no-sort")
+
       -- Toggle fullscreen
     , ((myMask, xK_f), sendMessage $ Toggle FULL)
+
       -- Recompile and restart xmonad
     , ((myMask, xK_0), spawn "i3lock -n -c 000000")
     , ((myMask, xK_q), spawn "xmonad --recompile && xmonad --restart")
@@ -296,12 +295,11 @@ myKeys =
 
 myLogHook h =
     dynamicLogWithPP $ def
-        { ppCurrent         = xmobarColor active "" . wrap "[" "]"
+        { ppCurrent         = xmobarColor active ""
         , ppTitle           = xmobarColor active "" . shorten 30
         , ppVisible         = wrap "(" ")"
         , ppUrgent          = xmobarColor urgent "" . wrap "!" "!"
         , ppHiddenNoWindows = const ""
-        , ppSep             = xmobarColor urgent "#2F2F30" " : "
         , ppWsSep           = " "
         , ppLayout          = xmobarColor color11 ""
         , ppOrder           = id

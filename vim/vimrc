@@ -7,20 +7,16 @@
 " ============
 call plug#begin('~/.vim/plugged')
 
-" if has('nvim')
-"     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" else
-"     Plug 'Shougo/deoplete.nvim'
-"     Plug 'roxma/nvim-yarp'
-"     Plug 'roxma/vim-hug-neovim-rpc'
-" endif
+" Nvim Completion Manager
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+Plug 'ncm2/ncm2-go'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'ncm2/nvim-typescript', {'do': './install.sh'}
+Plug 'ternjs/tern_for_vim', { 'do': 'cd bundle/tern_for_vim; npm install' }
 
 Plug 'ledger/vim-ledger'
-
-" Plug 'zchee/deoplete-go', { 'do': 'make' }
-" Plug 'pbogut/deoplete-elm'
-" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-Plug 'ternjs/tern_for_vim', { 'do': 'cd bundle/tern_for_vim; npm install' }
 
 " Vim FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -32,8 +28,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'jpo/vim-railscasts-theme'
 Plug 'altercation/vim-colors-solarized'
 
-" Vim Typescript
-Plug 'leafgarland/typescript-vim'
+Plug 'mhinz/vim-startify'
 
 " Vim JSX
 Plug 'mxw/vim-jsx'
@@ -63,13 +58,9 @@ let g:ale_javascript_prettier_options = '--single-quote --trailing-comma --tab-w
 
 " Unite. Cool stuff
 Plug 'Shougo/unite.vim'
-Plug 'tsukkee/unite-tag'
 
 " Plugin for Unite to search MRU sources
 Plug 'Shougo/neomru.vim'
-
-" Vimproc
-Plug 'Shougo/vimproc.vim'
 
 " Vim Addon MW utils
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -122,6 +113,9 @@ augroup omnifuncs
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType elm setlocal omnifunc=elm#Complete
 augroup END
+
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
 
 "
 " Some Markdown settings
@@ -186,9 +180,6 @@ nnoremap <silent> <C-J> <C-W>j
 nnoremap <silent> <C-H> <C-W>h
 nnoremap <silent> <C-L> <C-W>l
 
-" Open a file under cursor in a vertical split
-nnoremap <C-w>V <C-w>vgf
-
 " Rename current word
 nnoremap <leader>d yiw:%s:<C-R>":
 
@@ -224,9 +215,6 @@ vnoremap <C-D> y/\V<C-R>"<CR>
 vnoremap > >gv
 vnoremap < <gv
 
-" Insert one character
-nnoremap <silent> <leader>i i<Space><Esc>r
-
 " Remove search highlighting
 nnoremap <silent> <C-n> :noh<CR>
 
@@ -236,8 +224,6 @@ nnoremap <silent> <leader>k O<Esc>
 
 " Break current line with <CR> and stay in normal mode
 nnoremap <F3> i<CR><Esc><F5>
-
-nnoremap <leader>x Y:s:\[ \]:[x]:<CR>Go[updated at: <Esc>:pu=strftime('%c')<CR>kJA]<Esc>:nohl<CR>po<Esc><C-o>
 
 " Search mappings:
 " These will make it so that going to the next one in a search
@@ -319,7 +305,8 @@ endfunction
 
 " Unite key mappings
 nnoremap <leader>f :<C-u>Unite -auto-resize -start-insert file_mru<cr>
-nnoremap <leader>r :GitFiles<cr>
+nnoremap <silent> <leader>r :call fzf#run({'source': 'git ls-files -c -o -x node_modules -x .expo', 'down': '30%', 'sink': 'e'})<cr>
+" nnoremap <leader>r :GitFiles<cr>
 " nnoremap <leader>r :<C-u>Unite -auto-resize -buffer-name=files -start-insert file_rec/async:!<cr>
 nnoremap <leader>e :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
 nnoremap <leader>b :<C-u>Unite -start-insert menu:bookmarks <cr>
@@ -328,7 +315,7 @@ nnoremap <leader>g :<C-u>Unite -auto-resize -buffer-name=files -start-insert fil
 " Colors and font settings {{{
 set t_Co=256
 set background=dark
-colorscheme railscasts
+colorscheme wal
 " }}}
 " Folding {{{
 " =======
@@ -370,37 +357,19 @@ let g:go_def_mode = 'godef'
 " disable vim-go linter
 let g:go_fmt_fail_silently = 1
 
-" $ gocode set unimported-packages true
-" $ gocode set autobuild true
-" // $ go build -i
-" let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-" let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-" let g:deoplete#enable_at_startup = 1
-" call deoplete#custom#option('sources', {
-" \ '_': ['ale'],
-" \})
 " }}}
 "
 " Vim-airline {{{
-"set laststatus=2
-" let g:airline#extensions#tabline#enabled = 0
 let g:airline_theme="tomorrow"
 set encoding=utf-8
 " Misc {{{
 " ====
 
-" Set up initial size
-" set lines=50 columns=100
-
 " Speed up syntax highlighting {
-set nocursorcolumn
-set nocursorline
-syntax sync minlines=100
-syntax sync maxlines=240
-" Don't try to highlight lines longer than 300 characters,
-" in order to speed up the viewport.
-set synmaxcol=300
-" }
+" set nocursorcolumn
+" set nocursorline
+" syntax sync minlines=100
+" syntax sync maxlines=240
 
 " Color column
 set colorcolumn=80
@@ -423,7 +392,7 @@ set modelines=1
 " Automatic reloading of .vimrc
 autocmd! bufwritepost vimrc source %
 
-" Start scrolling 7 lines before edge
+" Start scrolling N lines before edge
 set so=5
 
 " Horizontal split always to the bottom
@@ -461,8 +430,8 @@ set showcmd
 set autoindent
 
 " Cool tab completion stuff
-set wildmenu
-set wildmode=list:longest,full
+" set wildmenu
+" set wildmode=list:longest,full
 
 " Ignoring case is a fun trick
 set ignorecase
@@ -488,32 +457,13 @@ match ExtraWhitespace /\s\+$/
 set listchars=tab:-\ ,trail:♥
 set list!
 
-" Turn off bell
-autocmd GUIEnter * set noerrorbells visualbell t_vb=
-
 " Cyrillic mapping
 set keymap=russian-colemak
 set iminsert=0
 set imsearch=0
-highlight lCursor guifg=NONE guibg=Cyan
+highlight lCursor guifg=NONE guibg=Cyan 
 
 " Closetag files
 let g:closetag_filenames = "*.html,*.js,*.jsx"
 " }}}
-
-" Ledger
-nnoremap <C-s> :r!date "+\%Y/\%m/\%d"<CR>A
-inoremap <C-s> <Esc>:r!date "+\%Y/\%m/\%d"<CR>kddA
-let g:ledger_bin = 'ledger'
-let g:ledger_maxwidth = 80
-let g:ledger_fillstring = '    -'
-let g:ledger_detailed_first = 1
-let g:ledger_align_at = 60
-
-let g:S = 0 "result in global variable S
-function! Sum(number)
-  let g:S = g:S + a:number
-  return a:number
-endfunction
-
 " vim:foldmethod=marker:foldlevel=0

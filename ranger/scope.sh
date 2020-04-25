@@ -39,7 +39,6 @@ HIGHLIGHT_TABWIDTH=8
 HIGHLIGHT_STYLE='pablo'
 PYGMENTIZE_STYLE='autumn'
 
-
 handle_extension() {
     case "${FILE_EXTENSION_LOWER}" in
         # Archive
@@ -75,13 +74,19 @@ handle_extension() {
             odt2txt "${FILE_PATH}" && exit 5
             exit 1;;
 
-        # HTML
+        # OpenDocument
         htm|html|xhtml)
             # Preview as text conversion
-            w3m -dump "${FILE_PATH}" && exit 5
-            lynx -dump -- "${FILE_PATH}" && exit 5
-            elinks -dump "${FILE_PATH}" && exit 5
-            ;; # Continue with next handler on failure
+            bat "${FILE_PATH}" && exit 5
+            exit 1;;
+
+        # # HTML
+        # htm|html|xhtml)
+        #     # Preview as text conversion
+        #     w3m -dump "${FILE_PATH}" && exit 5
+        #     lynx -dump -- "${FILE_PATH}" && exit 5
+        #     elinks -dump "${FILE_PATH}" && exit 5
+        #     ;; # Continue with next handler on failure
     esac
 }
 
@@ -129,7 +134,7 @@ handle_mime() {
     local mimetype="${1}"
     case "${mimetype}" in
         # Text
-        text/* | */xml)
+        text/* | */xml | */json)
             # Syntax highlight
             if [[ "$( stat --printf='%s' -- "${FILE_PATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
                 exit 2
@@ -141,8 +146,9 @@ handle_mime() {
                 local pygmentize_format='terminal'
                 local highlight_format='ansi'
             fi
-            highlight --replace-tabs="${HIGHLIGHT_TABWIDTH}" --out-format="${highlight_format}" \
-                --style="${HIGHLIGHT_STYLE}" --force -- "${FILE_PATH}" && exit 5
+            bat ${FILE_PATH} && exit 5
+            # highlight --replace-tabs="${HIGHLIGHT_TABWIDTH}" --out-format="${highlight_format}" \
+            #     --style="${HIGHLIGHT_STYLE}" --force -- "${FILE_PATH}" && exit 5
             # pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}" -- "${FILE_PATH}" && exit 5
             exit 2;;
 
@@ -154,10 +160,10 @@ handle_mime() {
             exit 1;;
 
         # Video and audio
-        video/* | audio/*)
-            mediainfo "${FILE_PATH}" && exit 5
-            exiftool "${FILE_PATH}" && exit 5
-            exit 1;;
+        # video/* | audio/*)
+        #     mediainfo "${FILE_PATH}" && exit 5
+        #     exiftool "${FILE_PATH}" && exit 5
+        #     exit 1;;
     esac
 }
 

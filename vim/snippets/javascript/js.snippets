@@ -1,29 +1,3 @@
-# React Redux And All That Crap
-snippet cs
-	createSelector(
-		${1:selector},
-		${2:result} => $2${0}
-	);
-
-# class function
-snippet cf
-	${1:fn}(${2}) {
-		${0}
-	}
-
-snippet acf
-	${1:fnName} = ${2:()} => ${0};
-
-# class function
-snippet rcf
-	${1:fn}(${2}) {
-		const { ${3} } = this.props;
-		${0}
-	}
-
-snippet p
-	${1:prop}={ $1 }
-
 # React Lifecycle Hooks
 snippet cwm
 	componentWillMount() {
@@ -71,6 +45,11 @@ snippet cn
 
 snippet cnx
 	className={ cx(${1}) }
+
+snippet sty
+	const styles = StyleSheet.create({
+		${0}
+	});
 
 # ES6 constructor
 snippet cons

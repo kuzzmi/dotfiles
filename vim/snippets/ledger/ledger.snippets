@@ -4,11 +4,11 @@ snippet t
 	    ${0:account}
 
 snippet aga
-	Expenses:Car:Audi:Gas  UAH ${1:value}
+	Expenses:Cars:Audi:Gas  UAH ${1:value}
 
 snippet mc
 	`strftime("%Y/%m/%d")` * McDonald's
-		Expenses:Eating Out:Fastfood  UAH ${1:value}.00
+		Expenses:Eating Out  UAH ${1:value}.00
 		${0:account}
 
 snippet gro
@@ -17,23 +17,13 @@ snippet gro
 snippet lar
 	Expenses:Home:Maid  UAH ${1:value}.00
 
-snippet eato
-	Expenses:Food:Eating out  UAH ${1:value}
-
-snippet lu "Lunch"
-	`strftime("%Y/%m/%d")` Lunch
-		* Expenses:Lunch  UAH ${1:value}
-		${0:Assets:UBS:Prepaid}
+snippet ea
+	Expenses:Eating Out  UAH ${1:value}
 
 snippet su "Support"
 	`strftime("%Y/%m/%d")` * Support
 		Expenses:Support:Wife  USD ${1:value}.00
 		${0:Assets:Cash:Envelope}
-
-snippet brent
-	`strftime("%Y/%m/%d")` * Budgeting for rent
-		Assets:Cash:Envelope  USD 1100.00
-		Budget:House:Rent
 
 snippet f
 	Assets:Cash:Envelopes:Fund
@@ -46,3 +36,12 @@ snippet wa
 
 snippet mo
 	Assets:Banking:Monobank:Black
+
+snippet mb
+	Assets:Banking:Monobank:Banka
+
+snippet ec
+	Assets:Cash:Envelopes:Cars
+
+snippet eg
+	Assets:Cash:Envelopes:Groceries

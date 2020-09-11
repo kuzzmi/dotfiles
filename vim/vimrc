@@ -54,7 +54,6 @@ let g:ale_fixers = {
 \   'typescript': ['prettier'],
 \   'css': ['prettier'],
 \}
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma --tab-width=4'
 
 " Unite. Cool stuff
 Plug 'Shougo/unite.vim'
@@ -402,10 +401,10 @@ set splitbelow
 set splitright
 
 " Tabs are 4 chars wide
-set tabstop=4
+set tabstop=2
 
 " Indentation size is 4 characters
-set shiftwidth=4
+set shiftwidth=2
 
 " Make backspace work like most other apps
 set backspace=2

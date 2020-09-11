@@ -3,7 +3,6 @@ import XMonad
 import XMonad.Actions.WithAll
 import XMonad.Actions.CycleWS
 import XMonad.Actions.CycleRecentWS
-import XMonad.Actions.GridSelect
 
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.DynamicLog
@@ -109,34 +108,6 @@ myTabTheme = def
     , decoHeight          = 40
     }
 
-myNavigation :: TwoD a (Maybe a)
-myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
-    where
-        navKeyMap = M.fromList
-            [ ((0, xK_Escape), cancel)
-            , ((0, xK_space), select)
-            , ((0, xK_Return), select)
-            , ((0, xK_slash) , substringSearch myNavigation)
-            , ((0, xK_h)     , move (-1,0)  >> myNavigation)
-            , ((0, xK_Left)  , move (-1,0)  >> myNavigation)
-            , ((0, xK_l)     , move (1,0)   >> myNavigation)
-            , ((0, xK_Right) , move (1,0)   >> myNavigation)
-            , ((0, xK_j)     , move (0,1)   >> myNavigation)
-            , ((0, xK_Down)  , move (0,1)   >> myNavigation)
-            , ((0, xK_Up)    , move (0,-1)  >> myNavigation)
-            , ((0, xK_k)     , move (0,-1)  >> myNavigation)
-            , ((0, xK_0) , setPos (0,0) >> myNavigation)
-            ]
-        navDefaultHandler = const myNavigation
-
-
-myGSTheme = def
-    { gs_font = myFont
-    , gs_cellwidth = 200
-    , gs_cellheight = 50
-    , gs_navigate = myNavigation
-    }
-
 ------------------------------------------------------------------------}}}
 -- Applications & Utilities                                             {{{
 ---------------------------------------------------------------------------
@@ -144,7 +115,7 @@ myGSTheme = def
 myTerminal           = "alacritty"
 myScratchpadTerminal = "urxvt"
 myStatusBar          = "xmobar -x0 -o ~/.xmonad/xmobar.conf"
-myBrowser            = "chromium"
+myBrowser            = "google-chrome-stable"
 
 myFocusFollowsMouse  = False
 myClickJustFocuses   = False
@@ -234,7 +205,7 @@ myKeys =
     [ ((myMask, xK_F2), spawn myBrowser) -- Launch browser
 
       -- Applications menu
-    , ((myMask, xK_Tab), spawn "rofi -show combi")
+    , ((myMask, xK_grave), spawn "rofi -show combi")
 
       -- Kill focused
     , ((myMask, xK_BackSpace), kill)
@@ -289,8 +260,6 @@ myKeys =
 
     , ((myMask .|. controlMask, xK_period), onGroup W.focusDown')
     , ((myMask .|. controlMask, xK_comma), onGroup W.focusUp')
-
-    , ((myMask, xK_grave), goToSelected myGSTheme)
     ]
 
 myLogHook h =

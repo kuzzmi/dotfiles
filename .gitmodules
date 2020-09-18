@@ -16,3 +16,6 @@
 [submodule "zsh/custom/zsh-autosuggestions"]
 	path = zsh/custom/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "xmonad/xmonad-pulsevolume"]
+	path = xmonad/xmonad-pulsevolume
+	url = git@github.com:kuzzmi/xmonad-pulsevolume.git

@@ -258,7 +258,7 @@ myKeys =
       -- Audio
     , ((myMask, xK_Page_Up), spawn "/home/kuzzmi/.xmonad/xmonad-pulsevolume/pulse-volume.sh increase")
     , ((myMask, xK_Page_Down), spawn "/home/kuzzmi/.xmonad/xmonad-pulsevolume/pulse-volume.sh decrease")
-    , ((myMask, xK_End), spawn "/home/kuzzmi/.xmonad/xmonad-pulsevolume/pulse-volume.sh mute")
+    , ((myMask, xK_End), spawn "/home/kuzzmi/.xmonad/xmonad-pulsevolume/pulse-volume.sh toggle")
     , ((myMask, xK_Home), spawn "/home/kuzzmi/.xmonad/xmonad-pulsevolume/pulse-volume.sh reset")
 
 

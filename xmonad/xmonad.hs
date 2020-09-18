@@ -84,8 +84,8 @@ color13 = "#D2A4B4"
 color14 = "#75A1A0"
 color15 = "#909090"
 
-gap     = 20
-border  = 5
+gap     = 16
+border  = 4
 
 myNormalBorderColor  = inactive
 myFocusedBorderColor = active
@@ -132,7 +132,6 @@ myManageHook =
         , name =? "discord" --> doShift "3"
         , className =? "Discord" --> doShift "3"
         , className =? "discord" --> doShift "3"
-
         , className =? "Slack" --> doShift "3"
         , className =? "Steam" --> doShift "4"
         , className =? "Chromium" --> doShift "2"
@@ -152,13 +151,14 @@ myManageHook =
 myScratchpads =
         [ NS "telegram" "telegram-desktop" ((className =? "Telegram") <||> (className =? "telegram-desktop") <||> (className =? "TelegramDesktop")) (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
         , NS "terminal" "alacritty -t alacritty-scratch" (title =? "alacritty-scratch") (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
-        , NS "email" "thunderbird" (className =? "Thunderbird") (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
+        , NS "email" "mailspring" (className =? "Mailspring") (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
         ]
 
 myLayout =
     windowNavigation $
     smartBorders .
     onWorkspace "3" tabs .
+    onWorkspace "4" tabs .
     full $
     tiled ||| tabs ||| grid ||| bsp
     where
@@ -186,6 +186,11 @@ myLayout =
         tabs = named "Tabs"
             $ avoidStruts
             $ tabbedBottom shrinkText myTabTheme
+
+        steam = noBorders
+            $ named "No borders"
+            $ avoidStruts
+            $ emptyBSP
 
 myMouseBindings XConfig {XMonad.modMask = modMask} = M.fromList
     -- mod-button1 %! Set the window to floating mode and move by dragging
@@ -216,9 +221,6 @@ myKeys =
       -- Launch a terminal
     , ((myMask, xK_Return), spawn myTerminal)
 
-      -- Launch a terminal
-    , ((myMask .|. controlMask, xK_Return), spawn "alacritty -e ranger")
-
       -- Swap the focused window and the master window
     , ((myMask .|. shiftMask, xK_Return), windows W.swapMaster)
 
@@ -247,20 +249,38 @@ myKeys =
       -- Run pavucontrol
     , ((myMask .|. shiftMask, xK_m), spawn "pavucontrol")
 
+      -- My own version of the mount script
+    , ((myMask, xK_F12), spawn "rofi-mount")
+
     , ((myMask, xK_Left), prevWS)
     , ((myMask, xK_Right), nextWS)
 
-    , ((myMask .|. controlMask, xK_h), sendMessage $ pullGroup L)
-    , ((myMask .|. controlMask, xK_l), sendMessage $ pullGroup R)
-    , ((myMask .|. controlMask, xK_k), sendMessage $ pullGroup U)
-    , ((myMask .|. controlMask, xK_j), sendMessage $ pullGroup D)
+      -- Audio
+    , ((myMask, xK_Page_Up), spawn "/home/kuzzmi/.xmonad/xmonad-pulsevolume/pulse-volume.sh increase")
+    , ((myMask, xK_Page_Down), spawn "/home/kuzzmi/.xmonad/xmonad-pulsevolume/pulse-volume.sh decrease")
+    , ((myMask, xK_End), spawn "/home/kuzzmi/.xmonad/xmonad-pulsevolume/pulse-volume.sh mute")
+    , ((myMask, xK_Home), spawn "/home/kuzzmi/.xmonad/xmonad-pulsevolume/pulse-volume.sh reset")
 
-    , ((myMask .|. controlMask, xK_m), withFocused (sendMessage . MergeAll))
-    , ((myMask .|. controlMask, xK_u), withFocused (sendMessage . UnMerge))
 
-    , ((myMask .|. controlMask, xK_period), onGroup W.focusDown')
-    , ((myMask .|. controlMask, xK_comma), onGroup W.focusUp')
+    -- , ((myMask .|. controlMask, xK_h), sendMessage $ pullGroup L)
+    -- , ((myMask .|. controlMask, xK_l), sendMessage $ pullGroup R)
+    -- , ((myMask .|. controlMask, xK_k), sendMessage $ pullGroup U)
+    -- , ((myMask .|. controlMask, xK_j), sendMessage $ pullGroup D)
+    --
+    -- , ((myMask .|. controlMask, xK_m), withFocused (sendMessage . MergeAll))
+    -- , ((myMask .|. controlMask, xK_u), withFocused (sendMessage . UnMerge))
+
+    -- , ((myMask .|. controlMask, xK_period), onGroup W.focusDown')
+    -- , ((myMask .|. controlMask, xK_comma), onGroup W.focusUp')
+
+    , ((myMask, xK_z), withFocused centerWindow)
     ]
+    where
+    centerWindow :: Window -> X ()
+    centerWindow win = do
+        (_, W.RationalRect x y w h) <- floatLocation win
+        windows $ W.float win (W.RationalRect ((1 - w) / 2) ((1 - h) / 2) w h)
+        return ()
 
 myLogHook h =
     dynamicLogWithPP $ def

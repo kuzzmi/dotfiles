@@ -6,10 +6,8 @@ snippet t
 snippet aga
 	Expenses:Cars:Audi:Gas  UAH ${1:value}
 
-snippet mc
-	`strftime("%Y/%m/%d")` * McDonald's
-		Expenses:Eating Out  UAH ${1:value}.00
-		${0:account}
+snippet ea
+	Expenses:Eating Out  UAH ${1:value}.00
 
 snippet gro
 	Expenses:Home:Groceries  UAH ${1:value}
@@ -26,7 +24,7 @@ snippet su "Support"
 		${0:Assets:Cash:Envelope}
 
 snippet f
-	Assets:Cash:Envelopes:Fund
+	Assets:Cash:Envelopes:${0:Fund}
 
 snippet wi
 	Assets:Cash:Wife

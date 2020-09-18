@@ -50,13 +50,10 @@ function gcoz() {
 
 alias fin="vim ~/Documents/Finances/ledger/ledger.dat"
 alias efin="vim ~/Documents/Finances/ledger/enko.dat"
-alias le="ledger -f ~/Documents/Finances/ledger/ledger.dat"
-alias ele="ledger -f ~/Documents/Finances/ledger/enko.dat"
-alias leb="le bal"
-alias ler="le reg"
-alias leui="hledger-ui -T --theme=terminal --depth=2 -f ~/Documents/Finances/ledger/ledger.dat"
+alias le="ledger --no-pager -f ~/Documents/Finances/ledger/ledger.dat"
 
 alias sydo="rsync -avzP --delete ~/Documents/ admin@thekzm.myqnapcloud.com:/share/Documents -e \"ssh -p 2201\""
 alias sydi="rsync -avzP admin@thekzm.myqnapcloud.com:/share/Documents/ ~/Documents -e \"ssh -p 2201\""
 
 alias cal="cal -m"
+alias bm="bashmount"

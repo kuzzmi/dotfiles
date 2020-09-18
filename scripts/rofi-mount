@@ -1,0 +1,100 @@
+#!/bin/bash
+set -u
+
+info_type() {
+  lsblk -drno TYPE "$1" 2>/dev/null
+}
+info_fslabel() {
+  lsblk -drno LABEL "$1" 2>/dev/null
+}
+info_fstype() {
+  lsblk -drno FSTYPE "$1" 2>/dev/null
+}
+info_mountpath() {
+  findmnt -no TARGET "$1" 2>/dev/null
+}
+info_partlabel() {
+  lsblk -drno PARTLABEL "$1" 2>/dev/null
+}
+info_size() {
+  lsblk -drno SIZE "$1" 2>/dev/null
+}
+info_vendormodel() {
+  lsblk -drno VENDOR,MODEL "$1" 2>/dev/null
+}
+
+check_removable() {
+  [[ "$(lsblk -drno RM "$1")" == "1" ]]
+}
+
+print_device() {
+  local label="$(info_fslabel "$devname")"
+  local fstype="$(info_fstype "$devname")"
+  local device="$(printf '%s' "$devname" | sed -e 's/[0-9]*$//g')"
+  local size="$(info_size "$devname")"
+  local mountpath="$(info_mountpath "$devname")"
+
+  [[ -z "$label" ]] && (( $# == 1 )) && label="$(info_vendormodel "$devname")"
+  [[ -z "$label" ]] && label="$(info_partlabel "$devname")"
+  [[ -z "$label" ]] && [[ "$fstype" == "crypto_LUKS" ]] && label="crypto_LUKS"
+  [[ -z "$label" ]] && label="$(info_vendormodel "$device")"
+  [[ -z "$label" ]] && label="-"
+
+  label="$(printf '%s' "$label" | sed -e 's/\\x20/ /g')"
+
+  printf '%s. %s %s (%s)' $i $label $size
+
+  [[ -n "$mountpath" ]] && printf '\t%s' $mountpath
+
+  printf '\n'
+}
+
+all=()
+removable=()
+
+list_devices() {
+  while IFS='' read -r device; do
+    all+=( "$device" )
+  done < <(lsblk -plno NAME)
+
+  for i in "${!all[@]}"; do
+    local devname="${all[$i]}"
+    local device_type=$(info_type "$devname")
+    if [[ "$device_type" == "part" ]]; then
+      if check_removable "$devname"; then
+        removable[${#removable[*]}]="$devname"
+      fi
+    fi
+  done
+
+  for i in "${!removable[@]}"; do
+    local devname="${removable[$i]}"
+    print_device $devname $i
+  done
+}
+
+get_selected() {
+  local selected_item=$(list_devices | rofi -dmenu)
+
+  local index=$(printf '%s' "$selected_item" | cut -d'.' -f1)
+  local selected_device
+
+  [[ -z "$selected_item" ]] && exit 1
+
+  list_devices
+
+  for i in "${!removable[@]}"; do
+    if [[ "$i" == "$index" ]]; then
+      local devname="${removable[$i]}"
+      selected_device=$devname
+    fi
+  done
+
+  if [[ -z $(info_mountpath "$selected_device") ]]; then
+    udisksctl mount -b $selected_device
+  else
+    udisksctl unmount -b $selected_device
+  fi
+}
+
+get_selected

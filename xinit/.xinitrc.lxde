@@ -1,0 +1,5 @@
+#!/bin/sh
+. ~/.xinitrc.common
+
+alacritty -e tmux &
+exec startlxde

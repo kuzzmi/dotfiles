@@ -1,0 +1,5 @@
+#!/bin/sh
+. ~/.xinitrc.common
+
+picom -b &
+exec xmonad

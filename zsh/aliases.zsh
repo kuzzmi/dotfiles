@@ -30,6 +30,9 @@ alias tmxw="tmuxinator work"
 
 alias dotfiles="cd ~/.config/dotfiles"
 
+alias g="git"
+alias tmux="tmux -u"
+
 function gcmz() {
     git merge $(git branch | fzf --height 40% --ansi --multi --tac)
 }

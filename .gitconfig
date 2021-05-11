@@ -3,7 +3,7 @@
     email = igor@kuzzmi.com
 
 [core]
-    editor = "vim"
+    editor = "nvim"
 
 [alias]
     g = "gui"
@@ -23,8 +23,8 @@
 [url "git@gitlab.com:"]
     insteadOf = https://gitlab.com/
 
-[url "git@github.com:"]
-    insteadOf = https://github.com/
+# [url "git@github.com:"]
+#     insteadOf = https://github.com/
 
 [push]
     default = current

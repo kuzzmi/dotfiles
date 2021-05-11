@@ -1,43 +1,40 @@
 # React Lifecycle Hooks
-snippet cwm
-	componentWillMount() {
-		${0}
-	}
-snippet cdm
-	componentDidMount() {
-		${0}
-	}
-snippet cwrp
-	componentWillReceiveProps(${1:nextProps}) {
-		${0}
-	}
-snippet scu
-	shouldComponentUpdate(${1:nextProps}${2:, nextState}) {
-		${0}
-		return true;
-	}
-snippet cdu
-	componentDidUpdate(${1:prevProps}${2:, prevState}) {
-		${0}
-	}
-snippet cwu
-	componentWillUnmount() {
-		${0}
-	}
+# snippet cwm
+# 	componentWillMount() {
+# 		${0}
+# 	}
+# snippet cdm
+# 	componentDidMount() {
+# 		${0}
+# 	}
+# snippet cwrp
+# 	componentWillReceiveProps(${1:nextProps}) {
+# 		${0}
+# 	}
+# snippet scu
+# 	shouldComponentUpdate(${1:nextProps}${2:, nextState}) {
+# 		${0}
+# 		return true;
+# 	}
+# snippet cdu
+# 	componentDidUpdate(${1:prevProps}${2:, prevState}) {
+# 		${0}
+# 	}
+# snippet cwu
+# 	componentWillUnmount() {
+# 		${0}
+# 	}
 
 snippet ss
+	this.setState({ ${0} });
+
+snippet sss
 	this.setState(state => ({
 		...state,
 		${0}
 	}));
 
-snippet sss
-	this.setState(state => {
-		${0}
-		return state;
-	});
-
-snippet pt
+snippet ptt
 	PropTypes.${1:any}${2:.isRequired}
 
 snippet cn
@@ -65,6 +62,7 @@ snippet desc
 			${0}
 		});
 	});
+
 snippet it
 	it('should ${1}', () => {
 		${0}
@@ -99,24 +97,28 @@ snippet rcl
 
 snippet =req
 	const ${1:package} = require('${0}');
+
 snippet req
 	require('${1}');
+
 snippet me
 	module.exports
+
 snippet ins
 	console.log(require('util').inspect(${1}, { showHidden: false, depth: null }));
 	${0}
-snippet rc
-	{/* ${0} */}
+
 # setInterval function
 snippet si
 	setInterval(function() {
 		${0}
 	}, ${1:10});
-snippet st
+
+snippet sto
 	setTimeout(function() {
 		${0}
 	}, ${1:10});
+
 snippet /*
 	/*
 	 * ${0}
@@ -139,22 +141,30 @@ snippet rnbp
 
 	export default $1;
 
-snippet rnbcp
+snippet rncomp
 	import React, { Component } from 'react';
-	import {
-		View,
-		Text,
-	} from 'react-native';
+	import PropTypes from 'prop-types';
+	import { View, StyleSheet, Text } from 'react-native';
 
-	export default class ${1:name} extends Component {
-		render() {
-			return (
-				<View>
-					<Text>$1</Text>
-				</View>
-			);
-		}
+	const styles = StyleSheet.create({
+	  container: {
+	    flex: 1,
+	  },
+	});
+
+	class ${1:name} extends Component {
+	  static propTypes = {};
+
+	  render() {
+	    return (
+	      <View>
+	        <Text>$1</Text>
+	      </View>
+	    );
+	  }
 	}
+
+	export default $1;
 
 # Webpack
 snippet reactwebpack

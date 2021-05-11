@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# This script facilities plotting of a ledger register report.  If you
+# use OS/X, and have AquaTerm installed, you will probably want to set
+# LEDGER_TERM to "aqua".
+#
+# Examples of use:
+#
+#   report -j -M reg food            # plot monthly food costs
+#   report -J reg checking           # plot checking account balance
+
+if [ -z "$LEDGER_TERM" ]; then
+  LEDGER_TERM="qt size 1280,720 persist"
+fi
+
+(cat <<EOF; ledger -f ~/Documents/Finances/ledger/ledger.dat "$@") | gnuplot
+  set terminal $LEDGER_TERM
+  set style histogram
+  set xdata time
+  set timefmt "%Y-%m-%d"
+  unset mxtics
+  set mytics 2
+  set grid xtics ytics mytics
+  set style fill transparent solid 0.6 noborder
+  plot "-" using 1:2 with boxes
+EOF

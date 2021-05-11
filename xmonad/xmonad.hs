@@ -9,10 +9,13 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.UrgencyHook
 
 import XMonad.Util.EZConfig (additionalKeys)
-import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.Run (spawnPipe, safeSpawn)
 import XMonad.Util.NamedScratchpad
+import XMonad.Util.NamedWindows
 import XMonad.Util.WorkspaceCompare
 
 import XMonad.Layout.BinarySpacePartition
@@ -42,28 +45,22 @@ import qualified XMonad.StackSet as W
 
 import qualified Data.Map as M
 
+import Data.List(isInfixOf)
+
+data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
+
+instance UrgencyHook LibNotifyUrgencyHook where
+    urgencyHook LibNotifyUrgencyHook w = do
+        name     <- getName w
+        Just idx <- fmap (W.findTag w) $ gets windowset
+
+        safeSpawn "notify-send" [show name, "workspace " ++ idx]
+
 myMask = mod4Mask -- win key
 
 ------------------------------------------------------------------------}}}
 -- Colors, Fonts, & Themes                                              {{{
 ---------------------------------------------------------------------------
-
--- base03  = "#002b36"
--- base02  = "#073642"
--- base01  = "#586e75"
--- base00  = "#657b83"
--- base0   = "#839496"
--- base1   = "#93a1a1"
--- base2   = "#eee8d5"
--- base3   = "#fdf6e3"
--- yellow  = "#b58900"
--- orange  = "#cb4b16"
--- red     = "#dc322f"
--- magenta = "#d33682"
--- violet  = "#6c71c4"
--- blue    = "#268bd2"
--- cyan    = "#2aa198"
--- green   = "#859900"
 
 bg      = "#F3F3F3"
 fg      = "#707070"
@@ -123,6 +120,10 @@ myPlacement          = fixed (0.5, 0.5) -- center of the screen
 
 myWorkspaces = map show [1 .. 9 :: Int]
 
+-- Queries for manage hook
+q ~? x = fmap (x `isInfixOf`) q
+q !? x = fmap (not . isInfixOf x) q
+
 myManageHook =
     composeAll
         [ namedScratchpadManageHook myScratchpads
@@ -138,8 +139,7 @@ myManageHook =
         , className =? "Pavucontrol" --> doFloat
         , className =? "Seahorse" --> doFloat
         , className =? "MEGAsync" --> doFloat
-        , role =? "gimp-toolbox-color-dialog" --> doFloat
-        , role =? "gimp-message-dialog" --> doFloat
+        , role ~? "gimp-" <&&> role !? "gimp-image-window" --> doFloat
         , composeOne [ isFullscreen -?> doFullFloat ]
         , manageDocks
         ]
@@ -160,7 +160,7 @@ myLayout =
     onWorkspace "3" tabs .
     onWorkspace "4" tabs .
     full $
-    tiled ||| tabs ||| grid ||| bsp
+    bsp ||| tabs
     where
         myGaps = smartSpacingWithEdge gap
 
@@ -174,23 +174,18 @@ myLayout =
             $ avoidStruts
             $ myGaps emptyBSP
 
-        grid = named "Grid"
-            $ avoidStruts
-            $ myGaps Grid
+        -- grid = named "Grid"
+        --     $ avoidStruts
+        --     $ myGaps Grid
 
-        tiled = named "Tiled"
-            $ avoidStruts
-            $ myGaps
-            $ Tall nmaster delta ratio
+        -- tiled = named "Tiled"
+        --     $ avoidStruts
+        --     $ myGaps
+        --     $ Tall nmaster delta ratio
 
         tabs = named "Tabs"
             $ avoidStruts
             $ tabbedBottom shrinkText myTabTheme
-
-        steam = noBorders
-            $ named "No borders"
-            $ avoidStruts
-            $ emptyBSP
 
 myMouseBindings XConfig {XMonad.modMask = modMask} = M.fromList
     -- mod-button1 %! Set the window to floating mode and move by dragging
@@ -211,6 +206,9 @@ myKeys =
 
       -- Applications menu
     , ((myMask, xK_grave), spawn "rofi -show combi")
+
+      -- Emoji menu
+    , ((myMask, xK_e), spawn "rofi -show emoji")
 
       -- Kill focused
     , ((myMask, xK_BackSpace), kill)
@@ -244,7 +242,7 @@ myKeys =
     , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
     , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.2; scrot -s /tmp/screen.png; xclip -selection clipboard -t image/png -i /tmp/screen.png; rm /tmp/screen.png")
     , ((shiftMask, xK_Print), spawn "scrot /tmp/screen.png; xclip -selection clipboard -t image/png -i /tmp/screen.png; rm /tmp/screen.png")
-    , ((0, xK_Print), spawn "scrot")
+    , ((0, xK_Print), spawn "flameshot gui")
 
       -- Run pavucontrol
     , ((myMask .|. shiftMask, xK_m), spawn "pavucontrol")
@@ -261,6 +259,8 @@ myKeys =
     , ((myMask, xK_End), spawn "/home/kuzzmi/.xmonad/xmonad-pulsevolume/pulse-volume.sh toggle")
     , ((myMask, xK_Home), spawn "/home/kuzzmi/.xmonad/xmonad-pulsevolume/pulse-volume.sh reset")
 
+    , ((myMask, xK_x), sendMessage $ ToggleGaps)
+    , ((myMask, xK_z), withFocused centerWindow)
 
     -- , ((myMask .|. controlMask, xK_h), sendMessage $ pullGroup L)
     -- , ((myMask .|. controlMask, xK_l), sendMessage $ pullGroup R)
@@ -270,10 +270,8 @@ myKeys =
     -- , ((myMask .|. controlMask, xK_m), withFocused (sendMessage . MergeAll))
     -- , ((myMask .|. controlMask, xK_u), withFocused (sendMessage . UnMerge))
 
-    -- , ((myMask .|. controlMask, xK_period), onGroup W.focusDown')
+    -- , ((myMask .|. controlMask, xK_period), onGroup W.focusown')
     -- , ((myMask .|. controlMask, xK_comma), onGroup W.focusUp')
-
-    , ((myMask, xK_z), withFocused centerWindow)
     ]
     where
     centerWindow :: Window -> X ()
@@ -301,7 +299,7 @@ main = do
     xmproc <- spawnPipe myStatusBar
     xmonad $ myConfig xmproc
 
-myConfig p = docks $ def
+myConfig p = docks $ withUrgencyHook LibNotifyUrgencyHook $ ewmh def
     { borderWidth        = border
     , normalBorderColor  = myNormalBorderColor
     , focusedBorderColor = myFocusedBorderColor

@@ -6,17 +6,11 @@ snippet t
 snippet aga
 	Expenses:Cars:Audi:Gas  UAH ${1:value}
 
-snippet ea
-	Expenses:Eating Out  UAH ${1:value}.00
-
 snippet gro
-	Expenses:Home:Groceries  UAH ${1:value}
+	Expenses:Groceries  UAH ${1:value}
 
 snippet lar
 	Expenses:Home:Maid  UAH ${1:value}.00
-
-snippet ea
-	Expenses:Eating Out  UAH ${1:value}
 
 snippet su "Support"
 	`strftime("%Y/%m/%d")` * Support
@@ -25,6 +19,9 @@ snippet su "Support"
 
 snippet f
 	Assets:Cash:Envelopes:${0:Fund}
+
+snippet doc
+	Expenses:Health:Doctor  UAH ${1:value}
 
 snippet wi
 	Assets:Cash:Wife
@@ -38,8 +35,5 @@ snippet mo
 snippet mb
 	Assets:Banking:Monobank:Banka
 
-snippet ec
-	Assets:Cash:Envelopes:Cars
-
-snippet eg
-	Assets:Cash:Envelopes:Groceries
+snippet eed
+	Expenses:Entertainment:Dining  UAH ${1:value}

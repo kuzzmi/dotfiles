@@ -7,11 +7,14 @@
 " ============
 call plug#begin('~/.config/dotfiles/vim/plugged')
 
+" Vim Arduino
+Plug 'stevearc/vim-arduino'
+
 " Nvim Completion Manager
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-Plug 'ncm2/ncm2-go'
+" Plug 'ncm2/ncm2-go'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'ncm2/nvim-typescript', {'do': './install.sh'}
 Plug 'ternjs/tern_for_vim', { 'do': 'cd bundle/tern_for_vim; npm install' }
@@ -28,7 +31,12 @@ Plug 'junegunn/vim-easy-align'
 Plug 'jpo/vim-railscasts-theme'
 Plug 'altercation/vim-colors-solarized'
 
-Plug 'mhinz/vim-startify'
+" PlantUML Stuff
+Plug 'aklt/plantuml-syntax'
+Plug 'weirongxu/plantuml-previewer.vim'
+Plug 'tyru/open-browser.vim'
+
+" Plug 'mhinz/vim-startify'
 
 " Vim JSX
 Plug 'mxw/vim-jsx'
@@ -43,8 +51,8 @@ Plug 'tpope/vim-abolish'
 Plug 'tomtom/tlib_vim'
 
 " Go support
-Plug 'fatih/vim-go', { 'tag': 'v1.18' }
-Plug 'sebdah/vim-delve'
+" Plug 'fatih/vim-go', { 'tag': 'v1.18' }
+" Plug 'sebdah/vim-delve'
 
 " Syntax checking
 Plug 'dense-analysis/ale'
@@ -53,6 +61,7 @@ let g:ale_fixers = {
 \   'javascript': ['prettier'],
 \   'typescript': ['prettier'],
 \   'css': ['prettier'],
+\   'scss': ['prettier'],
 \}
 
 " Unite. Cool stuff
@@ -85,7 +94,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'isRuslan/vim-es6'
 
 " Markdown folding
-Plug 'nelstrom/vim-markdown-folding'
+" Plug 'nelstrom/vim-markdown-folding'
 
 " Silver Searcher
 Plug 'rking/ag.vim'
@@ -111,6 +120,7 @@ augroup omnifuncs
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType elm setlocal omnifunc=elm#Complete
+    autocmd FileType typescript setlocal omnifunc=TSOmnicFunc
 augroup END
 
 autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -190,9 +200,6 @@ set pastetoggle=<F12>
 
 " Shortcut to enter visual block substitution
 vnoremap <leader>d y<Esc>:%s:<C-R>":
-
-" Append to end of file
-nnoremap <leader>a Go
 
 " Increment selected numbers
 function! Incr()
@@ -304,7 +311,8 @@ endfunction
 
 " Unite key mappings
 nnoremap <leader>f :<C-u>Unite -auto-resize -start-insert file_mru<cr>
-nnoremap <silent> <leader>r :call fzf#run({'source': 'git ls-files -c -o -x node_modules -x .expo', 'down': '30%', 'sink': 'e'})<cr>
+" nnoremap <silent> <leader>r :call fzf#run({'source': 'git ls-files -c -o -x node_modules -x .expo', 'down': '30%', 'sink': 'e'})<cr>
+nnoremap <silent> <leader>r :call fzf#run({'source': 'ag --hidden --ignore .git -g ""', 'down': '30%', 'sink': 'e'})<cr>
 " nnoremap <leader>r :GitFiles<cr>
 " nnoremap <leader>r :<C-u>Unite -auto-resize -buffer-name=files -start-insert file_rec/async:!<cr>
 nnoremap <leader>e :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
@@ -461,6 +469,8 @@ set keymap=russian-colemak
 set iminsert=0
 set imsearch=0
 highlight lCursor guifg=NONE guibg=Cyan 
+
+hi MatchParen cterm=reverse ctermbg=white
 
 " Closetag files
 let g:closetag_filenames = "*.html,*.js,*.jsx"

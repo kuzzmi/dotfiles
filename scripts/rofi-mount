@@ -74,7 +74,7 @@ list_devices() {
 }
 
 get_selected() {
-  local selected_item=$(list_devices | rofi -dmenu)
+  local selected_item=$(list_devices | rofi -dmenu -mesg "Select a drive to mount/unmount" -p "rofi-mount")
 
   local index=$(printf '%s' "$selected_item" | cut -d'.' -f1)
   local selected_device

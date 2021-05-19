@@ -3,7 +3,7 @@
     email = igor@kuzzmi.com
 
 [core]
-    editor = "vim"
+    editor = "nvim"
 
 [alias]
     g = "gui"

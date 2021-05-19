@@ -8,6 +8,7 @@ views/
 view
 
 fish/fishd.*
+vim/init.vim
 
 tmp
 temp

@@ -27,8 +27,8 @@ window:
   # Units are physical pixels; this is not DPI aware.
   # (change requires restart)
   padding:
-    x: 0
-    y: 0
+    x: 5
+    y: 5
 
   # Window decorations
   # Setting this to false will result in window without borders and title bar.
@@ -159,33 +159,90 @@ debug:
 #     cyan:    '0x519f50'
 #     white:   '0xf9f7f3'
 
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x161b1d'
+#     foreground: '0x7ea2b4'
+#
+#   # Normal colors
+#   normal:
+#     black:   '0x161b1d'
+#     red:     '0xd22d72'
+#     green:   '0x5EA53B'
+#     yellow:  '0x8a8a0f'
+#     blue:    '0x257fad'
+#     magenta: '0x5d5db1'
+#     cyan:    '0x2d8f6f'
+#     white:   '0x7ea2b4'
+#
+#   # Bright colors
+#   bright:
+#     black:   '0x5a7b8c'
+#     red:     '0xd22d72'
+#     green:   '0x5EA53B'
+#     yellow:  '0x8a8a0f'
+#     blue:    '0x257fad'
+#     magenta: '0x5d5db1'
+#     cyan:    '0x2d8f6f'
+#     white:   '0xebf8ff'
+
 colors:
   # Default colors
   primary:
-    background: '0x1c2023'
-    foreground: '0xc7ccd1'
+    background: '#2d2d2d'
+    foreground: '#d3d0c8'
 
   # Normal colors
   normal:
-    black:   '0x1c2023'
-    red:     '0xc7ae95'
-    green:   '0x95c7ae'
-    yellow:  '0xaec795'
-    blue:    '0xae95c7'
-    magenta: '0xc795ae'
-    cyan:    '0x95aec7'
-    white:   '0xc7ccd1'
+    black:   '#2d2d2d'
+    red:     '#f2777a'
+    green:   '#99cc99'
+    yellow:  '#ffcc66'
+    blue:    '#6699cc'
+    magenta: '#cc99cc'
+    cyan:    '#66cccc'
+    white:   '#d3d0c8'
 
   # Bright colors
   bright:
-    black:   '0x747c84'
-    red:     '0xc7ae95'
-    green:   '0x95c7ae'
-    yellow:  '0xaec795'
-    blue:    '0xae95c7'
-    magenta: '0xc795ae'
-    cyan:    '0x95aec7'
-    white:   '0xf3f4f5'
+    black:   '#747369'
+    red:     '#f2777a'
+    green:   '#99cc99'
+    yellow:  '#ffcc66'
+    blue:    '#6699cc'
+    magenta: '#cc99cc'
+    cyan:    '#66cccc'
+    white:   '#f2f0ec'
+
+# Ashes (dark)
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x1c2023'
+#     foreground: '0xc7ccd1'
+#
+#   # Normal colors
+#   normal:
+#     black:   '0x1c2023'
+#     red:     '0xc7ae95'
+#     green:   '0x95c7ae'
+#     yellow:  '0xaec795'
+#     blue:    '0xae95c7'
+#     magenta: '0xc795ae'
+#     cyan:    '0x95aec7'
+#     white:   '0xc7ccd1'
+#
+#   # Bright colors
+#   bright:
+#     black:   '0x747c84'
+#     red:     '0xc7ae95'
+#     green:   '0x95c7ae'
+#     yellow:  '0xaec795'
+#     blue:    '0xae95c7'
+#     magenta: '0xc795ae'
+#     cyan:    '0x95aec7'
+#     white:   '0xf3f4f5'
 
 # Colors (Solarized Light)
 # colors:

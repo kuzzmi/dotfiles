@@ -62,36 +62,36 @@ myMask = mod4Mask -- win key
 -- Colors, Fonts, & Themes                                              {{{
 ---------------------------------------------------------------------------
 
-bg      = "#F3F3F3"
-fg      = "#707070"
-color00 = "#D3D3D3"
-color01 = "#EF6B7B"
-color02 = "#A1D569"
-color03 = "#F59335"
-color04 = "#4EC2E8"
-color05 = "#FEC7CD"
-color06 = "#95C1C0"
-color07 = "#707070"
-color08 = "#B3B3B3"
-color09 = "#ED5466"
-color10 = "#AFDB80"
-color11 = "#F59335"
-color12 = "#5DC7EA"
-color13 = "#D2A4B4"
-color14 = "#75A1A0"
-color15 = "#909090"
+bg      = "#2d2d2d"
+fg      = "#d3d0c8"
+color00 = "#2d2d2d"
+color01 = "#f2777a"
+color02 = "#99cc99"
+color03 = "#ffcc66"
+color04 = "#6699cc"
+color05 = "#cc99cc"
+color06 = "#66cccc"
+color07 = "#d3d0c8"
+color08 = "#2d2d2d"
+color09 = "#f2777a"
+color10 = "#99cc99"
+color11 = "#ffcc66"
+color12 = "#6699cc"
+color13 = "#cc99cc"
+color14 = "#66cccc"
+color15 = "#d3d0c8"
 
 gap     = 16
-border  = 4
+border  = 0
+
+active   = color04
+inactive = color00
+urgent   = color01
 
 myNormalBorderColor  = inactive
 myFocusedBorderColor = active
 
-active   = color04
-inactive = color07
-urgent   = color09
-
-myFont     = "xft:JetBrainsMono:weight:900:pixelsize=20:bold:antialias=true:hinting=true"
+myFont     = "xft:JetBrainsMono:weight:900:pixelsize=22:bold:antialias=true:hinting=true"
 myBigFont  = "-*-terminus-medium-*-*-*-*-240-*-*-*-*-*-*"
 
 myTabTheme = def
@@ -102,7 +102,7 @@ myTabTheme = def
     , inactiveBorderColor = inactive
     , activeTextColor     = inactive
     , inactiveTextColor   = active
-    , decoHeight          = 40
+    , decoHeight          = 36
     }
 
 ------------------------------------------------------------------------}}}

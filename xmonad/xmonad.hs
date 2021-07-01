@@ -3,6 +3,7 @@ import XMonad
 import XMonad.Actions.WithAll
 import XMonad.Actions.CycleWS
 import XMonad.Actions.CycleRecentWS
+import XMonad.Actions.CopyWindow
 
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.DynamicLog
@@ -24,6 +25,7 @@ import XMonad.Layout.Decoration
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.Gaps
 import XMonad.Layout.Grid
+import XMonad.Layout.LayoutBuilder
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
@@ -53,7 +55,6 @@ instance UrgencyHook LibNotifyUrgencyHook where
     urgencyHook LibNotifyUrgencyHook w = do
         name     <- getName w
         Just idx <- fmap (W.findTag w) $ gets windowset
-
         safeSpawn "notify-send" [show name, "workspace " ++ idx]
 
 myMask = mod4Mask -- win key
@@ -110,7 +111,6 @@ myTabTheme = def
 ---------------------------------------------------------------------------
 
 myTerminal           = "alacritty"
-myScratchpadTerminal = "urxvt"
 myStatusBar          = "xmobar -x0 -o ~/.xmonad/xmobar.conf"
 myBrowser            = "google-chrome-stable"
 
@@ -136,7 +136,7 @@ myManageHook =
         , className =? "Slack" --> doShift "3"
         , className =? "Steam" --> doShift "4"
         , className =? "Chromium" --> doShift "2"
-        , className =? "Pavucontrol" --> doFloat
+        , className =? "Pavucontrol" --> doFloat <+> doF copyToAll
         , className =? "Seahorse" --> doFloat
         , className =? "MEGAsync" --> doFloat
         , role ~? "gimp-" <&&> role !? "gimp-image-window" --> doFloat
@@ -149,20 +149,23 @@ myManageHook =
 
 -- Scratch Pads
 myScratchpads =
-        [ NS "telegram" "telegram-desktop" ((className =? "Telegram") <||> (className =? "telegram-desktop") <||> (className =? "TelegramDesktop")) (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
-        , NS "terminal" "alacritty -t alacritty-scratch" (title =? "alacritty-scratch") (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
-        , NS "email" "mailspring" (className =? "Mailspring") (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
-        ]
+    [ NS "telegram" "telegram-desktop" ((className =? "Telegram") <||> (className =? "telegram-desktop") <||> (className =? "TelegramDesktop")) (customFloating $ sPadSize)
+    , NS "terminal" "alacritty -t alacritty-scratch" (title =? "alacritty-scratch") (customFloating $ sPadSize)
+    , NS "email" "mailspring" (className =? "Mailspring") (customFloating $ sPadSize)
+    ]
+    where
+      sPadSize = W.RationalRect (1/8) (1/8) (3/4) (3/4)
 
 myLayout =
     windowNavigation $
     smartBorders .
     onWorkspace "3" tabs .
     onWorkspace "4" tabs .
+    onWorkspace "6" tiled .
     full $
     bsp ||| tabs
     where
-        myGaps = smartSpacingWithEdge gap
+        myGaps = spacingWithEdge gap
 
         full = mkToggle (NOBORDERS ?? FULL ?? EOT)
 
@@ -178,14 +181,32 @@ myLayout =
         --     $ avoidStruts
         --     $ myGaps Grid
 
-        -- tiled = named "Tiled"
-        --     $ avoidStruts
-        --     $ myGaps
-        --     $ Tall nmaster delta ratio
+        tiled = named "Tiled"
+            $ avoidStruts
+            $ myGaps
+            $ Tall nmaster delta ratio
+
+        --         Cool grid
+        --   --------------------
+        --   |         |        |
+        --   |         |        |
+        --   |         |        |
+        --   |         |--------|
+        --   |         |        |
+        --   |         |  Tabs  |
+        --   |         |        |
+        --   --------------------
+
+        coolGrid = named "Cool grid"
+          $ avoidStruts
+          $ myGaps
+          $ layoutN 1 (relBox 0 0 0.5 1) (Just $ relBox 0 0 1 1) Full
+          $ layoutN 1 (relBox 0.5 0 1 0.5) (Just $ relBox 0.5 0 1 1) Full
+          $ layoutAll (relBox 0.5 0.5 1 1) tabs
 
         tabs = named "Tabs"
-            $ avoidStruts
-            $ tabbedBottom shrinkText myTabTheme
+          $ avoidStruts
+          $ tabbedBottom shrinkText myTabTheme
 
 myMouseBindings XConfig {XMonad.modMask = modMask} = M.fromList
     -- mod-button1 %! Set the window to floating mode and move by dragging
@@ -262,6 +283,11 @@ myKeys =
     , ((myMask, xK_x), sendMessage $ ToggleGaps)
     , ((myMask, xK_z), withFocused centerWindow)
 
+    -- Make focused window always visible
+    , ((myMask, xK_v ), windows copyToAll)
+    -- Toggle window state back
+    , ((myMask .|. shiftMask, xK_v ), killAllOtherCopies)
+
     -- , ((myMask .|. controlMask, xK_h), sendMessage $ pullGroup L)
     -- , ((myMask .|. controlMask, xK_l), sendMessage $ pullGroup R)
     -- , ((myMask .|. controlMask, xK_k), sendMessage $ pullGroup U)
@@ -273,6 +299,11 @@ myKeys =
     -- , ((myMask .|. controlMask, xK_period), onGroup W.focusown')
     -- , ((myMask .|. controlMask, xK_comma), onGroup W.focusUp')
     ]
+    ++
+    [((m .|. myMask, k), windows $ f i)
+        | (i, k) <- zip myWorkspaces [xK_1 .. xK_9]
+        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)
+        , (\i -> W.greedyView i . W.shift i, controlMask)]]
     where
     centerWindow :: Window -> X ()
     centerWindow win = do

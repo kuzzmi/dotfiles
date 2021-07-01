@@ -38,4 +38,6 @@ $HOME/.fehbg
 xset r rate 210 40
 setxkbmap -model pc105 -layout us,ua,ru -variant colemak,winkeys,winkeys -option grp:shifts_toggle -option caps:escape
 xbindkeys
+$HOME/.local/bin/monitor-temperature.sh &
+redshift &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &

@@ -1,22 +1,22 @@
 configuration {
-	modi: "drun,combi";
-	width: 30;
+	modi: "combi";
+	width: 40;
 	lines: 10;
 	columns: 1;
-	font: "Input 20";
+	font: "JetBrainsMono Bold 26";
 	bw: 10;
 	location: 0;
 	padding: 40;
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/
 /*	fixed-num-lines: true;*/
-	show-icons: true;
+/* show-icons: true; */
 	terminal: "alacritty";
 /*	ssh-client: "ssh";*/
 /*	ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";*/
 /*	run-command: "{cmd}";*/
 /*	run-list-command: "";*/
-/*	run-shell-command: "{terminal} -e {cmd}";*/
+	run-shell-command: "{terminal} -e {cmd}";
 /*	window-command: "wmctrl -i -R {window}";*/
 /*	window-match-fields: "all";*/
 /*	icon-theme: ;*/
@@ -31,17 +31,17 @@ configuration {
 /*	sorting-method: "normal";*/
 	case-sensitive: false;
 /*	cycle: true;*/
-	sidebar-mode: true;
+	/* sidebar-mode: true; */
 /*	eh: 1;*/
 /*	auto-select: false;*/
 /*	parse-hosts: false;*/
 /*	parse-known-hosts: true;*/
-/*	combi-modi: "window,run";*/
+	combi-modi: "window,run,drun";
 /*	matching: "normal";*/
 /*	tokenize: true;*/
 /*	m: "-5";*/
 	line-margin: 8;
-/*	line-padding: 1;*/
+	line-padding: 8;
 /*	filter: ;*/
 	separator-style: "none";
 	hide-scrollbar: true;
